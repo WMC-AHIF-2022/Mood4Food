@@ -20,7 +20,7 @@ Im großen Ganzen kann man sich auf der Website/Webapp auf 2 Arten registrieren/
 
 ### 2.1. Use Case Überblick
 
-<img src="./UseCaseDiagramm1.png" style="background-color:white; padding: 10px">
+<img src="./pics/UseCaseDiagramm1.png" style="background-color:white; padding: 10px">
 
 Bei diesem Diagramm haben wir wie schon gesagt, den Lehrer und der Schüler als Benutzer des Programms. </br>
 Wie man sieht hat der Lehrer viel mehr Rechte, aber auch viel mehr zu tun.
@@ -29,7 +29,7 @@ Wie man sieht hat der Lehrer viel mehr Rechte, aber auch viel mehr zu tun.
 
 #### 2.2.1 <strong> GUI-Design </strong>
 
-<img src="./orderMainSite.png">
+<img src="./pics/orderMainSite.png">
 
 Ist die Bestellung vollständig abgeschlossen, kann der Lehrer die Bestellungen als PDF-,Excel-,usw. herunterladen.</br>
 In der Datei werden jegliche Information angeben die für die Bestellung notwendig sind, wie zum Beispiel der Name des Schülers, usw.
@@ -45,7 +45,7 @@ Hierbei werden die Daten der Teilnehmer (Schüler sowie auch Lehrer) vom Server 
 
 #### 2.3.1 <strong> GUI-Design </strong>
 
-<img src="./searchSite.png">
+<img src="./pics/searchSite.png">
 Die Suchfunktion ist für jeden Benutzer zugänglich. Zusätzlich ist unterscheidbar, nach was man suchen will. Nämlich Speisen und Personen, von denen man bestellt. (?eigene Side für jede Speise/Person/Firma, wenn man darauf klickt)</br></br>
 Sucht man nach <strong>Speisen</strong>, kann man auch sehen, welche Zutaten diese Mahlzeit beinhaltet (Zutaten, Allergene, etc.) und wer diese Speisen bereits bestellt hat (oder auch nur die Anzahl).</br>
 <strong>Personen</strong> können entweder mithilfe der IDs oder einfach mit dem Namen gefunden werden. Ähnlich wie bei den Speisen kann man bei den Personen Namen und unpersönliche Daten sowie von ihnen bestellte Speisen sehen. </br>
@@ -73,13 +73,13 @@ Der Lehrer setzt mit dem Bestellprozess eine bestimmte Frist oder eine bestimmte
 
 #### 2.4.1 <strong> GUI-Design </strong>
 
-<img src="CreateNewOrder.png">
+<img src="./pics/CreateNewOrder.png">
 Ein Lehrer kann eine neuer Bestellung beantragen/erstellen (Siehe Bild) und eine bestimmte Anzahl von Schülern zur Eintragung auffordern. </br>
 Die Schüler haben daraufhin bis zum Ende der Frist Zeit sich eine Speise auszusuchen. Der Lehrer kann jederzeit Schüler ohne Bestellung dazu auffordern, eine Bestellung auszusuchen. Zum Beispiel, wenn die Frist beinahe zu Ende ist.
 
 #### 2.4.2 <strong> Workflow </strong>
 
-// missing text
+
 
 ## 3. Nicht-funktionale Anforderungen
 
