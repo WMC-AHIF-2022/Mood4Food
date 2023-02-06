@@ -20,7 +20,7 @@ Im großen Ganzen kann man sich auf der Website/Webapp auf 2 Arten registrieren/
 
 ### 2.1. Use Case Überblick
 
-<img src="./pics/UseCaseDiagramm1.png" style="background-color:white; padding: 10px">
+<img src="./pics/NewUCDiagram.png" style="background-color:white; padding: 10px">
 
 Bei diesem Diagramm haben wir wie schon gesagt, den Lehrer und der Schüler als Benutzer des Programms. </br>
 Wie man sieht hat der Lehrer viel mehr Rechte, aber auch viel mehr zu tun.
@@ -79,8 +79,6 @@ Die Schüler haben daraufhin bis zum Ende der Frist Zeit sich eine Speise auszus
 
 #### 2.4.2 <strong> Workflow </strong>
 
-
-
 ## 3. Nicht-funktionale Anforderungen
 
 Da es sich hier um ein Tool handelt, dass Bestellungen schnell und einfach zusammenfassen soll, ist es schnell klar welche Bereiche hier sehr wichtig sind.<br>
@@ -115,9 +113,6 @@ Eben <strong>Schnelligkeit</strong> und <strong>Einfachkeit</strong>.
 - Wieviele User werden erwartet?
   - 100 User
 - Wieviele Daten pro User werden erwartet?
-  
 - Mit welcher Anfrage-Frequenz wird gerechnet?
 
-
 ## 5. Systemarchitektur
-
