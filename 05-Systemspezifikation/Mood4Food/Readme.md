@@ -20,7 +20,7 @@ Im großen Ganzen kann man sich auf der Website/Webapp auf 2 Arten registrieren/
 
 ### 2.1. Use Case Überblick
 
-<img src="./UseCaseDiagramm1.png" style="background-color:white; padding: 10px">
+<img src="./NewUCDiagram.png" style="background-color:white; padding: 10px">
 
 Bei diesem Diagramm haben wir wie schon gesagt, den Lehrer und der Schüler als Benutzer des Programms. </br>
 Wie man sieht hat der Lehrer viel mehr Rechte, aber auch viel mehr zu tun.
