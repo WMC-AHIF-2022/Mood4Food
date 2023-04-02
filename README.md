@@ -47,8 +47,9 @@ Hierbei haben wir den <strong>Account Benutzer</strong>, die <strong>optische We
 
 ### 2.3 CSV-Import Speisen
 
-<img src="./pics/ImportFoodSite.png">
-Hier sehen wir die "Food-Section". Das ist die optische Ansicht der Foodlist, mit ihren Datensätzen. 
+<img src=".\pics\ImportFoodSite.png">
+
+Hier sehen wir die "Food-Section". Das ist die optische Ansicht der Foodlist, mit ihren Datensätzen.
 Nennenswerte Features sind:
 
 - Quick-Search für Speisen
@@ -58,6 +59,7 @@ Nennenswerte Features sind:
 Da anfangs jedoch die Foodlist leer ist, muss der dafür zuständige Lehrer (oder die Lehrer) mehrere Speisen hinzufügen. Und das ganz einfach mithilfe der <strong>Importfunktion</strong> (nur für Lehrer sichtbar).
 
 <img src="./pics/ImportFoodAD.png">
+
 Erstmal muss der Benutzer den Button für den Import drücken. Daraufhin erscheint ein Drag&Drop-Fenster (es gibt auch eine Uploadmöglichkeit mit Pfad). Falls der User das Fenster nicht vorher schließt, kann er also die Datei hochladen.
 Ist das erledigt und kann er den Confirm Button drücken.
 
