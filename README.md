@@ -28,7 +28,7 @@ Wie man sieht hat der Lehrer viel mehr Rechte, aber auch viel mehr zu tun.
 ### 2.2 PDF-/Excel-Export der Bestellung(en) nach der Bestellfrist
 
 <img src="./pics/ExportSite.png">
-<br></br>
+<br>
 Für den Lehrer gibt es eine weitere Liste. Und zwar die der einzelnen Bestellungen der Schüler mit der BestellID und einigen weiteren Daten (OrderID, Name, Food, FoodID) pro Bestellung. 
 Obendrein sind ist die Bestellfrist zu sehen (Start-Ende), man hat auch die Möglichkeit nach Bestimmten Schülern zu suchen (siehe Quick-Search für Students) und die "Standard-Table-Sortierungen" (Sortierung nach den einzelnen Spalten). <br>
 Das wichtigste ist jedoch die <strong>Exportfunktion</strong>.<br><br>
@@ -39,15 +39,37 @@ Hierbei haben wir den <strong>Account Benutzer</strong>, die <strong>optische We
 1. Der Prozess beginnt mit dem User, beim Drücken des Export-Buttons.
 2. Daraufhin checkt die Website, ob die Liste überhaupt einen Inhalt hat. Wenn nicht, oder wenn einfach nur ein Fehler aufgetreten ist, führt das zur Exception.
 3. Wenn alles in Ordnung ist, erscheint auf der Website die Funktion für den User, das Format zu wählen.
-   - PDF
-   - Excel
+   - `.pdf`
+   - `.csv`
 4. Daraufhin wird die Datei, im gewollten Format, erstellt und dem User geschickt/übergeben. Falls ein Fehler auftreten sollte, wird der Prozess abgebrochen und dem User angezeigt.
 5. Läuft alles rund, hat der User seine Datei und ist glücklich :D
    <br>
 
 ### 2.3 CSV-Import Speisen
 
-<img src="">
+<img src="./pics/ImportFoodSite.png">
+Hier sehen wir die "Food-Section". Das ist die optische Ansicht der Foodlist, mit ihren Datensätzen. 
+Nennenswerte Features sind:
+
+- Quick-Search für Speisen
+- Sortierbare Tabelle (je nach Spalte)
+- Speisen haben eine Main-Page
+
+Da anfangs jedoch die Foodlist leer ist, muss der dafür zuständige Lehrer (oder die Lehrer) mehrere Speisen hinzufügen. Und das ganz einfach mithilfe der <strong>Importfunktion</strong> (nur für Lehrer sichtbar).
+
+<img src="./pics/ImportFoodAD.png">
+Erstmal muss der Benutzer den Button für den Import drücken. Daraufhin erscheint ein Drag&Drop-Fenster (es gibt auch eine Uploadmöglichkeit mit Pfad). Falls der User das Fenster nicht vorher schließt, kann er also die Datei hochladen.
+Ist das erledigt und kann er den Confirm Button drücken.
+
+<br>Nun gibt es zwei Vorraussetzungen für die Datei:
+
+- die Datei-Endung ist `.csv`
+- der Inhalt ist richtig formatiert (`Number;Name;Ingredients`)
+
+Wird eins der beiden nicht eingehalten (1ste Vorr. geht vor), wird der Vorgang abgebrochen und der Fehler ausgegeben.
+Andernfalls werden die Zeilen der Datei zur Foodlist hinzugefügt und der Import als erfolgreich ausgegeben.
+
+</br>
 
 ## 3. Nicht-funktionale Anforderungen
 
