@@ -47,7 +47,7 @@ Hierbei haben wir den <strong>Account Benutzer</strong>, die <strong>optische We
 
 ### 2.3 CSV-Import Speisen
 
-<img src=".\pics\ImportFoodSite.png">
+<img src="./pics/ImportFoodSite.PNG">
 
 Hier sehen wir die "Food-Section". Das ist die optische Ansicht der Foodlist, mit ihren Datensätzen.
 Nennenswerte Features sind:
