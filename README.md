@@ -25,59 +25,29 @@ Im großen Ganzen kann man sich auf der Website/Webapp auf 2 Arten registrieren/
 Bei diesem Diagramm haben wir wie schon gesagt, den Lehrer und der Schüler als Benutzer des Programms. </br>
 Wie man sieht hat der Lehrer viel mehr Rechte, aber auch viel mehr zu tun.
 
-### 2.2 Bestellung an Service
+### 2.2 PDF-/Excel-Export der Bestellung(en) nach der Bestellfrist
 
-#### 2.2.1 <strong> GUI-Design </strong>
+<img src="./pics/ExportSite.png">
+<br></br>
+Für den Lehrer gibt es eine weitere Liste. Und zwar die der einzelnen Bestellungen der Schüler mit der BestellID und einigen weiteren Daten (OrderID, Name, Food, FoodID) pro Bestellung. 
+Obendrein sind ist die Bestellfrist zu sehen (Start-Ende), man hat auch die Möglichkeit nach Bestimmten Schülern zu suchen (siehe Quick-Search für Students) und die "Standard-Table-Sortierungen" (Sortierung nach den einzelnen Spalten). <br>
+Das wichtigste ist jedoch die <strong>Exportfunktion</strong>.<br><br>
 
-<img src="./pics/orderMainSite.png">
+<img src="./pics/ExportAD.png">
+Hierbei haben wir den <strong>Account Benutzer</strong>, die <strong>optische Website</strong> und den <strong>Server</strong>.
 
-Ist die Bestellung vollständig abgeschlossen, kann der Lehrer die Bestellungen als PDF-,Excel-,usw. herunterladen.</br>
-In der Datei werden jegliche Information angeben die für die Bestellung notwendig sind, wie zum Beispiel der Name des Schülers, usw.
+1. Der Prozess beginnt mit dem User, beim Drücken des Export-Buttons.
+2. Daraufhin checkt die Website, ob die Liste überhaupt einen Inhalt hat. Wenn nicht, oder wenn einfach nur ein Fehler aufgetreten ist, führt das zur Exception.
+3. Wenn alles in Ordnung ist, erscheint auf der Website die Funktion für den User, das Format zu wählen.
+   - PDF
+   - Excel
+4. Daraufhin wird die Datei, im gewollten Format, erstellt und dem User geschickt/übergeben. Falls ein Fehler auftreten sollte, wird der Prozess abgebrochen und dem User angezeigt.
+5. Läuft alles rund, hat der User seine Datei und ist glücklich :D
+   <br>
 
-#### 2.2.2 <strong> Workflow </strong>
+### 2.3 CSV-Import Speisen
 
-Auf der Website kann der Lehrer mithilfe des Download-Button auf der Hauptseite der Bestellung, eine Date vom Typ PDF oder auch Excel herunterladen.</br>
-Der Prozess startet, wenn der Benutzer auf den Button klickt.
-Danach wählt dieser aus, welche Art von Datei er haben will.
-Hierbei werden die Daten der Teilnehmer (Schüler sowie auch Lehrer) vom Server geholt und in die jeweilige Datei eingetragen.
-
-### 2.3 Suchfunktion von Speisen/Personen
-
-#### 2.3.1 <strong> GUI-Design </strong>
-
-<img src="./pics/searchSite.png">
-Die Suchfunktion ist für jeden Benutzer zugänglich. Zusätzlich ist unterscheidbar, nach was man suchen will. Nämlich Speisen und Personen, von denen man bestellt. (?eigene Side für jede Speise/Person/Firma, wenn man darauf klickt)</br></br>
-Sucht man nach <strong>Speisen</strong>, kann man auch sehen, welche Zutaten diese Mahlzeit beinhaltet (Zutaten, Allergene, etc.) und wer diese Speisen bereits bestellt hat (oder auch nur die Anzahl).</br>
-<strong>Personen</strong> können entweder mithilfe der IDs oder einfach mit dem Namen gefunden werden. Ähnlich wie bei den Speisen kann man bei den Personen Namen und unpersönliche Daten sowie von ihnen bestellte Speisen sehen. </br>
-
-#### 2.3.2 <strong> Workflow </strong>
-
-Es gibt 2 Arten wie man Speisen oder Personen suchen kann:
-
-- die ID
-- den Namen
-
-Davor muss man auswählen, wonach man sucht (Default ist Food).</br>
-Sucht man also nach einer Speise names Spaghetti Bolognese, geht das Programm alle Speisen durch und vergleicht die Eingabe mit der ID und den Namen der Speisen.<br>
-Das oder die Ergebnisse werden ausgegeben.
-
-#### <strong>Essenliste</strong>
-
-Wird vom Lehrer mit den nötigen Speisen "befüllt" und bearbeitet. Darauf zugegriffen wird von dem Bestellprozess und der Suchfunktion
-
-#### <strong>Bestelltage/-frist</strong>
-
-Der Lehrer setzt mit dem Bestellprozess eine bestimmte Frist oder eine bestimmte Anzahl von Tagen, wo die Schüler udn eventuell auch Lehrer bestellen können. Außerhalb dieser Zeitzone kann die Bestellung nicht verändert werden.
-
-### 2.4 Der Bestellprozess
-
-#### 2.4.1 <strong> GUI-Design </strong>
-
-<img src="./pics/CreateNewOrder.png">
-Ein Lehrer kann eine neuer Bestellung beantragen/erstellen (Siehe Bild) und eine bestimmte Anzahl von Schülern zur Eintragung auffordern. </br>
-Die Schüler haben daraufhin bis zum Ende der Frist Zeit sich eine Speise auszusuchen. Der Lehrer kann jederzeit Schüler ohne Bestellung dazu auffordern, eine Bestellung auszusuchen. Zum Beispiel, wenn die Frist beinahe zu Ende ist.
-
-#### 2.4.2 <strong> Workflow </strong>
+<img src="">
 
 ## 3. Nicht-funktionale Anforderungen
 
