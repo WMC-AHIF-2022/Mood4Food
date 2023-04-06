@@ -45,7 +45,9 @@ Hierbei haben wir den <strong>Account Benutzer</strong>, die <strong>optische We
    - `.csv`
 4. Daraufhin wird die Datei, im gewollten Format, erstellt und dem User geschickt/übergeben. Falls ein Fehler auftreten sollte, wird der Prozess abgebrochen und dem User angezeigt.
 5. Läuft alles rund, hat der User seine Datei und ist glücklich :D
-   <br>
+   <br></br>
+   <img src="./pics/pdfView.png" height="500">
+   <br></br>
 
 ### 2.3 CSV-Import Speisen
 
