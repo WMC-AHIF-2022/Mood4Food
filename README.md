@@ -27,8 +27,8 @@ Wie man sieht hat der Lehrer viel mehr Rechte, aber auch viel mehr zu tun.
 
 ### 2.2 PDF-/Excel-Export der Bestellung(en) nach der Bestellfrist
 
-<img src="./pics/ExportSite2.png">
-<br>
+<img src="./pics/ExportSite2.PNG">
+
 Für den Lehrer gibt es eine weitere Liste. Und zwar die der einzelnen Bestellungen der Schüler mit der BestellID und einigen weiteren Daten (OrderID, Name, Food, FoodID) pro Bestellung.
 
 Obendrein sind ist die Bestellfrist zu sehen (Start-Ende), man hat auch die Möglichkeit nach bestimmten Schülern und Speisen zu suchen (siehe Quick-Search für Students/Speisen) und die "Standard-Table-Sortierungen" (Sortierung nach den einzelnen Spalten). <br>
@@ -45,13 +45,16 @@ Hierbei haben wir den <strong>Account Benutzer</strong>, die <strong>optische We
    - `.csv`
 4. Daraufhin wird die Datei, im gewollten Format, erstellt und dem User geschickt/übergeben. Falls ein Fehler auftreten sollte, wird der Prozess abgebrochen und dem User angezeigt.
 5. Läuft alles rund, hat der User seine Datei und ist glücklich :D
-   <br></br>
-   <img src="./pics/pdfView.png" height="500">
-   <br></br>
+
+<br></br>
+<p align="center">
+   <img src="./pics/pdfView.png" height="700">
+</p>
+<br></br>
 
 ### 2.3 CSV-Import Speisen
 
-<img src=".\pics\ImportFoodSite2.png">
+<img src="./pics/ImportFoodSite2.PNG">
 
 Hier sehen wir die "Food-Section". Das ist die optische Ansicht der Foodlist, mit ihren Datensätzen.
 Nennenswerte Features sind:
