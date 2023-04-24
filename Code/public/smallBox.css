@@ -1,0 +1,79 @@
+#whiteOverlay{
+    z-index: 9;
+    position: absolute;
+    top: 60px;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.whiteBox{
+    position: relative;
+    background-color: #c7c7c7;
+    height: fit-content;
+    max-width:15cm;
+    min-width: 7cm;
+    width: 50%;
+    border-radius: 5px;
+    padding: 0.5cm;
+}
+
+.whiteBox h1 {
+    margin-bottom: 0.5cm;
+}
+
+.whiteBox > ul {
+    text-align: center;
+    padding-top: 0.5cm;
+}
+
+.closeBtn{
+    height: 1.3em;
+    width: auto;
+    float: right;
+}
+
+.closeBtn:hover{
+    cursor: pointer;
+}
+
+#uploadBox{
+    width: 100%;
+    margin-top: 1cm;
+}
+
+#input-Container{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+    padding-top: 0.5cm;
+    padding-right: 1cm;
+    padding-left: 0.5cm;
+}
+
+#input-Container .inputBox {
+    text-align: right;
+    grid-column: 2;
+}
+
+#input-Container .inputBox input {
+    width: 100%;
+    height: 0.75cm;
+}
+
+#input-Container .inputPreText {
+    display: flex;
+    align-items: center;
+}
+
+#confirmBtn, #addBtn{
+    margin: 0.5cm;
+}
+
+.confirmBtnBox{
+    width: 100%;
+    text-align: right;
+}
