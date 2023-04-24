@@ -10,7 +10,7 @@ app.use(cors());
 
 app.use("/food", foodRouter);
 
-const path = join(__dirname, './public');
+const path = join(__dirname, '../client');
 app.use(express.static(path));
 
 // start http server

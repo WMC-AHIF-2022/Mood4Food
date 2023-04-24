@@ -16,7 +16,7 @@ async function refresh(){
             row.insertCell(0).innerHTML = `${meals[i].id}`;
             row.insertCell(1).innerHTML = `${meals[i].name}`;
             row.insertCell(2).innerHTML = `0`;
-            row.insertCell(3).innerHTML = `<img class=\"removeBtn\" onclick=\"deleteWarning(${meals[i].id})\" src=\"../pics/close.png\">`;
+            row.insertCell(3).innerHTML = `<img class=\"removeBtn\" onclick=\"deleteWarning(${meals[i].id})\" src=\"../../pics/close.png\">`;
 
         }
     }

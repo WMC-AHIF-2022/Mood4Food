@@ -4,14 +4,14 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>M4M</title>
-        <link rel="stylesheet" href="../navBar.css">
+        <link rel="stylesheet" href="../../navBar.css">
         <link rel="stylesheet" href="foodSiteStyle.css">
-        <link rel="stylesheet" href="../smallBox.css">
+        <link rel="stylesheet" href="../../smallBox.css">
     </head>
     <body onload="refresh()">
         <div class="nav-container">
             <div id="navTitleBox">
-                <a href="../" class="navTitle">Mood4Food</a>
+                <a href="../.." class="navTitle">Mood4Food</a>
             </div>
             <div id="navListBox">
                 <ul id="navList">
@@ -51,7 +51,7 @@
         <div id="whiteOverlay" style="display: none">
             <!--Import CSV-->
             <div class="whiteBox" id="importContent" style="display: none">
-                <img class="closeBtn" onclick="switchOverlay('importContent')" src="../pics/close.png">
+                <img class="closeBtn" onclick="switchOverlay('importContent')" src="../../pics/close.png">
 
                 <h1>Import Meals by .csv</h1>
 
@@ -70,7 +70,7 @@
 
             <!--Add meal content (default: disabled)-->
             <div class="whiteBox" id="addMealContent" style="display: none">
-                <img class="closeBtn" onclick="switchOverlay('addMealContent')" src="../pics/close.png">
+                <img class="closeBtn" onclick="switchOverlay('addMealContent')" src="../../pics/close.png">
 
                 <h1>Add a meal</h1>
 
@@ -86,7 +86,7 @@
             </div>
 
             <div class="whiteBox" id="deleteWarningContent" style="display: none">
-                <img class="closeBtn" onclick="switchOverlay('deleteWarningContent')" src="../pics/close.png">
+                <img class="closeBtn" onclick="switchOverlay('deleteWarningContent')" src="../../pics/close.png">
                 <h1>Removing meal item...</h1>
                 <p><br>Do you really want to remove this meal item?</p>
                 <ul>
@@ -97,7 +97,7 @@
         </div>
 
         <script src="food-controller.js"></script>
-        <script src="../pageFunctions.js"></script>
+        <script src="../../pageFunctions.js"></script>
 
     </body>
 </html>
