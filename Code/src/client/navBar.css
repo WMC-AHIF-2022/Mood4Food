@@ -70,4 +70,10 @@ html{
     font-size: 1.2em;
     font-family: 'Inconsolata', monospace;
 }
+.picFormating{
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    margin-left: 5px;
+}
 
