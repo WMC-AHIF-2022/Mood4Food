@@ -1,3 +1,4 @@
+import {readFile, readFileSync} from "fs";
 
 const home_URL = "http://localhost:3000/food";
 
@@ -65,4 +66,8 @@ async function addMeal(){
     else{
         alert("Error during adding process");
     }
+}
+
+function insertMealsFromFile(file:File){
+    
 }

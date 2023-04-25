@@ -46,5 +46,18 @@ function switchOverlay(value:any){
 }
 
 function insertFromFile(){
+    const fileSelector: HTMLInputElement = document.getElementById('fileUpload') as HTMLInputElement;
+    if(fileSelector.files!.length == 0){
+        alert('no file uploaded');
+        return;
+    }
 
+    const file: File = fileSelector.files!.item(0)!;
+
+    if(file.type&&!file.type.startsWith("application/vnd.ms-excel")){
+        alert('File does not have the .csv format');
+        return;
+    }
+
+    insertMealsFromFile(file);
 }
