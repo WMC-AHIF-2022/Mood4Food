@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 
 function addOverlay(){
     const contentElement: HTMLDivElement = document.getElementById('addMealContent') as HTMLDivElement;
@@ -45,19 +44,31 @@ function switchOverlay(value:any){
     }
 }
 
-function insertFromFile(){
-    const fileSelector: HTMLInputElement = document.getElementById('fileUpload') as HTMLInputElement;
-    if(fileSelector.files!.length == 0){
-        alert('no file uploaded');
+function insertFromFile(className:string){
+    const fileInput = document.querySelector("input[type=file]") as HTMLInputElement;
+
+    if(!fileInput.files){
+        alert('no file selected');
         return;
     }
 
-    const file: File = fileSelector.files!.item(0)!;
+    let content: string = "";
+    const file = fileInput!.files?.item(0);
+    if (file) {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+            //console.log(reader.result);
+            if(typeof reader.result == "string"){
+                content = reader.result;
 
-    if(file.type&&!file.type.startsWith("application/vnd.ms-excel")){
-        alert('File does not have the .csv format');
-        return;
+                if(className.includes('food')){
+                    insertMealsFromString(content);
+                }
+                else if(className.includes('student')){
+
+                }
+            }
+        });
+        reader.readAsText(file);
     }
-
-    insertMealsFromFile(file);
 }

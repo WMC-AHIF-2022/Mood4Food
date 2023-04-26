@@ -10,8 +10,8 @@ POST http://localhost:3000/food HTTP/1.1
 Content-Type: application/json
 
 {
-    "number": "1",
-    "name": "Lasagna",
+    "number": "7",
+    "name": "Sandwich",
     "ingredients": "Pizza-Bread;Tomato-Sauce;Salami;Cheese"
 }
 
@@ -32,6 +32,6 @@ DELETE http://localhost:3000/food HTTP/1.1
 
 ###################################################
 
-DELETE http://localhost:3000/food/1 HTTP/1.1
+DELETE http://localhost:3000/food/2 HTTP/1.1
 
 ###################################################

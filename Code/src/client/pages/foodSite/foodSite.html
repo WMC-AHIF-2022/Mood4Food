@@ -61,11 +61,11 @@
                 <p>(--> Ingredients are seperated by ',')</p>
 
                 <div id="uploadBox">
-                    <input type="file" id="fileUpload" name="filename">
+                    <input type="file">
                 </div>
 
                 <div class='confirmBtnBox'>
-                    <button id='confirmBtn' onclick='insertFromFile()'>Confirm</button>
+                    <button id='confirmBtn' onclick="insertFromFile('food-controller')">Confirm</button>
                 </div>
             </div>
 
@@ -83,7 +83,7 @@
                     <div class="inputPreText">Ingredients</div>
                     <div class="inputBox"><input type="text" id="ingredientsInput" name="fingredients"></div>
                 </div>
-                <div class='confirmBtnBox'><button id="addBtn" onclick='addMeal()'>Add</button></div>
+                <div class='confirmBtnBox'><button id="addBtn" onclick='addMealByInputElements()'>Add</button></div>
             </div>
 
             <div class="whiteBox" id="deleteWarningContent" style="display: none">
