@@ -1,0 +1,53 @@
+body{
+    background-color: #EDF1D6;
+}
+
+.buttonPlacement{
+    margin: 50%;
+    padding: 14%;
+}
+
+
+
+.Title{
+       height: 100px;
+   width: 200px; 
+   margin-top: 100px;
+
+    
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    top: 100px;
+    
+
+
+    background-color: #f6faf5;
+}
+
+.Description{
+    height: 200px;
+    width: 200px; 
+    margin-top: 100px;   
+    background-color: #171916; 
+    float:inline-end;
+     	
+}
+
+.Grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
+    grid-gap: 50px 50px;
+  }
+
+.Tile {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    background-color: #9DC08B;
+    height: 300px;  
+    width: 200px;   
+    position: relative;
+
+}
+
+
+
