@@ -21,5 +21,21 @@ export class DB {
                 ingredients TEXT
             ) strict`
         );
+
+        await connection.run(
+            `create table if not exists Customer(
+                id INTEGER NOT NULL PRIMARY KEY,
+                lastname TEXT NOT NULL,
+                firstname TEXT NOT NULL
+            ) strict`
+        );
+
+        await connection.run(
+            `create table if not exists OrderDay(
+                id INTEGER NOT NULL PRIMARY KEY,
+                orderDate TEXT DEFAULT (DATE('now')) NOT NULL,
+                deadline TEXT DEFAULT (TIME('now','start of day','-1 Seconds')) NOT NULL
+            ) strict`
+        );
     }
 }
