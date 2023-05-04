@@ -1,0 +1,35 @@
+GET http://localhost:3000/orderday HTTP/1.1
+
+###################################################
+
+GET http://localhost:3000/orderday/1 HTTP/1.1
+
+###################################################
+
+POST http://localhost:3000/orderday HTTP/1.1
+Content-Type: application/json
+
+{
+    "orderdate": "2023-05-04",
+    "deadline": "18:00:00"
+}
+
+###################################################
+
+PUT http://localhost:3000/orderday/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "orderdate": "2023-05-06",
+  "deadline": "17:00:00"
+}
+
+###################################################
+
+DELETE http://localhost:3000/orderday HTTP/1.1
+
+###################################################
+
+DELETE http://localhost:3000/orderday/2 HTTP/1.1
+
+###################################################

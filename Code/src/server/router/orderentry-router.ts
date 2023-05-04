@@ -1,55 +1,62 @@
 import express, {response} from "express";
 import { DB } from "../database";
 import { StatusCodes } from "http-status-codes";
-import {OrderDay} from "../collective/Orderday";
-
+import {OrderEntry} from "../collective/OrderEntry";
 
 //create router
-export const orderDayRouter = express.Router();
+export const entryRouter = express.Router();
 
-//return all orderDays
-orderDayRouter.get("/", async(request, response) => {
+//return all orderEntries
+entryRouter.get("/", async(request,response) => {
     const db = await DB.createDBConnection();
-    const orderDays: OrderDay[] = await db.all<OrderDay[]>('select * from OrderDay');
+    const orders: OrderEntry = await db.all<OrderEntry>("select c.lastname || ' ' || c.firstname as name, f.name as food, od.orderDate as date " +
+        "FROM orderEntry oe " +
+        "INNER JOIN customer c ON (oe.customerID = c.id)" +
+        "INNER JOIN food f ON (oe.mealID = f.id)" +
+        "INNER JOIN orderDay od ON (oe.orderDayID = od.id)");
     await db.close();
 
-    response.status(StatusCodes.OK).json(orderDays);
+    response.status(StatusCodes.OK).json(orders);
 });
 
-//return one orderDay
-orderDayRouter.get("/:id", async(req, res) => {
+//return one orderEntry
+entryRouter.get("/:id", async(req, res) => {
     const id: number = Number(req.params.id);
 
     const db = await DB.createDBConnection();
-    const stmt = await db.prepare('select * from orderDay where id = ?1');
+    const stmt = await db.prepare("select c.lastname || ' ' || c.firstname as name, f.name as food, od.orderDate as date " +
+        "FROM orderEntry oe " +
+        "INNER JOIN customer c ON (oe.customerID = c.id)" +
+        "INNER JOIN food f ON (oe.mealID = f.id)" +
+        "INNER JOIN orderDay od ON (oe.orderDayID = od.id)" +
+        "WHERE oe.id = ?1");
     await stmt.bind({1: id});
-    const orderDay: OrderDay | undefined = await stmt.get<OrderDay>();
+    const entry: OrderEntry | undefined = await stmt.get<OrderEntry>();
     await stmt.finalize();
     await db.close();
 
-    if(orderDay === undefined){
+    if(entry === undefined){
         res.sendStatus(StatusCodes.NOT_FOUND);
         return;
     }
-    res.status(StatusCodes.OK).json(orderDay);
+    res.status(StatusCodes.OK).json(entry);
 });
 
-// add orderDate
-orderDayRouter.post("/", async(req, res) => {
-    const orderdate: any = req.body.orderdate;
-    const deadline: any = req.body.deadline;
-    console.log(orderdate,deadline);
-    if (typeof orderdate !== "string" || orderdate.trim().length === 0) {
-        res.status(StatusCodes.BAD_REQUEST).send("date missing or not ok");
+// add orderEntry TODO: it's undone
+entryRouter.post("/", async(req, res) => {
+    const firstname: any = req.body.firstname;
+    const lastname: any = req.body.lastname;
+    if (typeof firstname !== "string" || firstname.trim().length === 0) {
+        res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
         return;
     }
-    if (typeof deadline !== "string" || deadline.trim().length === 0) {
-        res.status(StatusCodes.BAD_REQUEST).send("time missing or not ok");
+    if (typeof lastname !== "string" || lastname.trim().length === 0) {
+        res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
         return;
     }
     const db = await DB.createDBConnection();
     // id selection
-    const stmt1 = await db.prepare('select count(*) as "count" from Orderday');
+    const stmt1 = await db.prepare('select count(*) as "count" from Customer');
     const result1 : { count: number } | undefined = await stmt1.get();
     await stmt1.finalize();
     if(typeof result1 == "undefined"){
@@ -61,7 +68,7 @@ orderDayRouter.post("/", async(req, res) => {
         result1.count = 1;
     }
     else{
-        const stmt2 = await db.prepare('select id from orderday order by id desc limit 1');
+        const stmt2 = await db.prepare('select id from customer order by id desc limit 1');
         const result2 = await stmt2.get();
         await stmt2.finalize();
         if(typeof result2 == "undefined"){
@@ -75,8 +82,8 @@ orderDayRouter.post("/", async(req, res) => {
     console.log(id);
 
     // standard process
-    const stmt = await db.prepare('insert or ignore into OrderDay values (?1, DATE(?2), TIME(?3))');
-    await stmt.bind({1:id, 2: orderdate, 3: deadline});
+    const stmt = await db.prepare('insert or ignore into Customer (id, firstname, lastname) values (?1, ?2, ?3)');
+    await stmt.bind({1:id, 2: firstname, 3: lastname});
     const operationResult = await stmt.run();
     await stmt.finalize();
     await db.close();
@@ -89,25 +96,25 @@ orderDayRouter.post("/", async(req, res) => {
     }
 });
 
-// updates an orderDate
-orderDayRouter.put("/:id", async(request, response) => {
+// update orderEntry TODO: it's undone
+entryRouter.put("/:id", async(request, response) => {
     const id: number = Number(request.params.id);
-    const date: any = request.body.orderdate;
-    const time: any = request.body.deadline;
-    if (typeof date !== "string" || date.trim().length === 0) {
+    const firstname: any = request.body.firstname;
+    const lastname: any = request.body.lastname;
+    if (typeof firstname !== "string" || firstname.trim().length === 0) {
         response.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
         return;
     }
-    if (typeof time !== "string" || time.trim().length === 0) {
+    if (typeof lastname !== "string" || lastname.trim().length === 0) {
         response.status(StatusCodes.BAD_REQUEST).send("ingredients missing or not ok");
         return;
     }
 
     const db = await DB.createDBConnection();
-    const stmt = await db.prepare('update or replace OrderDay set orderdate = ?1, deadline = ?2 where id = ?3');
+    const stmt = await db.prepare('update or replace Customer set firstname = ?1, lastname = ?2 where id = ?3');
     await stmt.bind({
-        1: date,
-        2: time,
+        1: firstname,
+        2: lastname,
         3: id
     });
     const operationResult = await stmt.run();
@@ -122,8 +129,8 @@ orderDayRouter.put("/:id", async(request, response) => {
     }
 });
 
-// delete all meals TODO: solve interruption TODO: OLD
-orderDayRouter.delete("/", async(request, response) => {
+// delete all orderEntries TODO: solve interruption TODO: it's undone
+entryRouter.delete("/", async(request, response) => {
     const db = await DB.createDBConnection();
     const stmt = await db.prepare('drop table food');
     const operationResult = await stmt.run();
@@ -137,15 +144,15 @@ orderDayRouter.delete("/", async(request, response) => {
     }
 });
 
-///deletes the orderDay at the given index
-orderDayRouter.delete("/:id", async(request, response) => {
+//delete one orderEntry TODO: it's undone
+entryRouter.delete("/:id", async(request, response) => {
     const index: number = parseInt(request.params.id);
     if (isNaN(index) || index < 0) {
         response.sendStatus(StatusCodes.NOT_FOUND);
         return;
     }
     const db = await DB.createDBConnection();
-    const stmt = await db.prepare('delete from orderDay where id = ?1');
+    const stmt = await db.prepare('delete from customer where id = ?1');
     await stmt.bind({1:index});
     const operationResult = await stmt.run();
     await stmt.finalize();

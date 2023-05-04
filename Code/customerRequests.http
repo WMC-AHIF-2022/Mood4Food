@@ -10,8 +10,8 @@ POST http://localhost:3000/customer HTTP/1.1
 Content-Type: application/json
 
 {
-    "firstname": "Karl",
-    "lastname": "Smith"
+    "firstname": "Charles",
+    "lastname": "Simeon"
 }
 
 ###################################################
