@@ -1,3 +1,4 @@
 Code/node_modules
 *.js
+*.map
 .idea

@@ -6,6 +6,10 @@
     margin: 0;
 }
 
+a {
+    cursor: pointer;
+}
+
 html{
     background-color: #EDF1D6;;
 }
@@ -56,6 +60,7 @@ html{
 }
 
 #navList li:hover{
+    cursor: pointer;
     background-color: #344230;
 }
 

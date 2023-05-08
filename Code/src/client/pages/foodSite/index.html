@@ -4,21 +4,21 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>M4M</title>
-        <link rel="stylesheet" href="../../navBar.css">
+        <link rel="stylesheet" href="../../navbar/navBar.css">
         <link rel="stylesheet" href="foodSiteStyle.css">
         <link rel="stylesheet" href="../../smallBox.css">
     </head>
     <body onload="refresh()">
         <div class="nav-container">
             <div id="navTitleBox">
-                <a href="../.." class="navTitle">Mood4Food</a>
+                <a id="homeLnk" class="navTitle">Mood4Food</a>
             </div>
             <div id="navListBox">
                 <ul id="navList">
-                    <li><a href="../../index.html">Orders</a></li>
-                    <li><a href="">Class</a></li>
-                    <li><a class="active" href="">Food</a></li>
-                    <li><a href="">User<img class="picFormating" src="../../pics/UserPic.png"></a></li>
+                    <li><a id="orderLnk">Orders</a></li>
+                    <li><a id="classLnk">Class</a></li>
+                    <li><a class="active" id="foodLnk">Food</a></li>
+                    <li><a id="userLnk">User<img class="picFormating" src="../../pics/UserPic.png"></a></li>
                 </ul>
             </div>
         </div>
@@ -99,6 +99,7 @@
 
         <script src="food-controller.js"></script>
         <script src="../../pageFunctions.js"></script>
+        <script src="../../navbar/navbar.js"></script>
 
     </body>
 </html>
