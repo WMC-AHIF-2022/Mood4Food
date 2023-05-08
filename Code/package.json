@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server-dev": "npx nodemon src/server/app.ts",
-    "prestart": "npx tsc",
-    "start": "node app.js"
+    "server-dev": "npx nodemon ./src/server/app.ts",
+    "client-dev": "npx tsc --watch --project ./src/client",
+    "prestart": "npx tsc --project ./src/client",
+    "start": "npx ts-node ./src/server/app.ts"
   },
   "author": "YL",
   "license": "ISC",

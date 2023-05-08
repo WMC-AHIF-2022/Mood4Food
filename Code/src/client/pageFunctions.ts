@@ -1,3 +1,12 @@
+const contentElement: HTMLDivElement = document.getElementById('deleteWarningContent') as HTMLDivElement;
+const yesBtn: HTMLButtonElement = document.getElementById('yesBtn') as HTMLButtonElement;
+let currEl: number = -1;
+
+yesBtn.addEventListener("mousedown", async () => {
+    await deleteMeal(currEl);
+    switchOverlay('deleteWarningContent')
+    currEl = -1;
+});
 
 function addOverlay(){
     const contentElement: HTMLDivElement = document.getElementById('addMealContent') as HTMLDivElement;
@@ -10,13 +19,8 @@ function importOverlay(){
 }
 
 function deleteWarning(id:number){
-    const contentElement: HTMLDivElement = document.getElementById('deleteWarningContent') as HTMLDivElement;
-    const yesBtn: HTMLButtonElement = document.getElementById('yesBtn') as HTMLButtonElement;
     switchOverlay(contentElement);
-    yesBtn.addEventListener("mousedown", async () => {
-        await deleteMeal(id);
-        switchOverlay('deleteWarningContent')
-    });
+    currEl = id;
 }
 
 ///parameter is either an element itself or the id of it
