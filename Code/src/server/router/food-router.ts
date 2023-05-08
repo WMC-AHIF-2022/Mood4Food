@@ -102,10 +102,10 @@ foodRouter.put("/:id", async(request, response) => {
     }
 });
 
-// delete all meals TODO: solve interruption
+// delete all meals
 foodRouter.delete("/", async(request, response) => {
     const db = await DB.createDBConnection();
-    const stmt = await db.prepare('drop table food');
+    const stmt = await db.prepare('delete from food');
     const operationResult = await stmt.run();
     await stmt.finalize();
     await db.close();

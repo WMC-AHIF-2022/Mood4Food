@@ -28,8 +28,7 @@ entryRouter.get("/:id", async(req, res) => {
         "FROM orderEntry oe " +
         "INNER JOIN customer c ON (oe.customerID = c.id)" +
         "INNER JOIN food f ON (oe.mealID = f.id)" +
-        "INNER JOIN orderDay od ON (oe.orderDayID = od.id)" +
-        "WHERE oe.id = ?1");
+        "INNER JOIN orderDay od ON (oe.orderDayID = od.id) where oe.id = ?1");
     await stmt.bind({1: id});
     const entry: OrderEntry | undefined = await stmt.get<OrderEntry>();
     await stmt.finalize();
@@ -42,21 +41,27 @@ entryRouter.get("/:id", async(req, res) => {
     res.status(StatusCodes.OK).json(entry);
 });
 
-// add orderEntry TODO: it's undone
+// add orderEntry
 entryRouter.post("/", async(req, res) => {
-    const firstname: any = req.body.firstname;
-    const lastname: any = req.body.lastname;
-    if (typeof firstname !== "string" || firstname.trim().length === 0) {
+    const odID: any = req.body.odID;
+    const customerID: any = req.body.customerID;
+    const mealID: any = req.body.mealID;
+    if (typeof odID !== "string" || odID.trim().length === 0) {
         res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
         return;
     }
-    if (typeof lastname !== "string" || lastname.trim().length === 0) {
+    if (typeof customerID !== "string" || customerID.trim().length === 0) {
         res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
         return;
     }
+    if (typeof mealID !== "string" || mealID.trim().length === 0) {
+        res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
+        return;
+    }
+
     const db = await DB.createDBConnection();
     // id selection
-    const stmt1 = await db.prepare('select count(*) as "count" from Customer');
+    const stmt1 = await db.prepare('select count(*) as "count" from OrderEntry');
     const result1 : { count: number } | undefined = await stmt1.get();
     await stmt1.finalize();
     if(typeof result1 == "undefined"){
@@ -68,7 +73,7 @@ entryRouter.post("/", async(req, res) => {
         result1.count = 1;
     }
     else{
-        const stmt2 = await db.prepare('select id from customer order by id desc limit 1');
+        const stmt2 = await db.prepare('select id from OrderEntry order by id desc limit 1');
         const result2 = await stmt2.get();
         await stmt2.finalize();
         if(typeof result2 == "undefined"){
@@ -81,9 +86,43 @@ entryRouter.post("/", async(req, res) => {
     const id = result1.count;
     console.log(id);
 
+    //check if odID, customerID and mealID exist
+    //odID
+    let temp = await db.prepare('select count(*) as count from OrderDay where id = ?1');
+    await temp.bind({1:odID});
+    const odResult = await temp.get();
+    await temp.finalize();
+
+    //customerID
+    temp = await db.prepare('select count(*) as count from Customer where id = ?1');
+    await temp.bind({1:customerID});
+    const customerResult = await temp.get();
+    await temp.finalize();
+
+    //mealID
+    temp = await db.prepare('select count(*) as count from Food where id = ?1');
+    await temp.bind({1:mealID});
+    const mealResult = await temp.get();
+    await temp.finalize();
+    if(typeof odResult == "undefined" || typeof customerResult == "undefined" || typeof mealResult == "undefined"){
+        return;
+    }
+    if(odResult.count == 0){
+        res.status(StatusCodes.BAD_REQUEST).send("orderDay-ID is not appropriate");
+        return;
+    }
+    if(customerResult.count == 0){
+        res.status(StatusCodes.BAD_REQUEST).send("customer-ID is not appropriate");
+        return;
+    }
+    if(mealResult.count == 0){
+        res.status(StatusCodes.BAD_REQUEST).send("meal-ID is not appropriate");
+        return;
+    }
+
     // standard process
-    const stmt = await db.prepare('insert or ignore into Customer (id, firstname, lastname) values (?1, ?2, ?3)');
-    await stmt.bind({1:id, 2: firstname, 3: lastname});
+    const stmt = await db.prepare('insert or ignore into OrderEntry (id, orderDayID, customerID, mealID) values (?1, ?2, ?3, ?4)');
+    await stmt.bind({1:id, 2: odID, 3: customerID, 4: mealID});
     const operationResult = await stmt.run();
     await stmt.finalize();
     await db.close();
@@ -96,43 +135,84 @@ entryRouter.post("/", async(req, res) => {
     }
 });
 
-// update orderEntry TODO: it's undone
-entryRouter.put("/:id", async(request, response) => {
-    const id: number = Number(request.params.id);
-    const firstname: any = request.body.firstname;
-    const lastname: any = request.body.lastname;
-    if (typeof firstname !== "string" || firstname.trim().length === 0) {
-        response.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
+// update orderEntry
+entryRouter.put("/:id", async(req, res) => {
+    const id: number = Number(req.params.id);
+    const odID: any = req.body.odID;
+    const customerID: any = req.body.customerID;
+    const mealID: any = req.body.mealID;
+    if (typeof odID !== "string" || odID.trim().length === 0) {
+        res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
         return;
     }
-    if (typeof lastname !== "string" || lastname.trim().length === 0) {
-        response.status(StatusCodes.BAD_REQUEST).send("ingredients missing or not ok");
+    if (typeof customerID !== "string" || customerID.trim().length === 0) {
+        res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
+        return;
+    }
+    if (typeof mealID !== "string" || mealID.trim().length === 0) {
+        res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
         return;
     }
 
     const db = await DB.createDBConnection();
-    const stmt = await db.prepare('update or replace Customer set firstname = ?1, lastname = ?2 where id = ?3');
+
+    //check if odID, customerID and mealID exist
+    //odID
+    let temp = await db.prepare('select count(*) as count from OrderDay where id = ?1');
+    await temp.bind({1:odID});
+    const odResult = await temp.get();
+    await temp.finalize();
+
+    //customerID
+    temp = await db.prepare('select count(*) as count from Customer where id = ?1');
+    await temp.bind({1:customerID});
+    const customerResult = await temp.get();
+    await temp.finalize();
+
+    //mealID
+    temp = await db.prepare('select count(*) as count from Food where id = ?1');
+    await temp.bind({1:mealID});
+    const mealResult = await temp.get();
+    await temp.finalize();
+    if(typeof odResult == "undefined" || typeof customerResult == "undefined" || typeof mealResult == "undefined"){
+        return;
+    }
+    if(odResult.count == 0){
+        res.status(StatusCodes.BAD_REQUEST).send("orderDay-ID is not appropriate");
+        return;
+    }
+    if(customerResult.count == 0){
+        res.status(StatusCodes.BAD_REQUEST).send("customer-ID is not appropriate");
+        return;
+    }
+    if(mealResult.count == 0){
+        res.status(StatusCodes.BAD_REQUEST).send("meal-ID is not appropriate");
+        return;
+    }
+
+    const stmt = await db.prepare('update or replace OrderEntry set orderDayID = ?1, customerID = ?2, mealID = ?3 where id = ?4');
     await stmt.bind({
-        1: firstname,
-        2: lastname,
-        3: id
+        1: odID,
+        2: customerID,
+        3: mealID,
+        4: id
     });
     const operationResult = await stmt.run();
     await stmt.finalize();
     await db.close();
 
     if(operationResult.changes == null || operationResult.changes !== 1){
-        response.status(StatusCodes.BAD_REQUEST);
+        res.status(StatusCodes.BAD_REQUEST);
     }
     else{
-        response.sendStatus(StatusCodes.ACCEPTED);
+        res.sendStatus(StatusCodes.ACCEPTED);
     }
 });
 
-// delete all orderEntries TODO: solve interruption TODO: it's undone
+// delete all orderEntries
 entryRouter.delete("/", async(request, response) => {
     const db = await DB.createDBConnection();
-    const stmt = await db.prepare('drop table food');
+    const stmt = await db.prepare('delete from orderEntry');
     const operationResult = await stmt.run();
     await stmt.finalize();
     await db.close();
@@ -144,7 +224,7 @@ entryRouter.delete("/", async(request, response) => {
     }
 });
 
-//delete one orderEntry TODO: it's undone
+//delete one orderEntry
 entryRouter.delete("/:id", async(request, response) => {
     const index: number = parseInt(request.params.id);
     if (isNaN(index) || index < 0) {
@@ -152,7 +232,7 @@ entryRouter.delete("/:id", async(request, response) => {
         return;
     }
     const db = await DB.createDBConnection();
-    const stmt = await db.prepare('delete from customer where id = ?1');
+    const stmt = await db.prepare('delete from orderEntry where id = ?1');
     await stmt.bind({1:index});
     const operationResult = await stmt.run();
     await stmt.finalize();

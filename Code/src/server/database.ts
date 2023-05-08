@@ -10,11 +10,11 @@ export class DB {
             filename: `./${dbFileName}`,
             driver: Driver
         });
+        await db.run('PRAGMA foreign_keys = ON');
         await DB.ensureTablesCreated(db);
         return db;
     }
     private static async ensureTablesCreated(connection: Database): Promise<void> {
-        await connection.run('PRAGMA foreign_keys = on');
         await connection.run(
             `create table if not exists Food(
                 id INTEGER NOT NULL PRIMARY KEY,

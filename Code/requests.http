@@ -2,7 +2,7 @@ GET http://localhost:3000/food HTTP/1.1
 
 ###################################################
 
-GET http://localhost:3000/api/tasks/0 HTTP/1.1
+GET http://localhost:3000/food/45 HTTP/1.1
 
 ###################################################
 
@@ -13,6 +13,17 @@ Content-Type: application/json
     "number": "7",
     "name": "Sandwich",
     "ingredients": "Pizza-Bread;Tomato-Sauce;Salami;Cheese"
+}
+
+###################################################
+
+POST http://localhost:3000/orderentries HTTP/1.1
+Content-Type: application/json
+
+{
+  "odID": "1",
+  "customerID": "1",
+  "mealID": "44"
 }
 
 ###################################################
@@ -28,10 +39,25 @@ Content-Type: application/json
 
 ###################################################
 
+PUT http://localhost:3000/orderentries/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "odID": "1",
+  "customerID": "1",
+  "mealID": "45"
+}
+
+###################################################
+
 DELETE http://localhost:3000/food HTTP/1.1
 
 ###################################################
 
-DELETE http://localhost:3000/food/2 HTTP/1.1
+DELETE http://localhost:3000/orderentries HTTP/1.1
+
+###################################################
+
+DELETE http://localhost:3000/food/44 HTTP/1.1
 
 ###################################################

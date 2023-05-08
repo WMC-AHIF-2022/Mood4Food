@@ -17,9 +17,9 @@ app.use(express.json())
 app.use(express.static(path, options));
 
 app.use("/food", foodRouter);
-app.use("/customer", customerRouter);
-app.use("/orderday", orderDayRouter);
-app.use("/orderentry", entryRouter);
+app.use("/customers", customerRouter);
+app.use("/orderdays", orderDayRouter);
+app.use("/orderentries", entryRouter);
 
 
 // start http server

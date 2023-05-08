@@ -122,10 +122,10 @@ orderDayRouter.put("/:id", async(request, response) => {
     }
 });
 
-// delete all meals TODO: solve interruption TODO: OLD
+// delete all orderDays
 orderDayRouter.delete("/", async(request, response) => {
     const db = await DB.createDBConnection();
-    const stmt = await db.prepare('drop table food');
+    const stmt = await db.prepare('delete from orderDay');
     const operationResult = await stmt.run();
     await stmt.finalize();
     await db.close();

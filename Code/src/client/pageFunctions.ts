@@ -9,6 +9,8 @@ yesBtn.addEventListener("mousedown", async () => {
     currEl = -1;
 });
 
+
+
 function addOverlay(){
     const contentElement: HTMLDivElement = document.getElementById('addMealContent') as HTMLDivElement;
     switchOverlay(contentElement);
