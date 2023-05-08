@@ -122,10 +122,10 @@ customerRouter.put("/:id", async(request, response) => {
     }
 });
 
-// delete all meals TODO: solve interruption TODO: OLD
+// delete all customers
 customerRouter.delete("/", async(request, response) => {
     const db = await DB.createDBConnection();
-    const stmt = await db.prepare('drop table food');
+    const stmt = await db.prepare('delete from customer');
     const operationResult = await stmt.run();
     await stmt.finalize();
     await db.close();
@@ -137,7 +137,7 @@ customerRouter.delete("/", async(request, response) => {
     }
 });
 
-//delete one meal
+//delete one customer
 customerRouter.delete("/:id", async(request, response) => {
     const index: number = parseInt(request.params.id);
     if (isNaN(index) || index < 0) {

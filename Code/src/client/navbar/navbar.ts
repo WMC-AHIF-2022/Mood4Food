@@ -4,6 +4,6 @@ const classLnk: HTMLLinkElement = document.getElementById('classLnk') as HTMLLin
 const homeLnk: HTMLLinkElement = document.getElementById('homeLnk') as HTMLLinkElement;
 
 foodLnk.addEventListener('click', () => window.location.href = "/pages/foodSite/");
-orderLnk.addEventListener('click', () => window.location.href = "/");
+orderLnk.addEventListener('click', () => window.location.href = "/pages/OrderSite/");
 classLnk.addEventListener('click', () => window.location.href = "/");
 homeLnk.addEventListener('click', ()=> window.location.href = "/");
