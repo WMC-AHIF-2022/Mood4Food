@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../navBar.css">
+    <link rel="stylesheet" href="../../navbar/navBar.css">
     <link rel="stylesheet" href="OrderSiteStyles.css">
     <script src="orderSite.js" defer></script>
 </head>
@@ -14,9 +14,10 @@
         </div>
         <div id="navListBox">
             <ul id="navList">
-                <li><a href="">Orders</a></li>
-                <li><a href="">Class</a></li>
-                <li><a href="../foodSite/foodSite.html">Food</a></li>
+                <li><a class="active" id="orderLnk">Orders</a></li>
+                <li><a id="classLnk">Class</a></li>
+                <li><a id="foodLnk">Food</a></li>
+                <li><a id="userLnk">User<img class="picFormating" src="../../pics/UserPic.png"></a></li>
             </ul>
         </div>
     </div>

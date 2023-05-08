@@ -2,6 +2,7 @@ const contentElement: HTMLDivElement = document.getElementById('deleteWarningCon
 const yesBtn: HTMLButtonElement = document.getElementById('yesBtn') as HTMLButtonElement;
 let currEl: number = -1;
 
+
 yesBtn.addEventListener("mousedown", async () => {
     await deleteMeal(currEl);
     switchOverlay('deleteWarningContent')

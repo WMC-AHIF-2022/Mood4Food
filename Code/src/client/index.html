@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>M4M</title>
-    <link rel="stylesheet" href="navBar.css">
+    <link rel="stylesheet" href="navbar/navBar.css">
 </head>
 <body>
 <div class="nav-container">
@@ -13,13 +13,16 @@
     </div>
     <div id="navListBox">
         <ul id="navList">
-            <li><a class="active" href="">Orders</a></li>
-            <li><a href="">Class</a></li>
-            <li><a href="pages/foodSite/foodSite.html">Food</a></li>
-            <li><a href="">User<img class="picFormating" src="./pics/UserPic.png"></a></li>
+            <li><a href="">Orders</a></li>
+            <li><a id="classLnk">Class</a></li>
+            <li><a id="foodLnk">Food</a></li>
+            <li><a id="userLnk">User<img class="picFormating" src="./pics/UserPic.png"></a></li>
         </ul>
     </div>
 </div>
+
+<script src="pageFunctions.js"></script>
+<script src="navbar/navbar.js"></script>
 
 </body>
 </html>
