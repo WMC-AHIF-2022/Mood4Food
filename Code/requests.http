@@ -2,7 +2,7 @@ GET http://localhost:3000/food HTTP/1.1
 
 ###################################################
 
-GET http://localhost:3000/api/tasks/0 HTTP/1.1
+GET http://localhost:3000/food/45 HTTP/1.1
 
 ###################################################
 
@@ -17,7 +17,7 @@ Content-Type: application/json
 
 ###################################################
 
-POST http://localhost:3000/orderentry HTTP/1.1
+POST http://localhost:3000/orderentries HTTP/1.1
 Content-Type: application/json
 
 {
@@ -39,7 +39,7 @@ Content-Type: application/json
 
 ###################################################
 
-PUT http://localhost:3000/orderentry/1 HTTP/1.1
+PUT http://localhost:3000/orderentries/1 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -54,7 +54,7 @@ DELETE http://localhost:3000/food HTTP/1.1
 
 ###################################################
 
-DELETE http://localhost:3000/orderentry HTTP/1.1
+DELETE http://localhost:3000/orderentries HTTP/1.1
 
 ###################################################
 
