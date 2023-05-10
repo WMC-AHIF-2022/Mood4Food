@@ -1,38 +1,46 @@
+import {fetchRestEndpoint} from "../../utils/client-server.js";
 
-const home_URL = "http://localhost:3000/food";
+const tableBody: HTMLTableSectionElement = document.getElementById('table-body') as HTMLTableSectionElement;
+const importBtn = document.getElementById('importBtn') as HTMLButtonElement;
+const whiteOverlay = document.getElementById('whiteOverlay') as HTMLDivElement;
+const addMealBtn = document.getElementById('addMealBtn') as HTMLButtonElement;
+const addBtn = document.getElementById('addBtn') as HTMLButtonElement;
+const importBox = document.getElementById('importBox') as HTMLDivElement;
+const addingBox = document.getElementById('addingBox') as HTMLDivElement;
+const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement;
+const confirmImportBtn = document.getElementById('confirmBtn') as HTMLButtonElement;
+const closeBtns = document.getElementsByClassName('closeBtn') as HTMLCollection;
+for(let x = 0; x < closeBtns.length;x++){
+    closeBtns[x].addEventListener('click',()=>{
+        closeWhiteOverlay();
+    });
+}
+let curEl = -1;
 
-///Updates the meal-table by fetching the data from the server
+//const home_URL = "http://localhost:3000/food";
+
+window.onload = async() =>{
+    await refresh();
+}
+
 async function refresh(){
-    const response = await fetch(home_URL);
+    const response = await fetchRestEndpoint("http://localhost:3000/food", "GET");
+    const meals = await response.json();
 
-    if(response.ok){
-        const meals = await response.json();
+    tableBody.innerHTML = '';
+    for(let i = 0; i < meals.length; i++){
+        const row = document.createElement("tr");
+        tableBody.appendChild(row);
+        row.insertCell(0).innerHTML = `${meals[i].id}`;
+        row.insertCell(1).innerHTML = `${meals[i].name}`;
+        row.insertCell(2).innerHTML = `0`;
+        row.insertCell(3).innerHTML = `<input type="checkbox" class="mealCheckBox">`;
 
-        const tableBody: HTMLTableSectionElement = document.getElementById('table-body') as HTMLTableSectionElement;
-        tableBody.innerHTML = '';
-        for(let i = 0; i < meals.length; i++){
-            const row = document.createElement("tr");
-            tableBody.appendChild(row);
-            row.insertCell(0).innerHTML = `${meals[i].id}`;
-            row.insertCell(1).innerHTML = `${meals[i].name}`;
-            row.insertCell(2).innerHTML = `0`;
-            row.insertCell(3).innerHTML = `<img class=\"removeBtn\" onclick=\"deleteWarning(${meals[i].id})\" src=\"../../pics/close.png\">`;
-
-        }
     }
 }
 
-///This function deletes a meal-item by delivering the id/number of the item.
 async function deleteMeal(index:number){
-    const deleteURL = `${home_URL}/${index}`;
-    const response = await fetch(deleteURL, {method:'DELETE'});
-
-    if(response.ok){
-        await refresh();
-    }
-    else{
-        alert(`Could not delete number ${index}`);
-    }
+    await fetchRestEndpoint(`http://localhost:3000/food/${index}`,"DELETE");
 }
 
 async function addMealByInputElements(){
@@ -50,11 +58,9 @@ async function addMealByInputElements(){
 
     console.log(number,name,ingredients);
 
-    let options: any = { method:'POST' };
-    options.headers = { "Content-Type": "application/json" };
-    options.body = JSON.stringify({number: number, name: name, ingredients: ingredients});
+    const data = {number: number, name: name, ingredients: ingredients};
 
-    const response = await fetch(home_URL, options);
+    const response = await fetchRestEndpoint('http://localhost:3000/food',"POST", data);
 
     if(response.ok){
         await refresh();
@@ -90,19 +96,86 @@ async function insertMealsFromString(content:string){
 
         console.log(number,name,ingredients);
 
-        let options: any = { method:'POST' };
-        options.headers = { "Content-Type": "application/json" };
-        options.body = JSON.stringify({number: number, name: name, ingredients: ingredients});
 
-        const response = await fetch(home_URL, options);
+        const content = {number: number, name: name, ingredients: ingredients};
+
+        const response = await fetchRestEndpoint("http://localhost:3000/food", "POST", content);
 
         //console.log(response);
 
         if(!response.ok){
-            alert(`Error during adding process in line ${x}`);
-        }
-        else{
-            await refresh();
+            alert(`${name} is already in the list`);
         }
     }
+    await refresh();
+}
+
+importBtn.addEventListener('click', ()=>{
+    whiteOverlay.style.display = "flex";
+
+    importBox.style.display = "block";
+});
+
+addMealBtn.addEventListener('click', ()=> {
+    whiteOverlay.style.display = "flex";
+
+    addingBox.style.display = "block";
+})
+
+addBtn.addEventListener('click', async ()=>{
+    await addMealByInputElements();
+});
+
+confirmImportBtn.addEventListener('click', ()=>{
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+
+    if(!fileInput.files){
+        alert('no file selected');
+        return;
+    }
+
+    let content: string = "";
+    const file = fileInput!.files?.item(0);
+    if (file) {
+        const reader = new FileReader();
+        reader.addEventListener("load", async() => {
+            //console.log(reader.result);
+            if(typeof reader.result == "string"){
+                content = reader.result;
+                //console.log(content);
+                await insertMealsFromString(content);
+            }
+        });
+        reader.readAsText(file);
+    }
+});
+
+deleteBtn.addEventListener('click', async()=>{
+    const inputElements = document.getElementsByTagName("input");
+    let activeList = [];
+    let count = 0;
+    for(let x = 0;x < inputElements.length; x++){
+        const curElement = inputElements.item(x) as HTMLInputElement;
+        if(curElement.type == "checkbox" && curElement.checked == true){
+            activeList.push(curElement.parentElement.parentElement.firstElementChild.innerHTML);
+        }
+    }
+
+    for(let x = 0; x < activeList.length; x++){
+        try{
+            await deleteMeal(Number(activeList[x]));
+        }
+        catch(e){
+            alert(e);
+            return;
+        }
+    }
+    await refresh();
+});
+
+
+function closeWhiteOverlay(){
+    whiteOverlay.style.display = "none";
+    importBox.style.display = "none";
+    addingBox.style.display = "none";
 }

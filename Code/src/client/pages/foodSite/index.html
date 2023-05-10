@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="foodSiteStyle.css">
         <link rel="stylesheet" href="../../smallBox.css">
     </head>
-    <body onload="refresh()">
+    <body>
         <div class="nav-container">
             <div id="navTitleBox">
                 <a id="homeLnk" class="navTitle">Mood4Food</a>
@@ -29,8 +29,8 @@
             <div id="searchBox">Search</div>
 
             <div id="BtnBox">
-                <Button onclick="importOverlay()" id="importBtn">Import by CSV</Button>
-                <button onclick="addOverlay()">Add Meal</button>
+                <Button id="importBtn">Import by CSV</Button>
+                <button id="addMealBtn">Add Meal</button>
             </div>
 
             <div id="tableBox">
@@ -40,7 +40,11 @@
                             <th>Number</th>
                             <th>Food</th>
                             <th>Number of Orders</th>
-                            <th></th>
+                            <th>
+                                <button id="deleteBtn">
+                                    <img id="deleteImg" src="../../pics/delete.png">
+                                </button>
+                            </th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
@@ -51,9 +55,8 @@
 
         <div id="whiteOverlay" style="display: none">
             <!--Import CSV-->
-            <div class="whiteBox" id="importContent" style="display: none">
-                <img class="closeBtn" onclick="switchOverlay('importContent')" src="../../pics/close.png">
-
+            <div class="whiteBox" id="importBox" style="display: none">
+                <img class="closeBtn" src="../../pics/close.png">
                 <h1>Import Meals by .csv</h1>
 
                 <p>Please, keep the content to the format: <br></p>
@@ -61,18 +64,17 @@
                 <p>(--> Ingredients are seperated by ',')</p>
 
                 <div id="uploadBox">
-                    <input type="file">
+                    <input id="fileInput" type="file">
                 </div>
 
                 <div class='confirmBtnBox'>
-                    <button id='confirmBtn' onclick="insertFromFile('food-controller')">Confirm</button>
+                    <button id='confirmBtn'>Confirm</button>
                 </div>
             </div>
 
-            <!--Add meal content (default: disabled)-->
-            <div class="whiteBox" id="addMealContent" style="display: none">
-                <img class="closeBtn" onclick="switchOverlay('addMealContent')" src="../../pics/close.png">
-
+            <!--add meal-->
+            <div class="whiteBox" id="addingBox" style="display: none">
+                <img class="closeBtn" src="../../pics/close.png">
                 <h1>Add a meal</h1>
 
                 <div id="input-Container">
@@ -83,23 +85,11 @@
                     <div class="inputPreText">Ingredients</div>
                     <div class="inputBox"><input type="text" id="ingredientsInput" name="fingredients"></div>
                 </div>
-                <div class='confirmBtnBox'><button id="addBtn" onclick='addMealByInputElements()'>Add</button></div>
-            </div>
-
-            <div class="whiteBox" id="deleteWarningContent" style="display: none">
-                <img class="closeBtn" onclick="switchOverlay('deleteWarningContent')" src="../../pics/close.png">
-                <h1>Removing meal item...</h1>
-                <p><br>Do you really want to remove this meal item?</p>
-                <ul>
-                    <button id="yesBtn">Yes</button>
-                    <button onclick="switchOverlay('deleteWarningContent')">No</button>
-                </ul>
+                <div class='confirmBtnBox'><button id="addBtn">Add</button></div>
             </div>
         </div>
 
-        <script src="food-controller.js"></script>
-        <script src="../../pageFunctions.js"></script>
+        <script src="food-controller.js" type="module"></script>
         <script src="../../navbar/navbar.js"></script>
-
     </body>
 </html>
