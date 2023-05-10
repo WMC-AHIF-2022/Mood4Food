@@ -23,6 +23,7 @@ window.onload = async() =>{
     await refresh();
 }
 
+///Refreshes the meal-table by fetching the data from the server.
 async function refresh(){
     const response = await fetchRestEndpoint("http://localhost:3000/food", "GET");
     const meals = await response.json();
@@ -39,10 +40,11 @@ async function refresh(){
     }
 }
 
+///sends an DELETE-Request to the server for the specific index parameter.
 async function deleteMeal(index:number){
     await fetchRestEndpoint(`http://localhost:3000/food/${index}`,"DELETE");
 }
-
+///Gathers the data from the input elements and sends an object to the server with a POST-Request.
 async function addMealByInputElements(){
     const numberBox = document.getElementById("numberInput") as HTMLInputElement;
     const nameBox = document.getElementById("nameInput") as HTMLInputElement;
@@ -73,6 +75,15 @@ async function addMealByInputElements(){
     }
 }
 
+///
+// {@addMealByInputElements}
+//
+//
+/**
+ * Reads the lines of the given parameter and, like in the
+ * {@link #addMealByInputElements() addMealByInputElements()},
+ * gathers the data in an object and sends it to the server with a POST-Request.
+ */
 async function insertMealsFromString(content:string){
     //console.log(content);
     const lines: string[] = content.split(/\r\n|\r|\n/);
@@ -173,7 +184,7 @@ deleteBtn.addEventListener('click', async()=>{
     await refresh();
 });
 
-
+///Sets the display of the white background and all boxes to 'none'
 function closeWhiteOverlay(){
     whiteOverlay.style.display = "none";
     importBox.style.display = "none";

@@ -1,9 +1,9 @@
 
-const home_URLL = "http://localhost:3000/orderday";
+const home_URL = "http://localhost:3000/orderday";
 
-///Updates the meal-table by fetching the data from the server
-async function refresh1(){
-    const response = await fetch(home_URLL);
+///(needs to be updated)Updates the meal-table by fetching the data from the server
+async function refresh(){
+    const response = await fetch(home_URL);
 
     if(response.ok){
         const meals = await response.json();
@@ -115,7 +115,7 @@ const buttonHs = document.getElementById("buttonHs");
 
 
 if(buttonHs != null){
-buttonHs.addEventListener("click", async () => console.log(await refresh1()));
+buttonHs.addEventListener("click", async () => console.log(await refresh()));
 }
 /*
 import {getOrderdays} from "../../../server/data/orderday-repository"
