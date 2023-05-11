@@ -18,9 +18,15 @@ button {
     cursor: pointer;
 }
 
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #32412f;
+}
+
 #deleteBtn{
     float: right;
-    margin-right: 0.75cm;
+    margin-right: 0.825cm;
 }
 
 #deleteImg{
@@ -84,7 +90,7 @@ button {
 
 #table-body{
     display: block;
-    max-height: 16.8cm;
+    max-height: 64vh;
     overflow: auto;
 }
 

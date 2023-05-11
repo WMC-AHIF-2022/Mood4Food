@@ -2,6 +2,10 @@ GET http://localhost:3000/food HTTP/1.1
 
 ###################################################
 
+GET http://localhost:3000/pages/foodSite/4 HTTP/1.1
+
+###################################################
+
 GET http://localhost:3000/food/45 HTTP/1.1
 
 ###################################################
@@ -22,8 +26,8 @@ Content-Type: application/json
 
 {
   "odID": "1",
-  "customerID": "1",
-  "mealID": "44"
+  "customerID": "0",
+  "mealID": "3"
 }
 
 ###################################################

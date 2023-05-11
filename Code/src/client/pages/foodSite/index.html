@@ -1,95 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>M4M</title>
-        <link rel="stylesheet" href="../../navbar/navBar.css">
-        <link rel="stylesheet" href="foodSiteStyle.css">
-        <link rel="stylesheet" href="../../smallBox.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>M4M</title>
+    <link rel="stylesheet" href="../../smallBox.css">
+    <link rel="stylesheet" href="../../navbar/navBar.css">
+</head>
     <body>
-        <div class="nav-container">
-            <div id="navTitleBox">
-                <a id="homeLnk" class="navTitle">Mood4Food</a>
-            </div>
-            <div id="navListBox">
-                <ul id="navList">
-                    <li><a id="orderLnk">Orders</a></li>
-                    <li><a id="classLnk">Class</a></li>
-                    <li class="active"><a id="foodLnk">Food</a></li>
-                    <li><a id="userLnk">User<img class="picFormating" src="../../pics/UserPic.png"></a></li>
-                </ul>
-            </div>
+    <div class="nav-container">
+        <div id="navTitleBox">
+            <a id="homeLnk" class="navTitle">Mood4Food</a>
         </div>
-
-        <div id="food-container">
-            <div id="foodPageTitleBox"><h1>Food</h1></div>
-
-            <div id="searchBox">Search</div>
-
-            <div id="BtnBox">
-                <Button id="importBtn">Import by CSV</Button>
-                <button id="addMealBtn">Add Meal</button>
-            </div>
-
-            <div id="tableBox">
-                <table id="food-table">
-                    <thead>
-                        <tr>
-                            <th>Number</th>
-                            <th>Food</th>
-                            <th>Number of Orders</th>
-                            <th>
-                                <button id="deleteBtn">
-                                    <img id="deleteImg" src="../../pics/delete.png">
-                                </button>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body">
-                    </tbody>
-                </table>
-            </div>
+        <div id="navListBox">
+            <ul id="navList">
+                <li><a id="orderLnk">Orders</a></li>
+                <li><a id="classLnk">Class</a></li>
+                <li><a id="foodLnk">Food</a></li>
+                <li><a id="userLnk">User<img class="picFormating" src="../../pics/UserPic.png"></a></li>
+            </ul>
         </div>
+    </div>
 
-        <div id="whiteOverlay" style="display: none">
-            <!--Import CSV-->
-            <div class="whiteBox" id="importBox" style="display: none">
-                <img class="closeBtn" src="../../pics/close.png">
-                <h1>Import Meals by .csv</h1>
-
-                <p>Please, keep the content to the format: <br></p>
-                <p class='codeFormatStyle'>Number;Name;Ingredients <br></p>
-                <p>(--> Ingredients are seperated by ',')</p>
-
-                <div id="uploadBox">
-                    <input id="fileInput" type="file">
-                </div>
-
-                <div class='confirmBtnBox'>
-                    <button id='confirmBtn'>Confirm</button>
-                </div>
-            </div>
-
-            <!--add meal-->
-            <div class="whiteBox" id="addingBox" style="display: none">
-                <img class="closeBtn" src="../../pics/close.png">
-                <h1>Add a meal</h1>
-
-                <div id="input-Container">
-                    <div class="inputPreText">Number:</div>
-                    <div class="inputBox"><input type="text" id="numberInput" name="fnumber"></div>
-                    <div class="inputPreText">Name:</div>
-                    <div class="inputBox"><input type="text" id="nameInput" name="fname"></div>
-                    <div class="inputPreText">Ingredients</div>
-                    <div class="inputBox"><input type="text" id="ingredientsInput" name="fingredients"></div>
-                </div>
-                <div class='confirmBtnBox'><button id="addBtn">Add</button></div>
-            </div>
-        </div>
-
-        <script src="food-controller.js" type="module"></script>
         <script src="../../navbar/navbar.js"></script>
     </body>
 </html>

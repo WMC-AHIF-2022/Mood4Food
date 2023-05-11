@@ -23,6 +23,12 @@ window.onload = async() =>{
     await refresh();
 }
 
+async function getAmountOfOrdersfor(index: number): Promise<string>{
+    const response = await fetchRestEndpoint(`http://localhost:3000/food/${index}/amount`,"GET")
+    const amount = await response.json();
+    return `${amount.value}`;
+}
+
 ///Refreshes the meal-table by fetching the data from the server.
 async function refresh(){
     const response = await fetchRestEndpoint("http://localhost:3000/food", "GET");
@@ -34,9 +40,14 @@ async function refresh(){
         tableBody.appendChild(row);
         row.insertCell(0).innerHTML = `${meals[i].id}`;
         row.insertCell(1).innerHTML = `${meals[i].name}`;
-        row.insertCell(2).innerHTML = `0`;
+        row.insertCell(2).innerHTML = await getAmountOfOrdersfor(meals[i].id);
         row.insertCell(3).innerHTML = `<input type="checkbox" class="mealCheckBox">`;
-
+        row.addEventListener('click',(e)=>{
+            const target = e.target as HTMLButtonElement;
+            if(target.tagName != "INPUT"){
+                window.location.href=`http://localhost:3000/pages/foodSites/${meals[i].id}`;
+            }
+        });
     }
 }
 
@@ -168,7 +179,7 @@ deleteBtn.addEventListener('click', async()=>{
     for(let x = 0;x < inputElements.length; x++){
         const curElement = inputElements.item(x) as HTMLInputElement;
         if(curElement.type == "checkbox" && curElement.checked == true){
-            activeList.push(curElement.parentElement.parentElement.firstElementChild.innerHTML);
+            activeList.push(curElement.parentElement!.parentElement!.firstElementChild!.innerHTML);
         }
     }
 
