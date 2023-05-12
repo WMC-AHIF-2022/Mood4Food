@@ -6,7 +6,6 @@ function  OrderFood(): void{
 
     console.log("Hello Wolrd");
 
-
 }
 
 
