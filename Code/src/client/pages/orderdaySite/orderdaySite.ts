@@ -1,8 +1,10 @@
 
-const home_URLL = "http://localhost:3000/orderday";
+const home_URLL = "http://localhost:3000/orderdays";
 
 ///Updates the meal-table by fetching the data from the server
 async function refresh1(){
+    console.log(home_URLL)
+
     const response = await fetch(home_URLL);
 
     if(response.ok){
@@ -21,7 +23,9 @@ async function refresh1(){
         }
         */
 
+
         console.log(meals);
+
     }
 }
 
