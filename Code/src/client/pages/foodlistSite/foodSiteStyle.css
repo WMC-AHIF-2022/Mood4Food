@@ -5,16 +5,33 @@
 }
 
 html{
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 
 button {
+    transition-duration: 1s;
     padding:5px;
     background-color: #32412f;
     color: white;
     border-radius: 5px;
     border: 1px solid #1a6000;
     cursor: pointer;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #32412f;
+}
+
+#deleteBtn{
+    float: right;
+    margin-right: 0.825cm;
+}
+
+#deleteImg{
+    height: 20px;
+    width: auto;
 }
 
 #food-container{
@@ -73,7 +90,7 @@ button {
 
 #table-body{
     display: block;
-    max-height: 16.8cm;
+    max-height: 64vh;
     overflow: auto;
 }
 
@@ -91,11 +108,11 @@ thead, #table-body tr{
     padding: 10px;
 }
 
-#food-table tr :not(th){
+#food-table tr :not(th,button,img){
     background-color: #c7c7c7;
 }
 
-#food-table tr:hover :not(th){
+#food-table tr:hover :not(th,button,img){
     background-color: #bebebe;
     cursor: pointer;
 }
@@ -109,9 +126,7 @@ tr td:last-child {
     border-bottom-right-radius: 5px;
 }
 
-.removeBtn {
+.mealCheckBox {
     margin-right: 1cm;
     float: right;
-    height: 0.5cm;
-    width: auto;
 }

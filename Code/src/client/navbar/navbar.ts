@@ -3,7 +3,7 @@ const orderLnk: HTMLLinkElement = document.getElementById('orderLnk') as HTMLLin
 const classLnk: HTMLLinkElement = document.getElementById('classLnk') as HTMLLinkElement;
 const homeLnk: HTMLLinkElement = document.getElementById('homeLnk') as HTMLLinkElement;
 
-foodLnk.addEventListener('click', () => window.location.href = "/pages/foodSite/");
+foodLnk.addEventListener('click', () => window.location.href = "/pages/foodlistSite/");
 orderLnk.addEventListener('click', () => window.location.href = "/pages/OrderSite/");
 classLnk.addEventListener('click', () => window.location.href = "/");
 homeLnk.addEventListener('click', ()=> window.location.href = "/");
