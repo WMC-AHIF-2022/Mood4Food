@@ -4,24 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>M4M</title>
-    <link rel="stylesheet" href="navbar/navBar.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="nav-container">
-    <div id="navTitleBox">
-        <a href="/" class="navTitle">Mood4Food</a>
-    </div>
-    <div id="navListBox">
-        <ul id="navList">
-            <li><a href="../client/pages/OrderSite/index.html">Orders</a></li>
-            <li><a id="classLnk">Class</a></li>
-            <li><a id="foodLnk">Food</a></li>
-            <li><a href="pages/login/index.html" id="userLnk">User<img class="picFormating" src="./pics/UserPic.png"></a></li>
-        </ul>
+<div id="loginContainer">
+    <div class="center">
+        <div id="mainTitleBox">
+            <h1 id="mainTitle">Mood4Food</h1>
+        </div>
+
+        <form id="form">
+            <div id="checkBar">
+                <label>Teacher: </label>
+                <input type="checkbox" id="checkBoxTeacher">
+            </div>
+            <div>
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" class="form-control" id="username">
+            </div>
+            <div>
+                <label for="password" class="form-label">Password: </label>
+                <input type="password" class="form-control" id="password">
+            </div>
+
+            <button id="btnLogin" type="button" class="btn btn-primary">Login</button>
+            <button id="btnSignup" type="button" class="btn btn-primary">Signup</button>
+
+            <div id="textOutput">
+                <label id="loginStatus" class="text-success"></label>
+                <label id="loginError" class="text-danger"></label>
+            </div>
+        </form>
     </div>
 </div>
 
-<script src="navbar/navbar.js"></script>
+<script src="login-controller.js" type="module"></script>
 
 </body>
 </html>

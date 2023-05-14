@@ -147,7 +147,7 @@ async function createOderday(){
 
     
 
-    if(datePickerValueInt < TodaysDate || IsDateInDatabase(datePickerValueString)){
+    if(datePickerValueInt < TodaysDate || await IsDateInDatabase(datePickerValueString)){
         console.log("abcdefg");
     }
     else{

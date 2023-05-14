@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
+
+#loginContainer{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #EDF1D6;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.center {
+    width: 40%;
+}
+
+#mainTitleBox{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#mainTitle{
+    font-family: 'Sora', sans-serif;
+    font-size: 4em;
+    color: #1a6000;
+}
+
+#form {
+    background-color: #c5c5c5;
+    padding: 0.5cm 1cm 0 1cm;
+    border-radius: 5px;
+    height: fit-content;
+}
+
+#form div{
+    width: 100%;
+}
+
+#form div:not(:last-child, :first-child){
+    margin: 1cm 0;
+}
+
+#textOutput{
+    height: 1cm;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+#checkBar{
+    /*text-align: center;*/
+    display: block;
+}
+
+#loginError{
+    color: red;
+}
+
+#loginStatus {
+    color: #1a6000;
+}
+
+button {
+    transition-duration: 1s;
+    padding:5px;
+    background-color: #32412f;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #1a6000;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #32412f;
+}
+
+input[type=text],input[type=password], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    display: inline-block;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
