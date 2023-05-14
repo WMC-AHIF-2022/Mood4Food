@@ -1,9 +1,14 @@
+import { OrderEntry } from "../../../server/collective/OrderEntry";
 
-const home_URL = "http://localhost:3000/orderday";
+const Host_URL = "http://localhost:3000/orderdays";
 
-///(needs to be updated)Updates the meal-table by fetching the data from the server
-async function refresh(){
-    const response = await fetch(home_URL);
+
+
+///Updates the meal-table by fetching the data from the server
+async function refresh1(){
+    console.log(Host_URL)
+
+    const response = await fetch(Host_URL);
 
     if(response.ok){
         const meals = await response.json();
@@ -21,17 +26,19 @@ async function refresh(){
         }
         */
 
+
         console.log(meals);
+
     }
 }
 
 ///This function deletes a meal-item by delivering the id/number of the item.
 async function deleteMeal1(index:number){
-    const deleteURL = `${home_URL}/${index}`;
+    const deleteURL = `${Host_URL}/${index}`;
     const response = await fetch(deleteURL, {method:'DELETE'});
 
     if(response.ok){
-        await refresh();
+        await refresh1();
     }
     else{
         alert(`Could not delete number ${index}`);
@@ -57,10 +64,10 @@ async function addMealByInputElements1(){
     options.headers = { "Content-Type": "application/json" };
     options.body = JSON.stringify({number: number, name: name, ingredients: ingredients});
 
-    const response = await fetch(home_URL, options);
+    const response = await fetch(Host_URL, options);
 
     if(response.ok){
-        await refresh();
+        await refresh1();
         numberBox.value = "";
         nameBox.value = "";
         ingredientsBox.value = "";
@@ -97,7 +104,7 @@ async function insertMealsFromString1(content:string){
         options.headers = { "Content-Type": "application/json" };
         options.body = JSON.stringify({number: number, name: name, ingredients: ingredients});
 
-        const response = await fetch(home_URL, options);
+        const response = await fetch(Host_URL, options);
 
         //console.log(response);
 
@@ -105,7 +112,7 @@ async function insertMealsFromString1(content:string){
             alert(`Error during adding process in line ${x}`);
         }
         else{
-            await refresh();
+            await refresh1();
         }
     }
 }
@@ -115,8 +122,73 @@ const buttonHs = document.getElementById("buttonHs");
 
 
 if(buttonHs != null){
-buttonHs.addEventListener("click", async () => console.log(await refresh()));
+buttonHs.addEventListener("click", async () => console.log(await refresh1()));
 }
+
+
+
+let divForDatePicker = document.getElementById("datePicker");
+const datePicker = document.getElementById("start") as HTMLInputElement;
+
+datePicker.addEventListener("change", () =>{
+    createOderday();
+
+});
+
+async function createOderday(){
+
+    let htmlElement: string = ""; 
+
+    const TodaysDate: number = Date.now(); 
+
+    const datePickerValueInt: number = +datePicker.value;
+    const datePickerValueString: string = datePicker.value;
+    console.log(datePickerValueString, TodaysDate);
+
+    
+
+    if(datePickerValueInt < TodaysDate || IsDateInDatabase(datePickerValueString)){
+        console.log("abcdefg");
+    }
+    else{
+        console.log("Ayyyy es funktioniert");
+    }
+
+
+
+
+    
+
+    
+    
+
+} 
+
+async function IsDateInDatabase(date: string): Promise<boolean>{
+
+    const response = await fetch(Host_URL);
+    
+    
+
+    if(response.ok){
+        const orderdays: OrderEntry[] = await response.json();    
+        console.log(orderdays);
+
+        for(let i = 0; i < orderdays.length; i++){
+            if(date == orderdays[i].date){
+                return true;
+            }
+        }
+    }
+
+  
+
+
+    return false; 
+
+}
+
+
 /*
 import {getOrderdays} from "../../../server/data/orderday-repository"
 

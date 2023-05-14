@@ -10,5 +10,5 @@ const foodList: Food[] = [];
 export const foodRouter = express.Router();
 
 foodRouter.get("/:id", (request, response)=>{
-    response.status(StatusCodes.OK).send(`Hello ${request.params.id}`);
+    response.status(StatusCodes.OK).redirect("./");
 });

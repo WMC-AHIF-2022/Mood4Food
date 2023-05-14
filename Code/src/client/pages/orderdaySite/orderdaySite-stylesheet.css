@@ -1,3 +1,24 @@
 body{
     background-color: #EDF1D6;
 }
+
+
+.containerForDatePicker{
+    background-color: #D9D9D9;
+    height: 40px;
+    width: 563px;
+    margin-left: 400px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.containerForDeadline{
+    background-color: #D9D9D9;
+    height: 40px;
+    width: 563px;
+    margin-left: 400px; 
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 30px;
+
+}
