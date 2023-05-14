@@ -6,6 +6,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="../../navbar/navBar.css">
+    <script src="login-controller.js" type="module"></script>
 </head>
 <body>
 <div class="nav-container">
@@ -25,28 +26,19 @@
     <div class="login-page">
         <div class="form">
             <h1>Login</h1>
-            <form class="register-form">
-                <input type="text" placeholder="name"/>
-                <input type="password" placeholder="password"/>
-                <input type="text" placeholder="email address"/>
-                <button>create</button>
-                <p class="message">Already registered? <a href="#">Sign In</a></p>
-            </form>
             <div id="checkbox_StTe", class="float-left">
-                <p>Student</p>
-                <input type="checkbox" checked="checked">
                 <p>Teacher</p>
-                <input type="checkbox" checked="checked">
+                <input id="checkBoxIsTeacher" type="checkbox" checked="checked">
 
             </div>
             <form class="login-form">
-                <input type="text" placeholder="username"/>
-                <input type="password" placeholder="password"/>
+                <input id="username" type="text" placeholder="username"/>
+                <input id="password" type="password" placeholder="password"/>
 
                 <div class="float-left">
 
-                    <button>login</button>
-                    <button>Register</button>
+                    <button id="btnLogin">login</button>
+                    <button id="btnSignup">Register</button>
                 </div>
                 <!--<p class="message">Not registered? <a href="#">Create an account</a></p>-->
             </form>
