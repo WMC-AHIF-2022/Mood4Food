@@ -15,12 +15,13 @@ html{
 }
 
 .nav-container{
-    height: auto;
     display: grid;
     grid-template-columns: auto auto;
     gap: 10px;
     background-color: #40513B;
     padding-left: 20px;
+    grid-row: 1;
+    height: fit-content;
 }
 
 #navTitleBox{

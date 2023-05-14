@@ -9,33 +9,29 @@
         <link rel="stylesheet" href="../../smallBox.css">
     </head>
     <body>
-        <div class="nav-container">
-            <div id="navTitleBox">
-                <a id="homeLnk" class="navTitle">Mood4Food</a>
-            </div>
-            <div id="navListBox">
-                <ul id="navList">
-                    <li><a id="orderLnk">Orders</a></li>
-                    <li><a id="classLnk">Class</a></li>
-                    <li class="active"><a id="foodLnk">Food</a></li>
-                    <li><a id="userLnk">User<img class="picFormating" src="../../pics/UserPic.png"></a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div id="food-container">
-            <div id="foodPageTitleBox"><h1>Food</h1></div>
-
-            <div id="searchBox">Search</div>
-
-            <div id="BtnBox">
-                <Button id="importBtn">Import by CSV</Button>
-                <button id="addMealBtn">Add Meal</button>
+        <div id="page-container">
+            <div id="navItem" class="nav-container">
+                <div id="navTitleBox">
+                    <a id="homeLnk" class="navTitle">Mood4Food</a>
+                </div>
+                <div id="navListBox">
+                    <ul id="navList">
+                        <li><a id="orderLnk">Orders</a></li>
+                        <li><a id="classLnk">Class</a></li>
+                        <li class="active"><a id="foodLnk">Food</a></li>
+                        <li><a id="userLnk">User<img class="picFormating" src="../../pics/UserPic.png"></a></li>
+                    </ul>
+                </div>
             </div>
 
-            <div id="tableBox">
-                <table id="food-table">
-                    <thead>
+            <div id="food-container">
+                <div id="foodPageTitleBox"><h1>Food</h1></div>
+
+                <div id="searchBox">Search</div>
+
+                <div id="tableBox">
+                    <table id="food-table">
+                        <thead>
                         <tr>
                             <th>Number</th>
                             <th>Food</th>
@@ -46,10 +42,15 @@
                                 </button>
                             </th>
                         </tr>
-                    </thead>
-                    <tbody id="table-body">
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody id="table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="BtnBox">
+                <Button id="importBtn">Import by CSV</Button>
+                <button id="addMealBtn">Add Meal</button>
             </div>
         </div>
 
