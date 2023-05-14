@@ -6,6 +6,7 @@ import {customerRouter} from "./router/customer-router";
 import {orderDayRouter} from "./router/order-day-router";
 import {entryRouter} from "./router/orderentry-router";
 import {foodRouter} from "./router/food-router";
+import {userRouter} from "./router/user-router";
 
 // create express application
 
@@ -22,6 +23,7 @@ app.use("/customers", customerRouter);
 app.use("/orderdays", orderDayRouter);
 app.use("/orderentries", entryRouter);
 app.use("/pages/foodSites", foodRouter);
+app.use("/users", userRouter);
 
 
 // start http server

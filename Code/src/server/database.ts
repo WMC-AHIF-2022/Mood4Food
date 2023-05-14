@@ -59,5 +59,13 @@ export class DB {
                      ON DELETE CASCADE
             ) strict`
         );
+        await connection.run(`
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY,
+                username UNIQUE NOT NULL,
+                password NOT NULL,
+                teacher INTEGER
+            )
+        `);
     }
 }
