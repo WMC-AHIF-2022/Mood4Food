@@ -49,8 +49,10 @@ orderDayRouter.post("/", async(req, res) => {
     }
     const db = await DB.createDBConnection();
     // id selection
-    const stmt1 = await db.prepare('select count(*) as "count" from Orderday');
-    const result1 : { count: number } | undefined = await stmt1.get();
+    const stmt1 = await db.prepare('select count(*) as "count" from OrderDay');
+    //console.log(await stmt1.get());
+    const result1 = await stmt1.get();
+    console.log(result1);
     await stmt1.finalize();
     if(typeof result1 == "undefined"){
         res.status(StatusCodes.CONFLICT).send('Error during id selection');
@@ -60,6 +62,7 @@ orderDayRouter.post("/", async(req, res) => {
     if(result1.count == 0){
         result1.count = 1;
     }
+    /*
     else{
         const stmt2 = await db.prepare('select id from orderday order by id desc limit 1');
         const result2 = await stmt2.get();
@@ -70,17 +73,21 @@ orderDayRouter.post("/", async(req, res) => {
         }
         result1.count = result2.count++;
     }
-
-    const id = result1.count;
+    */
+    console.log(result1);
+    const id = result1.count + 1;
     console.log(id);
 
     // standard process
-    const stmt = await db.prepare('insert or ignore into OrderDay values (?1, DATE(?2), TIME(?3))');
+    const stmt = await db.prepare('insert or ignore into OrderDay values (?1, ?2, ?3)');
+    //console.log(await stmt.bind());
     await stmt.bind({1:id, 2: orderdate, 3: deadline});
+    //console.log(await stmt.finalize());
     const operationResult = await stmt.run();
     await stmt.finalize();
-    await db.close();
+    await db.close();   
 
+    console.log(operationResult.changes);
     if(operationResult.changes == null || operationResult.changes !== 1){
         res.status(StatusCodes.BAD_REQUEST).send("db error occurred");
     }

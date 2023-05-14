@@ -117,58 +117,47 @@ async function insertMealsFromString1(content:string){
     }
 }
 
+//getting every HTML Element(Date Picker, Input field und Button)
+const buttonForCompleteOrderday = document.getElementById("buttonHs");
+let divForDatePicker = document.getElementById("datePicker");
+const datePicker = document.getElementById("start") as HTMLInputElement;
 
-const buttonHs = document.getElementById("buttonHs");
+const inputForDeadLine = document.getElementById("deadLineInput") as HTMLInputElement;
 
+//Eventhandler for Button 
+if(buttonForCompleteOrderday != null){
 
-if(buttonHs != null){
-buttonHs.addEventListener("click", async () => console.log(await refresh1()));
+    buttonForCompleteOrderday.addEventListener("click", async () =>{
+
+        createOderday();
+                
+    });
 }
 
 
 
-let divForDatePicker = document.getElementById("datePicker");
-const datePicker = document.getElementById("start") as HTMLInputElement;
 
-datePicker.addEventListener("change", () =>{
-    createOderday();
 
-});
+
 
 async function createOderday(){
-
-    let htmlElement: string = ""; 
-
     const TodaysDate: number = Date.now(); 
 
     const datePickerValueInt: number = +datePicker.value;
     const datePickerValueString: string = datePicker.value;
     console.log(datePickerValueString, TodaysDate);
 
-    
-
     if(datePickerValueInt < TodaysDate || IsDateInDatabase(datePickerValueString)){
-        console.log("abcdefg");
+        alert("Date passt nicht");
     }
     else{
-        console.log("Ayyyy es funktioniert");
+        console.log("Alles baba und Date passt auch");
     }
-
-
-
-
     
-
-    
-    
-
 } 
 
 async function IsDateInDatabase(date: string): Promise<boolean>{
-
     const response = await fetch(Host_URL);
-    
-    
 
     if(response.ok){
         const orderdays: OrderEntry[] = await response.json();    
@@ -180,12 +169,7 @@ async function IsDateInDatabase(date: string): Promise<boolean>{
             }
         }
     }
-
-  
-
-
     return false; 
-
 }
 
 
