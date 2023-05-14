@@ -65,3 +65,8 @@ DELETE http://localhost:3000/orderentries HTTP/1.1
 DELETE http://localhost:3000/food/44 HTTP/1.1
 
 ###################################################
+
+
+GET http://localhost:3000/orderdays HTTP/1.1
+
+###################################################

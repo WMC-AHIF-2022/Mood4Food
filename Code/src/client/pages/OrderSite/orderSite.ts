@@ -4,8 +4,7 @@ import {OrderEntry} from "../../../server/collective/OrderEntry"
 
 function  OrderFood(): void{
 
-    console.log("Deine Mutter ist ein Hure");
-
+    console.log("Hello Wolrd");
 
 }
 
