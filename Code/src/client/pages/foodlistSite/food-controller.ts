@@ -33,7 +33,7 @@ async function getAmountOfOrdersfor(index: number): Promise<string>{
 async function refresh(){
     const response = await fetchRestEndpoint("http://localhost:3000/food", "GET");
     const meals = await response.json();
-
+    
     tableBody.innerHTML = '';
     for(let i = 0; i < meals.length; i++){
         const row = document.createElement("tr");
@@ -201,3 +201,39 @@ function closeWhiteOverlay(){
     importBox.style.display = "none";
     addingBox.style.display = "none";
 }
+// get Search field
+const inputElement = document.getElementById("foodSearch") as HTMLInputElement;
+inputElement.addEventListener("keyup", async (event: KeyboardEvent) => { 
+    const inputValue = inputElement.value;    
+    const tableBodyElement = document.getElementById("table-body") as HTMLTableSectionElement;
+    while (tableBodyElement.firstChild) { 
+        tableBodyElement.removeChild(tableBodyElement.firstChild); 
+    }
+    const response = await fetchRestEndpoint("http://localhost:3000/food", "GET");
+    const meals = await response.json();
+    for(let i = 0; i < meals.length; i++){
+        
+        if(!meals[i].name.includes(inputValue))
+        {           
+            meals.splice(i, 1);
+            i = -1;            
+        }
+    }
+    tableBody.innerHTML = '';
+    for(let i = 0; i < meals.length; i++){
+        const row = document.createElement("tr");
+        tableBody.appendChild(row);
+        row.insertCell(0).innerHTML = `${meals[i].id}`;
+        row.insertCell(1).innerHTML = `${meals[i].name}`;
+        row.insertCell(2).innerHTML = await getAmountOfOrdersfor(meals[i].id);
+        row.insertCell(3).innerHTML = `<input type="checkbox" class="mealCheckBox">`;
+        row.addEventListener('click',(e)=>{
+            const target = e.target as HTMLButtonElement;
+            if(target.tagName != "INPUT"){
+                window.location.href=`http://localhost:3000/pages/foodSites/${meals[i].id}`;
+            }
+        });
+    }
+
+    
+  });

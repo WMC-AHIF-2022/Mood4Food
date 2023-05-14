@@ -76,7 +76,7 @@ async function addMealByInputElements1(){
         alert("Error during adding process");
     }
 }
-
+                      
 async function insertMealsFromString1(content:string){
     //console.log(content);
     const lines: string[] = content.split(/\r\n|\r|\n/);
@@ -117,58 +117,92 @@ async function insertMealsFromString1(content:string){
     }
 }
 
+//getting every HTML Element(Date Picker, Input field und Button)
+const buttonForCompleteOrderday = document.getElementById("buttonHs");
+let divForDatePicker = document.getElementById("datePicker");
+const datePicker = document.getElementById("start") as HTMLInputElement;
 
-const buttonHs = document.getElementById("buttonHs");
+const inputForDeadLine = document.getElementById("deadLineInput") as HTMLInputElement;
+
+//Eventhandler for Button 
+if(buttonForCompleteOrderday != null){
+
+    buttonForCompleteOrderday.addEventListener("click", async () =>{
+
+        if(!await createOderday()){
+            //alert("");
+            console.log("Nainnnnn");
+
+        }
+        else{
+            console.log("Jaaaaaaa");
+        }
 
 
-if(buttonHs != null){
-buttonHs.addEventListener("click", async () => console.log(await refresh1()));
+    });
 }
 
 
 
-let divForDatePicker = document.getElementById("datePicker");
-const datePicker = document.getElementById("start") as HTMLInputElement;
 
-datePicker.addEventListener("change", () =>{
-    createOderday();
 
-});
-
-async function createOderday(){
-
-    let htmlElement: string = ""; 
-
-    const TodaysDate: number = Date.now(); 
-
-    const datePickerValueInt: number = +datePicker.value;
-    const datePickerValueString: string = datePicker.value;
-    console.log(datePickerValueString, TodaysDate);
-
+async function createOderday(): Promise<Boolean>{
+    let TodaysDate: number = Date.now();
     
 
-    if(datePickerValueInt < TodaysDate || await IsDateInDatabase(datePickerValueString)){
-        console.log("abcdefg");
+    
+    const datePickerValueString: string = datePicker.value;
+    const datePickerInDateFormat: Date = new Date(datePickerValueString);
+    let deadLine: string = inputForDeadLine.value; 
+    console.log(datePickerValueString, datePickerInDateFormat.getTime(),"TodaysDate:" ,TodaysDate,"In DateFormat", datePickerInDateFormat);
+
+    console.log(await  IsDateInDatabase(datePickerValueString));
+
+        
+    if(datePickerInDateFormat.getTime() < TodaysDate || await !IsDateInDatabase(datePickerValueString)){
+        alert("Bitte wählen Sie ein gültiges Datum ");
+        return false;
     }
     else{
-        console.log("Ayyyy es funktioniert");
+        console.log("Alles baba und Date passt auch");
     }
 
+    var trigger = deadLine,
+    regexp = new RegExp('^[0-9][0-9]\\:[0-9][0-9]$'),
+    test = regexp.test(trigger);
 
-
-
+    if(!test){
+        alert("Bitte wähle eine gültige dead line (HH:MM)");
+        return false;
+    }
+    deadLine += ":00";  
     
+    let options: any = { method:'POST' };
 
-    
-    
+    options.headers = { "Content-Type": "application/json" };
+    console.log("Input für options:", datePickerValueString, deadLine);
+    options.body = JSON.stringify({orderdate: datePickerValueString, deadline: deadLine});
+
+    console.log("1", options.body);
+    const response = await fetch(Host_URL, options);
+    console.log("2");
+
+
+    if(response.ok){
+        return true;    
+       
+    }
+    else{
+        alert("Fehler während beim Hinzufügen");
+        alert(response.text)
+    }
+    return false;
+
 
 } 
 
 async function IsDateInDatabase(date: string): Promise<boolean>{
-
     const response = await fetch(Host_URL);
-    
-    
 
     if(response.ok){
         const orderdays: OrderEntry[] = await response.json();    
@@ -180,12 +214,7 @@ async function IsDateInDatabase(date: string): Promise<boolean>{
             }
         }
     }
-
-  
-
-
     return false; 
-
 }
 
 
