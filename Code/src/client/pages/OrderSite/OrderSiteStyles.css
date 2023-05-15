@@ -84,10 +84,11 @@ body{
     color: #EDF1E6
 
 }
-.buttonPlacement{
-    border-radius: 50px;
+#buttonPlacement{
+    border-radius: 5px;
     border-color: black;
-    margin-left: 50px;
+    margin-left: 1vw;
+    height: 100%;
 }
 
 
