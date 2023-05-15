@@ -84,6 +84,11 @@ body{
     color: #EDF1E6
 
 }
+.buttonPlacement{
+    border-radius: 50px;
+    border-color: black;
+    margin-left: 50px;
+}
 
 
 
