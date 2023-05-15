@@ -136,3 +136,9 @@ tr td:last-child {
     margin-right: 1cm;
     float: right;
 }
+/*Searchfield*/
+#foodSearch{
+    width: calc(50px+0.5vw);
+    height: 25px;
+    border-radius: 5px;
+}
