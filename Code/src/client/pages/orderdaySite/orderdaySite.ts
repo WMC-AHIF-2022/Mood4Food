@@ -130,12 +130,12 @@ if(buttonForCompleteOrderday != null){
     buttonForCompleteOrderday.addEventListener("click", async () =>{
 
         if(!await createOderday()){
-            //alert("");
-            console.log("Nainnnnn");
+           
+           console.log("");
 
         }
         else{
-            console.log("Jaaaaaaa");
+            alert("Orderday succsesfully added");
         }
 
 
