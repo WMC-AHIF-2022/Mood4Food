@@ -22,7 +22,7 @@ export async function login() {
         loginError.innerHTML = "Login failed";
     }
     else{
-        sessionStorage.setItem('chat-user', username);
+        sessionStorage.setItem('web-user', username);
         window.location.href = "pages/OrderSite/";
     }
 }
