@@ -37,14 +37,19 @@ customerRouter.get("/:id", async(req, res) => {
 
 // add customer
 customerRouter.post("/", async(req, res) => {
-    const firstname: any = req.body.firstname;
-    const lastname: any = req.body.lastname;
+    const firstname: any = req.body.firstName;
+    const lastname: any = req.body.lastName;
+    const className: any = req.body.className;
     if (typeof firstname !== "string" || firstname.trim().length === 0) {
-        res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
+        res.status(StatusCodes.BAD_REQUEST).send("firstName missing or not ok");
         return;
     }
     if (typeof lastname !== "string" || lastname.trim().length === 0) {
-        res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
+        res.status(StatusCodes.BAD_REQUEST).send("lastName missing or not ok");
+        return;
+    }
+    if (typeof className !== "string" || className.trim().length === 0) {
+        res.status(StatusCodes.BAD_REQUEST).send("className missing or not ok");
         return;
     }
     const db = await DB.createDBConnection();
@@ -75,8 +80,8 @@ customerRouter.post("/", async(req, res) => {
     console.log(id);
 
     // standard process
-    const stmt = await db.prepare('insert or ignore into Customer (id, firstname, lastname) values (?1, ?2, ?3)');
-    await stmt.bind({1:id, 2: firstname, 3: lastname});
+    const stmt = await db.prepare('insert or ignore into Customer (id, firstname, lastname, className) values (?1, ?2, ?3, ?4)');
+    await stmt.bind({1:id, 2: firstname, 3: lastname, 4: className});
     const operationResult = await stmt.run();
     await stmt.finalize();
     await db.close();
@@ -92,23 +97,29 @@ customerRouter.post("/", async(req, res) => {
 // update customer
 customerRouter.put("/:id", async(request, response) => {
     const id: number = Number(request.params.id);
-    const firstname: any = request.body.firstname;
-    const lastname: any = request.body.lastname;
+    const firstname: any = request.body.firstName;
+    const lastname: any = request.body.lastName;
+    const className: any = request.body.className;
     if (typeof firstname !== "string" || firstname.trim().length === 0) {
-        response.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
+        response.status(StatusCodes.BAD_REQUEST).send("firstname missing or not ok");
         return;
     }
     if (typeof lastname !== "string" || lastname.trim().length === 0) {
-        response.status(StatusCodes.BAD_REQUEST).send("ingredients missing or not ok");
+        response.status(StatusCodes.BAD_REQUEST).send("lastname missing or not ok");
+        return;
+    }
+    if (typeof className !== "string" || className.trim().length === 0) {
+        response.status(StatusCodes.BAD_REQUEST).send("classname missing or not ok");
         return;
     }
 
     const db = await DB.createDBConnection();
-    const stmt = await db.prepare('update or replace Customer set firstname = ?1, lastname = ?2 where id = ?3');
+    const stmt = await db.prepare('update or replace Customer set firstname = ?1, lastname = ?2, className = ?3 where id = ?4');
     await stmt.bind({
         1: firstname,
         2: lastname,
-        3: id
+        3: className,
+        4: id
     });
     const operationResult = await stmt.run();
     await stmt.finalize();

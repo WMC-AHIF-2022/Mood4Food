@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>M4M</title>
         <link rel="stylesheet" href="../../navbar/navBar.css">
-        <link rel="stylesheet" href="foodSiteStyle.css">
+        <link rel="stylesheet" href="classSiteStyle.css">
         <link rel="stylesheet" href="../../smallBox.css">
     </head>
     <body>
@@ -17,27 +17,28 @@
                 <div id="navListBox">
                     <ul id="navList">
                         <li><a id="orderLnk">Orders</a></li>
-                        <li><a id="classLnk">Class</a></li>
-                        <li class="active"><a id="foodLnk">Food</a></li>
+                        <li class="active"><a id="classLnk">Class</a></li>
+                        <li><a id="foodLnk">Food</a></li>
                         <li><a id="userLnk">User<img class="picFormating" src="../../pics/UserPic.png"></a></li>
                     </ul>
                 </div>
             </div>
 
-            <div id="food-container">
-                <div id="foodPageTitleBox"><h1>Food</h1></div>
+            <div id="class-container">
+                <div id="classPageTitleBox"><h1>Class</h1></div>
 
                 <div id="searchBox">
-                    <input type="text" id="foodSearch" placeholder="Search">
+<!--                    <input type="text" id="classSearch" placeholder="Search">-->
+                    Search
                 </div>
 
                 <div id="tableBox">
-                    <table id="food-table">
+                    <table id="class-table">
                         <thead>
                         <tr>
-                            <th>Number</th>
-                            <th>Food</th>
-                            <th>Number of Orders</th>
+                            <th>Lastname</th>
+                            <th>Firstname</th>
+                            <th>Class</th>
                             <th>
                                 <button id="deleteBtn">
                                     <img id="deleteImg" src="../../pics/delete.png">
@@ -52,7 +53,7 @@
             </div>
             <div id="BtnBox">
                 <Button id="importBtn">Import by CSV</Button>
-                <button id="addMealBtn">Add Meal</button>
+                <button id="addCustomerBtn">Add Customer</button>
             </div>
         </div>
 
@@ -63,7 +64,7 @@
                 <h1>Import Meals by .csv</h1>
 
                 <p>Please, keep the content to the format: <br></p>
-                <p class='codeFormatStyle'>Number;Name;Ingredients <br></p>
+                <p class='codeFormatStyle'>Lastname;Firstname;Class <br></p>
                 <p>(--> Ingredients are seperated by ',')</p>
 
                 <div id="uploadBox">
@@ -81,18 +82,18 @@
                 <h1>Add a meal</h1>
 
                 <div id="input-Container">
-                    <div class="inputPreText">Number:</div>
-                    <div class="inputBox"><input type="text" id="numberInput" name="fnumber"></div>
-                    <div class="inputPreText">Name:</div>
-                    <div class="inputBox"><input type="text" id="nameInput" name="fname"></div>
-                    <div class="inputPreText">Ingredients</div>
-                    <div class="inputBox"><input type="text" id="ingredientsInput" name="fingredients"></div>
+                    <div class="inputPreText">Lastname:</div>
+                    <div class="inputBox"><input type="text" id="lastNameInput" name="fnumber"></div>
+                    <div class="inputPreText">Firstname:</div>
+                    <div class="inputBox"><input type="text" id="firstNameInput" name="fname"></div>
+                    <div class="inputPreText">Class: </div>
+                    <div class="inputBox"><input type="text" id="classInput" name="fingredients"></div>
                 </div>
                 <div class='confirmBtnBox'><button id="addBtn">Add</button></div>
             </div>
         </div>
 
-        <script src="food-controller.js" type="module"></script>
+        <script src="class-controller.js" type="module"></script>
         <script src="../../navbar/navbar.js"></script>
     </body>
 </html>
