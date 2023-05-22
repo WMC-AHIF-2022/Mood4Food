@@ -30,8 +30,11 @@ async function refresh(){
     
     tableBody.innerHTML = '';
     for(let i = 0; i < customers.length; i++){
+        //console.log(customers[i]);
         const row = document.createElement("tr");
         tableBody.appendChild(row);
+        row.id = customers[i].id;
+        //row.insertCell(0).innerHTML = `<div>${customers[i].id}</div>`;
         row.insertCell(0).innerHTML = `${customers[i].lastname}`;
         row.insertCell(1).innerHTML = `${customers[i].firstname}`;
         row.insertCell(2).innerHTML = `${customers[i].className}`;
@@ -41,7 +44,7 @@ async function refresh(){
 
 ///sends an DELETE-Request to the server for the specific index parameter.
 async function deleteCustomer(index:number){
-    await fetchRestEndpoint(`http://localhost:3000/customer/${index}`,"DELETE");
+    await fetchRestEndpoint(`http://localhost:3000/customers/${index}`,"DELETE");
 }
 ///Gathers the data from the input elements and sends an object to the server with a POST-Request.
 async function addCustomerByInputElements(){
@@ -158,7 +161,8 @@ deleteBtn.addEventListener('click', async()=>{
     for(let x = 0;x < inputElements.length; x++){
         const curElement = inputElements.item(x) as HTMLInputElement;
         if(curElement.type == "checkbox" && curElement.checked == true){
-            activeList.push(curElement.parentElement!.parentElement!.firstElementChild!.innerHTML);
+            console.log(curElement.parentElement!.parentElement!.id);
+            activeList.push(curElement.parentElement!.parentElement!.id);
         }
     }
 
