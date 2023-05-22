@@ -1,13 +1,63 @@
 import {Food} from "../../../server/collective/Food";
 import {Person} from "../../../server/collective/Person";
-import {OrderEntry} from "../../../server/collective/OrderEntry";
+import { OrderEntry } from "../../../server/collective/OrderEntry";
+import {OrderDay} from "../../../server/collective/Orderday";
 
-function  OrderFood(): void{
 
-    console.log("Hello Wolrd");
+const Host_URL = "http://localhost:3000/orderdays";
 
+let gridForOrderdays = document.getElementById("FoodOrders");
+
+
+
+window.onload = async() =>{
+    await getOrderdays();
 }
 
+async function getOrderdays(){
+
+    const response = await fetch(Host_URL);
+    let htmlDivString: string = "";
+
+    if(response.ok){
+        const orderdays = await response.json();
+        
+        for(let i = 0; i < orderdays.length; i++){
+           // let formattedDate = (moment(orderdays[i].orderDate)).format('DD-MMM');
+           
+            //datum so formatieren das man in das Format dd-mm kommt
+            let splittedDate = orderdays[i].orderDate.split('-');
+            let formattedDate = splittedDate[1] + "-" + splittedDate[2];
+
+            //datum zu Wochentag
+            let d = new Date(orderdays[i].orderDate);
+            let dayName = gsDayNames[d.getDay()];
+
+            //Uhrzeit formatieren 
+            let splittedDeadLine = orderdays[i].deadline.split(':');
+            let formattedDeadLine = splittedDeadLine[0] + ":" + splittedDeadLine[1];
+
+            htmlDivString += `<div class="Tile DateInGrid">${formattedDate}<div class="Description">${dayName} <br> Deadline: ${formattedDeadLine}<button type="button" class="btn btn-success Button" >Kebab</button></div></div> `           
+        }
+
+    }
+    if(gridForOrderdays != null){
+        gridForOrderdays.innerHTML = htmlDivString
+
+    }
+    
+}
+
+
+var gsDayNames = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ];
 
 
 
