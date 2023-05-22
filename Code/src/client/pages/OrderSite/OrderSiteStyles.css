@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+
 body{
     background-color: #EDF1D6;
 }
@@ -8,19 +10,14 @@ body{
 }
 
 
-
 .Title{
     height: 100px;
-    width: 200px; 
-   
-
-    
+    width: 200px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
-    top: 100px;  
-
-
+    top: 100px;
     background-color: #f6faf5;
+    font-family: 'Inconsolata', monospace;
 }
 
 .Description{
@@ -38,9 +35,7 @@ body{
     margin-top: auto;  
     background-color : #9DC08B;
     color: #000000;
-
-   
-     	
+    font-family: 'Inconsolata', monospace;
 }
 
 .Grid {
@@ -57,19 +52,17 @@ body{
     height: 300px;  
     width: 200px;   
     position: relative;
-
+    font-family: 'Inconsolata', monospace;
 }
 
 
 
 .Button{
-
-  
     width: 172px;
     height: 42px;
     left: 72px;
     margin-top: 70px;
-
+    font-family: 'Inconsolata', monospace;
 }
 
 
@@ -86,10 +79,44 @@ body{
 }
 #buttonPlacement{
     border-radius: 5px;
-    border-color: black;
-    margin-left: 1vw;
-    height: 100%;
+    color: white;
+    background-color: #344230;
+    outline-color: #32412f;
+    margin-left: -10px;
+    height: 170%;
+    width: 20%;
 }
 
+#BtnBox{
+    grid-row: 3;
+    height: fit-content;
+    text-align: center;
+    color: #1a6000;
+    padding: 0.75cm 0;
+}
 
+#page-container{
+    display: grid;
+    height: inherit;
+    margin-left: 1.5%;
+
+    grid-template-rows: auto 1fr auto;
+}
+
+#class-container{
+    padding: 0.75cm 0.75cm 0;
+    display: grid;
+    grid-gap: 10px;
+    margin-left: 2.5%;
+    margin-right: 5%;
+    grid-row: 2;
+    grid-template-rows: fit-content(50%) fit-content(50%) auto;
+    overflow: auto;
+    font-family: 'Inconsolata', monospace;
+}
+#RemakeBox{
+    margin-left: 2%;
+    margin-right: 2%;
+    font-family: 'Inconsolata', monospace;
+}
 
