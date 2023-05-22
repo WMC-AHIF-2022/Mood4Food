@@ -56,6 +56,10 @@ html{
     padding: 0 10px;
 }
 
+#navList li:last-child{
+    width: auto;
+}
+
 .active{
     background-color: #32412f;
 }

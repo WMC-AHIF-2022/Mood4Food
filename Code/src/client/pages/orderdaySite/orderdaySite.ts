@@ -2,8 +2,6 @@ import { OrderEntry } from "../../../server/collective/OrderEntry";
 
 const Host_URL = "http://localhost:3000/orderdays";
 
-
-
 ///Updates the meal-table by fetching the data from the server
 async function refresh1(){
     console.log(Host_URL)

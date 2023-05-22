@@ -27,7 +27,8 @@ export class DB {
             `create table if not exists Customer(
                 id INTEGER NOT NULL PRIMARY KEY,
                 lastname TEXT NOT NULL,
-                firstname TEXT NOT NULL
+                firstname TEXT NOT NULL,
+                className TEXT
             ) strict`
         );
 
