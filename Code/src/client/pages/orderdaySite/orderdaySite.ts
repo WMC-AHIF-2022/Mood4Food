@@ -237,3 +237,6 @@ export async function getAllOrders(){
    
 
 */
+
+
+// write a loop with a counter to 10

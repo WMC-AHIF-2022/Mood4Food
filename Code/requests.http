@@ -54,18 +54,6 @@ Content-Type: application/json
 
 ###################################################
 
-POST http://localhost:3000/users/signup HTTP/1.1
-Content-Type: application/json
-
-{
-  "id": "1",
-  "username": "LOL",
-  "password": "125",
-  "teacher": 0
-}
-#########################
-
-#########################
 DELETE http://localhost:3000/food HTTP/1.1
 
 ###################################################
@@ -84,6 +72,7 @@ GET http://localhost:3000/orderdays HTTP/1.1
 ###################################################
 POST http://localhost:3000/orderdays HTTP/1.1
 Content-Type: application/json
+
 {  
   "orderdate": "1.1.2023",
   "deadline": "11:00:00"
