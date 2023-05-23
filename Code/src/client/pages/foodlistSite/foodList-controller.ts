@@ -45,7 +45,8 @@ async function refresh(){
         row.addEventListener('click',(e)=>{
             const target = e.target as HTMLButtonElement;
             if(target.tagName != "INPUT"){
-                window.location.href=`http://localhost:3000/pages/foodSites/${meals[i].id}`;
+                sessionStorage.setItem('selectedFoodItem', meals[i].id);
+                window.location.href=`http://localhost:3000/pages/foodSite`;
             }
         });
     }
@@ -230,7 +231,7 @@ inputElement.addEventListener("keyup", async (event: KeyboardEvent) => {
         row.addEventListener('click',(e)=>{
             const target = e.target as HTMLButtonElement;
             if(target.tagName != "INPUT"){
-                window.location.href=`http://localhost:3000/pages/foodSites/${meals[i].id}`;
+                window.location.href=`http://localhost:3000/pages/foodSite`;
             }
         });
     }

@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+
+* {
+    font-family: 'Inconsolata', monospace;
+}
+
+html, body{
+    overflow: hidden;
+    height: 100%;
+}
+
+#page-container{
+    display: grid;
+    height: inherit;
+    grid-template-rows: auto 1fr auto;
+}
+
+button {
+    transition-duration: 1s;
+    padding:5px;
+    background-color: #32412f;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #1a6000;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #32412f;
+}
