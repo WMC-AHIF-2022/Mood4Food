@@ -40,6 +40,7 @@ customerRouter.post("/", async(req, res) => {
     const firstname: any = req.body.firstName;
     const lastname: any = req.body.lastName;
     const className: any = req.body.className;
+
     if (typeof firstname !== "string" || firstname.trim().length === 0) {
         res.status(StatusCodes.BAD_REQUEST).send("firstName missing or not ok");
         return;
