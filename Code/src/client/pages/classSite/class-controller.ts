@@ -20,13 +20,23 @@ let curEl = -1;
 //const home_URL = "http://localhost:3000/food";
 
 window.onload = async() =>{
-    await refresh();
+    await refresh("");
 }
 
 ///Refreshes the meal-table by fetching the data from the server.
-async function refresh(){
+async function refresh(input: string){
     const response = await fetchRestEndpoint("http://localhost:3000/customers", "GET");
     const customers = await response.json();
+
+    if(!(input === "")) {
+        for (let i = 0; i < customers.length; i++) {
+
+            if (!customers[i].lastname.includes(input)) {
+                customers.splice(i, 1);
+                i = -1;
+            }
+        }
+    }
     
     tableBody.innerHTML = '';
     for(let i = 0; i < customers.length; i++){
@@ -62,7 +72,7 @@ async function addCustomerByInputElements(){
     const response = await fetchRestEndpoint('http://localhost:3000/customers',"POST", data);
 
     if(response.ok){
-        await refresh();
+        await refresh("");
         firstNameBox.value = "";
         lastNameBox.value = "";
         classBox.value = "";
@@ -111,7 +121,7 @@ async function insertCustomersFromString(content:string){
 
         //console.log(response);
     }
-    await refresh();
+    await refresh("");
 }
 
 importBtn.addEventListener('click', ()=>{
@@ -175,7 +185,7 @@ deleteBtn.addEventListener('click', async()=>{
             return;
         }
     }
-    await refresh();
+    await refresh("");
 });
 
 ///Sets the display of the white background and all boxes to 'none'
@@ -192,25 +202,7 @@ inputElement.addEventListener("keyup", async (event: KeyboardEvent) => {
     while (tableBodyElement.firstChild) { 
         tableBodyElement.removeChild(tableBodyElement.firstChild); 
     }
-    const response = await fetchRestEndpoint("http://localhost:3000/customers", "GET");
-    const customers = await response.json();
-    for(let i = 0; i < customers.length; i++){
-        
-        if(!customers[i].lastname.includes(inputValue))
-        {           
-            customers.splice(i, 1);
-            i = -1;            
-        }
-    }
-    tableBody.innerHTML = '';
-    for(let i = 0; i < customers.length; i++){
-        const row = document.createElement("tr");
-        tableBody.appendChild(row);
-        row.insertCell(0).innerHTML = `${customers[i].lastname}`;
-        row.insertCell(1).innerHTML = `${customers[i].firstname}`;
-        row.insertCell(2).innerHTML = `${customers[i].className}`;
-        row.insertCell(3).innerHTML = `<input type="checkbox" class="classCheckBox">`;
-    }
 
+    await refresh(inputValue);
     
   });
