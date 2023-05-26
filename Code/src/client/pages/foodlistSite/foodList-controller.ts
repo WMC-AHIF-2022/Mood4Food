@@ -231,6 +231,7 @@ inputElement.addEventListener("keyup", async (event: KeyboardEvent) => {
         row.addEventListener('click',(e)=>{
             const target = e.target as HTMLButtonElement;
             if(target.tagName != "INPUT"){
+                sessionStorage.setItem('selectedFoodItem', meals[i].id);
                 window.location.href=`http://localhost:3000/pages/foodSite`;
             }
         });

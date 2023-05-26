@@ -185,38 +185,32 @@ function closeWhiteOverlay(){
     addingBox.style.display = "none";
 }
 // get Search field
-/*const inputElement = document.getElementById("foodSearch") as HTMLInputElement;
+const inputElement = document.getElementById("classSearch") as HTMLInputElement;
 inputElement.addEventListener("keyup", async (event: KeyboardEvent) => { 
     const inputValue = inputElement.value;    
     const tableBodyElement = document.getElementById("table-body") as HTMLTableSectionElement;
     while (tableBodyElement.firstChild) { 
         tableBodyElement.removeChild(tableBodyElement.firstChild); 
     }
-    const response = await fetchRestEndpoint("http://localhost:3000/food", "GET");
-    const meals = await response.json();
-    for(let i = 0; i < meals.length; i++){
+    const response = await fetchRestEndpoint("http://localhost:3000/customers", "GET");
+    const customers = await response.json();
+    for(let i = 0; i < customers.length; i++){
         
-        if(!meals[i].name.includes(inputValue))
+        if(!customers[i].lastname.includes(inputValue))
         {           
-            meals.splice(i, 1);
+            customers.splice(i, 1);
             i = -1;            
         }
     }
     tableBody.innerHTML = '';
-    for(let i = 0; i < meals.length; i++){
+    for(let i = 0; i < customers.length; i++){
         const row = document.createElement("tr");
         tableBody.appendChild(row);
-        row.insertCell(0).innerHTML = `${meals[i].id}`;
-        row.insertCell(1).innerHTML = `${meals[i].name}`;
-        row.insertCell(2).innerHTML = await getAmountOfOrdersfor(meals[i].id);
-        row.insertCell(3).innerHTML = `<input type="checkbox" class="mealCheckBox">`;
-        row.addEventListener('click',(e)=>{
-            const target = e.target as HTMLButtonElement;
-            if(target.tagName != "INPUT"){
-                window.location.href=`http://localhost:3000/pages/foodSites/${meals[i].id}`;
-            }
-        });
+        row.insertCell(0).innerHTML = `${customers[i].lastname}`;
+        row.insertCell(1).innerHTML = `${customers[i].firstname}`;
+        row.insertCell(2).innerHTML = `${customers[i].className}`;
+        row.insertCell(3).innerHTML = `<input type="checkbox" class="classCheckBox">`;
     }
 
     
-  });*/
+  });

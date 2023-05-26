@@ -10,6 +10,14 @@ html, body{
     height: 100%;
 }
 
+.dataAnchor {
+    width: 100%;
+    display: inline-block;
+    background-color: #9DC08B;
+    border-radius: 5px;
+    padding: 5px;
+}
+
 #page-container{
     display: grid;
     height: inherit;
@@ -21,7 +29,7 @@ html, body{
     grid-row: 2;
     grid-template-rows: auto 1fr;
     grid-gap: 10px;
-    padding-top: 4cm;
+    padding-top: 6cm;
     overflow: auto;
 }
 
