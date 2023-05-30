@@ -27,13 +27,27 @@ html, body{
 #content{
     display: grid;
     grid-row: 2;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto 1fr;
     grid-gap: 10px;
-    padding-top: 6cm;
     overflow: auto;
 }
 
+#returnBox{
+    padding: 0.5cm 1cm;
+}
+
+#returnLnk{
+    color: black;
+    font-size: 1.5em;
+}
+
+#returnLnk:hover{
+    text-decoration-line: underline;
+    color: #32412f;
+}
+
 #contentHeader{
+    margin-top: 10vh;
     padding: 0 1cm;
     font-size: 3em;
     color: black;

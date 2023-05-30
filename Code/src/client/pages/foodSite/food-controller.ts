@@ -12,6 +12,11 @@ window.onload = async() => {
     const numberForm = document.getElementById('numberForm') as HTMLAnchorElement;
     const nameForm = document.getElementById('nameForm') as HTMLAnchorElement;
     const ingredientsBox = document.getElementById('ingredients') as HTMLDivElement;
+    const returnBtn = document.getElementById('returnLnk') as HTMLAnchorElement;
+
+    returnBtn.addEventListener('click', ()=>{
+        window.location.href = "/pages/foodlistSite/";
+    })
 
     const food: Food = await getFoodById(sessionStorage.getItem('selectedFoodItem'));
     const ingredients: string[] = getAllIngredients(food.ingredients);
