@@ -34,3 +34,14 @@ export async function isAuthorized(user: User): Promise<boolean>{
 
     return typeof result !== "undefined" && result.password === user.password
 }
+
+export async function isTeacher(user: User): Promise<boolean>{
+    const db = await  DB.createDBConnection();
+    const stmt = await db.prepare(`SELECT * FROM users WHERE username = ?1`);
+    await stmt.bind({1: user.username});
+    const result: User | undefined = await stmt.get<User>();
+    await stmt.finalize();
+    await db.close();
+
+    return typeof result !== "undefined" && result.teacher == 1;
+}
