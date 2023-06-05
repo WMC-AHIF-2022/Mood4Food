@@ -5,6 +5,11 @@ interface Food {
     name: string,
     ingredients: string
 }
+const btnLogout = document.getElementById('logoutButton')as HTMLButtonElement;
+btnLogout.addEventListener("click", () => {
+    sessionStorage.clear();
+    window.location.href="/";
+})
 
 window.onload = async() => {
     //alert(sessionStorage.getItem('selectedFoodItem'));

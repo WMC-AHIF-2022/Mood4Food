@@ -1,7 +1,11 @@
 import { OrderEntry } from "../../../server/collective/OrderEntry";
 
 const Host_URL = "http://localhost:3000/orderdays";
-
+const btnLogout = document.getElementById('logoutButton') as HTMLButtonElement;
+btnLogout.addEventListener("click", () => {
+    sessionStorage.clear();
+    window.location.href="/";
+})
 ///Updates the meal-table by fetching the data from the server
 async function refresh1(){
     console.log(Host_URL)

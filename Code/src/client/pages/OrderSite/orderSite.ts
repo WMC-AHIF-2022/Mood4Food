@@ -7,6 +7,12 @@ import {OrderDay} from "../../../server/collective/Orderday";
 const Host_URL = "http://localhost:3000/orderdays";
 
 let gridForOrderdays = document.getElementById("FoodOrders");
+const btnLogout = document.getElementById('logoutButton') as HTMLButtonElement;
+
+btnLogout.addEventListener("click", () => {
+    sessionStorage.clear();
+    window.location.href="/";
+})
 
 
 

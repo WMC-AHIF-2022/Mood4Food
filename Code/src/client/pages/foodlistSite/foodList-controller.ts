@@ -10,6 +10,12 @@ const addingBox = document.getElementById('addingBox') as HTMLDivElement;
 const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement;
 const confirmImportBtn = document.getElementById('confirmBtn') as HTMLButtonElement;
 const closeBtns = document.getElementsByClassName('closeBtn') as HTMLCollection;
+const btnLogout = document.getElementById('logoutButton') as HTMLButtonElement;
+btnLogout.addEventListener("click", () => {
+    sessionStorage.clear();
+    window.location.href="/";
+})
+
 for(let x = 0; x < closeBtns.length;x++){
     closeBtns[x].addEventListener('click',()=>{
         closeWhiteOverlay();
