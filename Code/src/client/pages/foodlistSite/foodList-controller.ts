@@ -20,7 +20,7 @@ let curEl = -1;
 //const home_URL = "http://localhost:3000/food";
 
 window.onload = async() =>{
-    await refresh();
+    await refresh("");
 }
 
 async function getAmountOfOrdersfor(index: number): Promise<string>{
@@ -30,9 +30,19 @@ async function getAmountOfOrdersfor(index: number): Promise<string>{
 }
 
 ///Refreshes the meal-table by fetching the data from the server.
-async function refresh(){
+async function refresh(input: string){
     const response = await fetchRestEndpoint("http://localhost:3000/food", "GET");
     const meals = await response.json();
+
+    if(!(input === "")) {
+        for (let i = 0; i < meals.length; i++) {
+
+            if (!meals[i].name.includes(input)) {
+                meals.splice(i, 1);
+                i = -1;
+            }
+        }
+    }
     
     tableBody.innerHTML = '';
     for(let i = 0; i < meals.length; i++){
@@ -45,7 +55,8 @@ async function refresh(){
         row.addEventListener('click',(e)=>{
             const target = e.target as HTMLButtonElement;
             if(target.tagName != "INPUT"){
-                window.location.href=`http://localhost:3000/pages/foodSites/${meals[i].id}`;
+                sessionStorage.setItem('selectedFoodItem', meals[i].id);
+                window.location.href=`http://localhost:3000/pages/foodSite`;
             }
         });
     }
@@ -76,7 +87,7 @@ async function addMealByInputElements(){
     const response = await fetchRestEndpoint('http://localhost:3000/food',"POST", data);
 
     if(response.ok){
-        await refresh();
+        await refresh("");
         numberBox.value = "";
         nameBox.value = "";
         ingredientsBox.value = "";
@@ -129,7 +140,7 @@ async function insertMealsFromString(content:string){
             alert(`${name} is already in the list`);
         }
     }
-    await refresh();
+    await refresh("");
 }
 
 importBtn.addEventListener('click', ()=>{
@@ -192,7 +203,7 @@ deleteBtn.addEventListener('click', async()=>{
             return;
         }
     }
-    await refresh();
+    await refresh("");
 });
 
 ///Sets the display of the white background and all boxes to 'none'
@@ -209,31 +220,6 @@ inputElement.addEventListener("keyup", async (event: KeyboardEvent) => {
     while (tableBodyElement.firstChild) { 
         tableBodyElement.removeChild(tableBodyElement.firstChild); 
     }
-    const response = await fetchRestEndpoint("http://localhost:3000/food", "GET");
-    const meals = await response.json();
-    for(let i = 0; i < meals.length; i++){
-        
-        if(!meals[i].name.includes(inputValue))
-        {           
-            meals.splice(i, 1);
-            i = -1;            
-        }
-    }
-    tableBody.innerHTML = '';
-    for(let i = 0; i < meals.length; i++){
-        const row = document.createElement("tr");
-        tableBody.appendChild(row);
-        row.insertCell(0).innerHTML = `${meals[i].id}`;
-        row.insertCell(1).innerHTML = `${meals[i].name}`;
-        row.insertCell(2).innerHTML = await getAmountOfOrdersfor(meals[i].id);
-        row.insertCell(3).innerHTML = `<input type="checkbox" class="mealCheckBox">`;
-        row.addEventListener('click',(e)=>{
-            const target = e.target as HTMLButtonElement;
-            if(target.tagName != "INPUT"){
-                window.location.href=`http://localhost:3000/pages/foodSites/${meals[i].id}`;
-            }
-        });
-    }
 
-    
+    await refresh(inputValue);
   });

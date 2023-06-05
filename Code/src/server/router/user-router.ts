@@ -1,6 +1,6 @@
 import express from "express";
 import {StatusCodes} from "http-status-codes";
-import {addUser, getAllUsers, isAuthorized} from "../collective/user-repository";
+import {addUser, getAllUsers, isAuthorized, isTeacher} from "../collective/user-repository";
 import {User} from "../collective/user";
 
 export const userRouter = express.Router();
@@ -39,15 +39,14 @@ userRouter.post("/login", async (request, response) => {
         username: username,
         password: password
     }
-
     const isUserAuthorized: boolean = await isAuthorized(user);
     if (isUserAuthorized){
-        response.sendStatus(StatusCodes.OK);
+        const isHigherEntity = `${await isTeacher(user)}`;
+        response.status(StatusCodes.OK).json(isHigherEntity);
     }
     else {
         response.sendStatus(StatusCodes.UNAUTHORIZED);
     }
-
 })
 
 userRouter.get("/", async (request, response) => {

@@ -22,6 +22,7 @@ export async function login() {
         loginError.innerHTML = "Login failed";
     }
     else{
+        sessionStorage.setItem('web-isTeacher', await response.json());
         sessionStorage.setItem('web-user', username);
         window.location.href = "pages/OrderSite/";
     }
@@ -34,7 +35,8 @@ export async function signup() {
     const elementPassword = <HTMLInputElement>document.getElementById("password");
     const password = elementPassword.value;
     const elementIsTeacher = <HTMLInputElement>document.getElementById("checkBoxTeacher");
-    const isTeacher = elementPassword.checked;
+    const isTeacher = elementIsTeacher.checked;
+    console.log(isTeacher);
     let teacher = 0;
     if(isTeacher){
         teacher = 1;

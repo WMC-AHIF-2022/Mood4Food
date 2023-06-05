@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+
+* {
+    font-family: 'Inconsolata', monospace;
+    color: #EDF1D6;
+}
+
+html, body{
+    overflow: hidden;
+    height: 100%;
+}
+
+.dataAnchor {
+    width: 100%;
+    display: inline-block;
+    background-color: #9DC08B;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#page-container{
+    display: grid;
+    height: inherit;
+    grid-template-rows: auto 1fr auto;
+}
+
+#content{
+    display: grid;
+    grid-row: 2;
+    grid-template-rows: auto auto 1fr;
+    grid-gap: 10px;
+    overflow: auto;
+}
+
+#returnBox{
+    padding: 0.5cm 1cm;
+}
+
+#returnLnk{
+    color: black;
+    font-size: 1.5em;
+}
+
+#returnLnk:hover{
+    text-decoration-line: underline;
+    color: #32412f;
+}
+
+#contentHeader{
+    margin-top: 10vh;
+    padding: 0 1cm;
+    font-size: 3em;
+    color: black;
+}
+
+#contentBody{
+    background-color: #609966;
+    padding: 20px 1cm;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto auto 1fr;
+    grid-gap: 20px;
+}
+
+#numberBox{
+    font-size: 1.5em;
+    grid-row: 1;
+    grid-column: 1;
+}
+
+#nameBox {
+    font-size: 1.5em;
+    grid-row: 2;
+    grid-column: 1;
+}
+
+#ingredientBox{
+    grid-row: 3;
+    font-size: 1.5em;
+    grid-column: 1;
+}
+
+.ingredient{
+    font-size: 1em;
+    background-color: #32412f;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+#orderList{
+    grid-row: 1/span 3;
+    grid-column: 2;
+    background-color: #9DC08B;
+    border-radius: 10px;
+}
+
+#contentBody div{
+    /*background-color: #32412f;*/
+}
+
+#bottom{
+    background-color: #609966;
+    height: 2cm;
+}
+
+button {
+    transition-duration: 1s;
+    padding:5px;
+    background-color: #32412f;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #1a6000;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #32412f;
+}

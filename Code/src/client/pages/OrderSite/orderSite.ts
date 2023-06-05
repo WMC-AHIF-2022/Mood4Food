@@ -12,6 +12,7 @@ let gridForOrderdays = document.getElementById("FoodOrders");
 
 window.onload = async() =>{
     await getOrderdays();
+    console.log(sessionStorage.getItem('web-isTeacher'));
 }
 
 async function getOrderdays(){
