@@ -11,14 +11,12 @@ const addingBox = document.getElementById('addingBox') as HTMLDivElement;
 const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement;
 const confirmImportBtn = document.getElementById('confirmBtn') as HTMLButtonElement;
 const closeBtns = document.getElementsByClassName('closeBtn') as HTMLCollection;
-<<<<<<< HEAD
+
 const btnLogout = document.getElementById('logoutButton') as HTMLButtonElement;
 btnLogout.addEventListener("click", () => {
     sessionStorage.clear();
     window.location.href="/";
 })
-=======
->>>>>>> 66fc009368ba96a142bbfcbbfba92957b6bdbece
 
 for(let x = 0; x < closeBtns.length;x++){
     closeBtns[x].addEventListener('click',()=>{
