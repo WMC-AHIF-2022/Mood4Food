@@ -18,9 +18,10 @@ window.onload = async() => {
         window.location.href = "/pages/foodlistSite/";
     })
 
-    const food: Food = await getFoodById(sessionStorage.getItem('selectedFoodItem'));
+    const food: Food = await getFoodById(sessionStorage.getItem('selectedFoodItem')as string)as Food;
     const ingredients: string[] = getAllIngredients(food.ingredients);
     let html = "";
+    
 
     for(let x = 0; x < ingredients.length; x++){
         html += `<div class="ingredient">${ingredients[x]}</div>`;
