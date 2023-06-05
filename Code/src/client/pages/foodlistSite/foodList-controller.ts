@@ -1,6 +1,7 @@
 import {fetchRestEndpoint} from "../../utils/client-server.js";
 
 const tableBody: HTMLTableSectionElement = document.getElementById('table-body') as HTMLTableSectionElement;
+const deleteBtnH = document.getElementById('deleteBtnH');
 const importBtn = document.getElementById('importBtn') as HTMLButtonElement;
 const whiteOverlay = document.getElementById('whiteOverlay') as HTMLDivElement;
 const addMealBtn = document.getElementById('addMealBtn') as HTMLButtonElement;
@@ -10,11 +11,14 @@ const addingBox = document.getElementById('addingBox') as HTMLDivElement;
 const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement;
 const confirmImportBtn = document.getElementById('confirmBtn') as HTMLButtonElement;
 const closeBtns = document.getElementsByClassName('closeBtn') as HTMLCollection;
+<<<<<<< HEAD
 const btnLogout = document.getElementById('logoutButton') as HTMLButtonElement;
 btnLogout.addEventListener("click", () => {
     sessionStorage.clear();
     window.location.href="/";
 })
+=======
+>>>>>>> 66fc009368ba96a142bbfcbbfba92957b6bdbece
 
 for(let x = 0; x < closeBtns.length;x++){
     closeBtns[x].addEventListener('click',()=>{
@@ -22,10 +26,24 @@ for(let x = 0; x < closeBtns.length;x++){
     });
 }
 let curEl = -1;
+let isTeacher: boolean = false;
 
 //const home_URL = "http://localhost:3000/food";
 
+/*<tr>
+
+    <th>
+
+        </th>
+        </tr>*/
+
 window.onload = async() =>{
+    isTeacher = sessionStorage.getItem("web-isTeacher") === "true";
+    if(!isTeacher){
+        deleteBtnH.remove();
+        addMealBtn.remove();
+        importBtn.remove();
+    }
     await refresh("");
 }
 
@@ -49,7 +67,7 @@ async function refresh(input: string){
             }
         }
     }
-    
+
     tableBody.innerHTML = '';
     for(let i = 0; i < meals.length; i++){
         const row = document.createElement("tr");
@@ -57,7 +75,8 @@ async function refresh(input: string){
         row.insertCell(0).innerHTML = `${meals[i].id}`;
         row.insertCell(1).innerHTML = `${meals[i].name}`;
         row.insertCell(2).innerHTML = await getAmountOfOrdersfor(meals[i].id);
-        row.insertCell(3).innerHTML = `<input type="checkbox" class="mealCheckBox">`;
+        if(isTeacher)
+            row.insertCell(3).innerHTML = `<input type="checkbox" class="mealCheckBox">`;
         row.addEventListener('click',(e)=>{
             const target = e.target as HTMLButtonElement;
             if(target.tagName != "INPUT"){

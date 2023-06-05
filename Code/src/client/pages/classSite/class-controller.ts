@@ -1,6 +1,7 @@
 import {fetchRestEndpoint} from "../../utils/client-server.js";
 
 const tableBody: HTMLTableSectionElement = document.getElementById('table-body') as HTMLTableSectionElement;
+const deleteBtnH = document.getElementById('deleteBtnH');
 const importBtn = document.getElementById('importBtn') as HTMLButtonElement;
 const whiteOverlay = document.getElementById('whiteOverlay') as HTMLDivElement;
 const addMealBtn = document.getElementById('addCustomerBtn') as HTMLButtonElement;
@@ -20,11 +21,18 @@ for(let x = 0; x < closeBtns.length;x++){
         closeWhiteOverlay();
     });
 }
+let isTeacher: boolean = false;
 let curEl = -1;
 
 //const home_URL = "http://localhost:3000/food";
 
 window.onload = async() =>{
+    isTeacher = sessionStorage.getItem("web-isTeacher") === "true";
+    if(!isTeacher){
+        deleteBtnH.remove();
+        addMealBtn.remove();
+        importBtn.remove();
+    }
     await refresh("");
 }
 
@@ -53,7 +61,8 @@ async function refresh(input: string){
         row.insertCell(0).innerHTML = `${customers[i].lastname}`;
         row.insertCell(1).innerHTML = `${customers[i].firstname}`;
         row.insertCell(2).innerHTML = `${customers[i].className}`;
-        row.insertCell(3).innerHTML = `<input type="checkbox" class="classCheckBox">`;
+        if(isTeacher)
+            row.insertCell(3).innerHTML = `<input type="checkbox" class="classCheckBox">`;
     }
 }
 
