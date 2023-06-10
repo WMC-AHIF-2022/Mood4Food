@@ -10,6 +10,11 @@ btnLogout.addEventListener("click", () => {
     sessionStorage.clear();
     window.location.href="/";
 })
+const btnAddMealToOrderday = document.getElementById('addToOrderDay')as HTMLButtonElement;
+btnAddMealToOrderday.addEventListener("click", () => {
+     let idElement = document.getElementById('numberForm');
+     console.log(idElement?.innerHTML);
+})
 
 window.onload = async() => {
     //alert(sessionStorage.getItem('selectedFoodItem'));

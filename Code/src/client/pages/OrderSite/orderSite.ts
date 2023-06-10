@@ -18,10 +18,11 @@ btnLogout.addEventListener("click", () => {
 
 window.onload = async() =>{
     await getOrderdays();
-    console.log(sessionStorage.getItem('web-isTeacher'));
+    
+    
     document.addEventListener('click', (event: MouseEvent) => {
         const targetElement = event.target as HTMLElement;
-      
+        
         // Überprüfen, ob das Ziellement selbst ein Button ist
         if (targetElement.classList.contains('bestellButton') ) {
           
@@ -45,7 +46,13 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
     for(let i = 0; i < orderDays.length;i++){
     if(orderDays[i].orderDate.toString().includes(dateString)){
       let id = i  + 1;
-        sessionStorage.setItem('orderDayID',id.toString());
+        if(new Date < new Date(orderDays[i].orderDate)){
+          sessionStorage.setItem('orderDayID',id.toString());
+        }
+        else{
+          alert('Zu spät');         
+          return;
+        }
       }
     }
   }
@@ -57,7 +64,7 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
     }
   }
   console.log(sessionStorage.getItem('orderDayID'));
-  console.log(sessionStorage.getItem('userID'));
+  console.log(sessionStorage.getItem('userID'));  
   window.location.href = '../foodlistSite/index.html';
 }
 async function getOrderdays(){
