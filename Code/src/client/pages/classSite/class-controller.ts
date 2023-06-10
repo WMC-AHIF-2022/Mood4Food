@@ -29,7 +29,7 @@ let curEl = -1;
 window.onload = async() =>{
     isTeacher = sessionStorage.getItem("web-isTeacher") === "true";
     if(!isTeacher){
-        deleteBtnH.remove();
+        deleteBtnH?.remove();
         addMealBtn.remove();
         importBtn.remove();
     }

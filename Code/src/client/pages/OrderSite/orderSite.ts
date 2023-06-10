@@ -8,7 +8,6 @@ const Host_URL = "http://localhost:3000/orderdays";
 
 let gridForOrderdays = document.getElementById("FoodOrders");
 const btnLogout = document.getElementById('logoutButton') as HTMLButtonElement;
-
 btnLogout.addEventListener("click", () => {
     sessionStorage.clear();
     window.location.href="/";
@@ -19,13 +18,42 @@ btnLogout.addEventListener("click", () => {
 window.onload = async() =>{
     await getOrderdays();
     console.log(sessionStorage.getItem('web-isTeacher'));
+    document.addEventListener('click', (event: MouseEvent) => {
+        const targetElement = event.target as HTMLElement;
+      
+        // Überprüfen, ob das Ziellement selbst ein Button ist
+        if (targetElement.classList.contains('bestellButton') ) {
+          
+          /*const button = targetElement as HTMLButtonElement;
+          // Code zum Entfernen des Buttons
+          button.parentNode?.removeChild(button);*/          
+          
+          prepareOrderEntry(targetElement.parentElement?.parentElement)
+          
+        }
+        
+        
+      });
 }
-
+async function prepareOrderEntry(theHtmlElementparams:any) {
+  const response = await fetch(Host_URL);
+  const dateElement = theHtmlElementparams?.querySelector('div.dateInformation') as HTMLDivElement;
+  let dateString:string|null = dateElement.textContent;
+  if(dateString !== null){
+    let orderDays:OrderDay[] = await response.json();     
+    for(let i = 0; i < orderDays.length;i++){
+    if(orderDays[i].orderDate.toString().includes(dateString)){
+      let id = i  + 1;
+        sessionStorage.setItem('orderDayID',id.toString());
+      }
+    }
+  }
+  
+}
 async function getOrderdays(){
 
     const response = await fetch(Host_URL);
-    let htmlDivString: string = "";
-
+    let htmlDivString: string = "";    
     if(response.ok){
         const orderdays = await response.json();
         
@@ -44,7 +72,7 @@ async function getOrderdays(){
             let splittedDeadLine = orderdays[i].deadline.split(':');
             let formattedDeadLine = splittedDeadLine[0] + ":" + splittedDeadLine[1];
 
-            htmlDivString += `<div class="Tile DateInGrid">${formattedDate}<div class="Description">${dayName} <br> Deadline: ${formattedDeadLine}<button type="button" class="btn btn-success Button" >Kebab</button></div></div> `           
+            htmlDivString += `<div class="Tile DateInGrid"><div class="dateInformation">${formattedDate}</div><div class="Description">${dayName} <br> Deadline: ${formattedDeadLine}<button type="button" class="btn btn-success Button bestellButton" >Kebab</button></div></div> `           
         }
 
     }
