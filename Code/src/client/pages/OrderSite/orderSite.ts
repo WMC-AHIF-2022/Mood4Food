@@ -58,7 +58,7 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
   }
   console.log(sessionStorage.getItem('orderDayID'));
   console.log(sessionStorage.getItem('userID'));
-  
+  window.location.href = '../foodlistSite/index.html';
 }
 async function getOrderdays(){
 
