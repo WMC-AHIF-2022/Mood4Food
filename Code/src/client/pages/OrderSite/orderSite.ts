@@ -2,6 +2,7 @@ import {Food} from "../../../server/collective/Food";
 import {Person} from "../../../server/collective/Person";
 import { OrderEntry } from "../../../server/collective/OrderEntry";
 import {OrderDay} from "../../../server/collective/Orderday";
+import {User} from "../../../server/collective/user";
 
 
 const Host_URL = "http://localhost:3000/orderdays";
@@ -48,6 +49,15 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
       }
     }
   }
+  const userResponse = await fetch('http://localhost:3000/users');
+  let users:User[] = await userResponse.json();
+  for(let i = 0;  i< users.length;i++){
+    if(users[i].username === sessionStorage.getItem('web-user')){
+      sessionStorage.setItem('userID',users[i].id.toString());
+    }
+  }
+  console.log(sessionStorage.getItem('orderDayID'));
+  console.log(sessionStorage.getItem('userID'));
   
 }
 async function getOrderdays(){
