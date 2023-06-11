@@ -25,8 +25,8 @@ POST http://localhost:3000/orderentries HTTP/1.1
 Content-Type: application/json
 
 {
-  "odID": "1",
-  "customerID": "1",
+  "odID": "2",
+  "customerID": "2",
   "mealID": "3"
 }
 

@@ -52,7 +52,7 @@ export class DB {
                       ON DELETE CASCADE,
                  CONSTRAINT fk_customer 
                      FOREIGN KEY (customerID) 
-                     REFERENCES Customer(id) 
+                     REFERENCES users(id) 
                      ON DELETE CASCADE,
                  CONSTRAINT fk_food 
                      FOREIGN KEY (mealID) 

@@ -70,9 +70,9 @@ entryRouter.post("/", async(req, res) => {
 
     const db = await DB.createDBConnection();
     // id selection
-    const stmt1 = await db.prepare('select count(*) as "count" from OrderEntry');
+    const stmt1 = await db.prepare('select count(*) as "count" from OrderEntry');    
     const result1 : { count: number } | undefined = await stmt1.get();
-    await stmt1.finalize();
+    await stmt1.finalize();    
     if(typeof result1 == "undefined"){
         res.status(StatusCodes.CONFLICT).send('Error during id selection');
         return;
@@ -85,15 +85,17 @@ entryRouter.post("/", async(req, res) => {
         const stmt2 = await db.prepare('select id from OrderEntry order by id desc limit 1');
         const result2 = await stmt2.get();
         await stmt2.finalize();
+        console.log('3');
+        console.log(result2);
         if(typeof result2 == "undefined"){
             res.status(StatusCodes.CONFLICT).send('Error during id selection');
             return;
         }
-        result1.count = result2.count++;
-    }
-
-    const id = result1.count;
-    console.log(id);
+        let theID:number=result2.id + 1;
+        console.log(theID);
+        result1.count = theID;
+    }    
+    const id = result1.count;   
 
     //check if odID, customerID and mealID exist
     //odID
@@ -103,9 +105,7 @@ entryRouter.post("/", async(req, res) => {
     await temp.finalize();
 
     //customerID
-    temp = await db.prepare('select count(*) as count from users where id = ?1');
-    console.log('id');
-    console.log(customerID);
+    temp = await db.prepare('select count(*) as count from users where id = ?1');   
     await temp.bind({1:customerID});
     const customerResult = await temp.get();
     await temp.finalize();
@@ -121,10 +121,7 @@ entryRouter.post("/", async(req, res) => {
     if(odResult.count == 0){
         res.status(StatusCodes.BAD_REQUEST).send("orderDay-ID is not appropriate");
         return;
-    }
-    console.log('a');
-    console.log('r');
-    console.log(customerResult);
+    }    
     if(customerResult.count == 0){
         res.status(StatusCodes.BAD_REQUEST).send("customer-ID is not appropriate");
         return;
@@ -133,13 +130,19 @@ entryRouter.post("/", async(req, res) => {
         res.status(StatusCodes.BAD_REQUEST).send("meal-ID is not appropriate");
         return;
     }
-
+    
     // standard process
+    console.log(`id: ${id}`);
+    console.log(`orderDay: ${odID}`);
+    console.log(`customerID: ${customerID}`);
+    console.log(`mealID: ${mealID}`);
+
     const stmt = await db.prepare('insert or ignore into OrderEntry (id, orderDayID, customerID, mealID) values (?1, ?2, ?3, ?4)');
     await stmt.bind({1:id, 2: odID, 3: customerID, 4: mealID});
     const operationResult = await stmt.run();
     await stmt.finalize();
     await db.close();
+    
 
     if(operationResult.changes == null || operationResult.changes !== 1){
         res.status(StatusCodes.BAD_REQUEST).send("db error occurred");
@@ -147,6 +150,7 @@ entryRouter.post("/", async(req, res) => {
     else{
         res.status(StatusCodes.CREATED).json({id: operationResult.lastID});
     }
+    
 });
 
 // update orderEntry
