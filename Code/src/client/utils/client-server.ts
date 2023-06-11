@@ -1,4 +1,4 @@
-export async function fetchRestEndpoint(route: string, httpMethod: "GET" | "POST" | "DELETE", data?: object): Promise<any>{
+export async function fetchRestEndpoint(route: string, httpMethod: "GET" | "POST" | "DELETE"|"PUT", data?: object): Promise<any>{
     let options: any = { method: httpMethod };
 
     if (data){

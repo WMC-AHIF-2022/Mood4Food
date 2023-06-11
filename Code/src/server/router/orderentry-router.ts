@@ -6,6 +6,15 @@ import {OrderEntry} from "../collective/OrderEntry";
 //create router
 export const entryRouter = express.Router();
 
+
+
+
+entryRouter.get("/simple", async(request,response) => {    
+    const db = await DB.createDBConnection();
+    const orders: OrderEntry[] = await db.all<OrderEntry[]>("select * from orderEntry");
+    await db.close();
+    response.status(StatusCodes.OK).json(orders);
+});
 //return all orderEntries
 entryRouter.get("/", async(request,response) => {
     const db = await DB.createDBConnection();
@@ -94,7 +103,9 @@ entryRouter.post("/", async(req, res) => {
     await temp.finalize();
 
     //customerID
-    temp = await db.prepare('select count(*) as count from Customer where id = ?1');
+    temp = await db.prepare('select count(*) as count from users where id = ?1');
+    console.log('id');
+    console.log(customerID);
     await temp.bind({1:customerID});
     const customerResult = await temp.get();
     await temp.finalize();
@@ -111,6 +122,9 @@ entryRouter.post("/", async(req, res) => {
         res.status(StatusCodes.BAD_REQUEST).send("orderDay-ID is not appropriate");
         return;
     }
+    console.log('a');
+    console.log('r');
+    console.log(customerResult);
     if(customerResult.count == 0){
         res.status(StatusCodes.BAD_REQUEST).send("customer-ID is not appropriate");
         return;
@@ -223,7 +237,7 @@ entryRouter.delete("/", async(request, response) => {
         response.sendStatus(StatusCodes.ACCEPTED);
     }
 });
-
+ 
 //delete one orderEntry
 entryRouter.delete("/:id", async(request, response) => {
     const index: number = parseInt(request.params.id);

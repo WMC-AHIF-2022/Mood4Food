@@ -26,7 +26,7 @@ Content-Type: application/json
 
 {
   "odID": "1",
-  "customerID": "0",
+  "customerID": "1",
   "mealID": "3"
 }
 

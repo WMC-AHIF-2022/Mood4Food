@@ -1,3 +1,4 @@
+import { OrderEntry } from "../../../server/collective/OrderEntry.js";
 import {fetchRestEndpoint} from "../../utils/client-server.js";
 
 interface Food {
@@ -11,13 +12,65 @@ btnLogout.addEventListener("click", () => {
     window.location.href="/";
 })
 const btnAddMealToOrderday = document.getElementById('addToOrderDay')as HTMLButtonElement;
-btnAddMealToOrderday.addEventListener("click", () => {
-     let idElement = document.getElementById('numberForm');
-     console.log(idElement?.innerHTML);
-})
 
+ btnAddMealToOrderday.addEventListener("click", () => {
+     addingMeal();
+})
+async function addingMeal(){
+    
+    let idElement = document.getElementById('numberForm');     
+    if(sessionStorage.getItem('orderDayID') !== '-1' && sessionStorage.getItem('userID') !== '-1'){
+        let userID = sessionStorage.getItem('userID');
+        let orderDayID = sessionStorage.getItem('orderDayID');
+        let foodID = Number.parseInt(idElement!.innerHTML);
+        let newOrderEntry:any;       
+        if(userID !== null && orderDayID!== null){
+        newOrderEntry = 
+            {
+            odID: `${orderDayID}`,
+            customerID: `${userID}`,
+            mealID: `${foodID}`
+            };
+        }      
+       
+       let allOrderEntrysPromis = await fetch('http://localhost:3000/orderentries/simple');
+       let allOrderEntrys:any []= await allOrderEntrysPromis.json();       
+       let alreadyEntry = -1;
+       for(let i = 0; i < allOrderEntrys.length;i++){
+        if(allOrderEntrys[i] !== undefined){            
+            const parsedObject: OrderEntry = {
+                name: allOrderEntrys[i].customerID.toString(),
+                food: allOrderEntrys[i].mealID.toString(),
+                date: allOrderEntrys[i].orderDayID.toString(),
+            };
+            if(parsedObject.name == newOrderEntry!.customerID && parsedObject.date == newOrderEntry!.odID){
+                alreadyEntry = allOrderEntrys[i].id;                
+                i = allOrderEntrys.length+1;
+            }        
+        }
+       }       
+       if(alreadyEntry === -1){
+        
+        let theResult = await fetchRestEndpoint('http://localhost:3000/orderentries','POST',newOrderEntry);
+        console.log(theResult);
+        alert('Speiße wurde hinzugefügt');
+       }
+       else{        
+        let theResult = await fetchRestEndpoint(`http://localhost:3000/orderentries/${alreadyEntry}`,'PUT',newOrderEntry);
+        alert('Speiße wurde erneuert');
+       }
+       /*
+       let theResult = fetchRestEndpoint('http://localhost:3000/orderentries','POST',newOrderEntry);
+       console.log(theResult);
+       sessionStorage.setItem('userID','-1');
+       sessionStorage.setItem('orderDayID','-1');*/
+    }
+}
 window.onload = async() => {
     //alert(sessionStorage.getItem('selectedFoodItem'));
+    if(sessionStorage.getItem('orderDayID') !== '-1' && sessionStorage.getItem('userID') !== '-1'){        
+        btnAddMealToOrderday.disabled;
+    }
     const header = document.getElementById('contentHeader') as HTMLDivElement;
     const numberForm = document.getElementById('numberForm') as HTMLAnchorElement;
     const nameForm = document.getElementById('nameForm') as HTMLAnchorElement;
