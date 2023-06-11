@@ -91,8 +91,7 @@ entryRouter.post("/", async(req, res) => {
             res.status(StatusCodes.CONFLICT).send('Error during id selection');
             return;
         }
-        let theID:number=result2.id + 1;
-        console.log(theID);
+        let theID:number=result2.id + 1;        
         result1.count = theID;
     }    
     const id = result1.count;   
@@ -136,8 +135,8 @@ entryRouter.post("/", async(req, res) => {
     console.log(`orderDay: ${odID}`);
     console.log(`customerID: ${customerID}`);
     console.log(`mealID: ${mealID}`);
-
-    const stmt = await db.prepare('insert or ignore into OrderEntry (id, orderDayID, customerID, mealID) values (?1, ?2, ?3, ?4)');
+    
+    const stmt = await db.prepare('insert  into OrderEntry (id, orderDayID, customerID, mealID) values (?1, ?2, ?3, ?4)');
     await stmt.bind({1:id, 2: odID, 3: customerID, 4: mealID});
     const operationResult = await stmt.run();
     await stmt.finalize();

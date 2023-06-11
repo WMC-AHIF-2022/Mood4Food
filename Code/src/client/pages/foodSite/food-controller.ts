@@ -49,8 +49,7 @@ async function addingMeal(){
             }        
         }
        }       
-       if(alreadyEntry === -1){
-        
+       if(alreadyEntry === -1){        
         let theResult = await fetchRestEndpoint('http://localhost:3000/orderentries','POST',newOrderEntry);
         console.log(theResult);
         alert('Speiße wurde hinzugefügt');
