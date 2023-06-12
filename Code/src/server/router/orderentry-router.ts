@@ -195,14 +195,17 @@ entryRouter.put("/:id", async(req, res) => {
         return;
     }
     if(odResult.count == 0){
+        console.log('a');
         res.status(StatusCodes.BAD_REQUEST).send("orderDay-ID is not appropriate");
         return;
     }
     if(customerResult.count == 0){
+        console.log('b');
         res.status(StatusCodes.BAD_REQUEST).send("customer-ID is not appropriate");
         return;
     }
     if(mealResult.count == 0){
+        console.log('c');
         res.status(StatusCodes.BAD_REQUEST).send("meal-ID is not appropriate");
         return;
     }
@@ -219,9 +222,11 @@ entryRouter.put("/:id", async(req, res) => {
     await db.close();
 
     if(operationResult.changes == null || operationResult.changes !== 1){
+        console.log('f');
         res.status(StatusCodes.BAD_REQUEST);
     }
     else{
+        
         res.sendStatus(StatusCodes.ACCEPTED);
     }
 });

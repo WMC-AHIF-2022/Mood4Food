@@ -51,14 +51,16 @@ async function addingMeal(){
        }       
        if(alreadyEntry === -1){        
         let theResult = await fetchRestEndpoint('http://localhost:3000/orderentries','POST',newOrderEntry);
-        console.log(theResult);
-        alert('Speiße wurde hinzugefügt');
+        
+        alert('Speise wurde hinzugefügt');
        }
        else{        
         let theResult = await fetchRestEndpoint(`http://localhost:3000/orderentries/${alreadyEntry}`,'PUT',newOrderEntry);
-        alert('Speiße wurde erneuert');
+        alert('Speise wurde erneuert');
        }
        /*
+       
+       
        let theResult = fetchRestEndpoint('http://localhost:3000/orderentries','POST',newOrderEntry);
        console.log(theResult);
        sessionStorage.setItem('userID','-1');
