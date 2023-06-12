@@ -81,7 +81,7 @@ async function getOrderdays(){
            
             //datum so formatieren das man in das Format dd-mm kommt
             let splittedDate = orderdays[i].orderDate.split('-');
-            let formattedDate = splittedDate[1] + "-" + splittedDate[2];
+            let formattedDate = splittedDate[2] + "-" + splittedDate[1];
 
             //datum zu Wochentag
             let d = new Date(orderdays[i].orderDate);
