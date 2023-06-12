@@ -94,7 +94,7 @@ entryRouter.post("/", async(req, res) => {
         let theID:number=result2.id + 1;        
         result1.count = theID;
     }    
-    const id = result1.count;   
+    const id = result1.count;
 
     //check if odID, customerID and mealID exist
     //odID
