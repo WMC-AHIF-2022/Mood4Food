@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+
+* {
+    font-family: 'Inconsolata', monospace;
+}
+
+html, body{
+    overflow: hidden;
+    height: 100%;
+}
+
+#page-container{
+    display: grid;
+    height: inherit;
+    grid-template-rows: auto 1fr auto;
+}
+
+button {
+    transition-duration: 1s;
+    padding:5px;
+    background-color: #32412f;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #1a6000;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #32412f;
+}
+
+#deleteBtn{
+    float: right;
+    margin-right: 0.825cm;
+}
+
+#deleteImg{
+    height: 20px;
+    width: auto;
+}
+
+#food-container{
+    padding: 0.75cm 0.75cm 0;
+    display: grid;
+    grid-gap: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+    grid-row: 2;
+    grid-template-rows: fit-content(50%) fit-content(50%) auto;
+    overflow: auto;
+}
+
+#food-container div {
+    /*background-color: #646464;*/
+}
+
+#foodPageTitleBox{
+    grid-row: 1;
+}
+
+#foodPageTitleBox h1{
+    font-size: 3em;
+    font-weight: bold;
+}
+
+#searchBox{
+    grid-row: 2;
+}
+
+#BtnBox{
+    grid-row: 3;
+    height: fit-content;
+    text-align: center;
+    padding: 0.75cm 0;
+}
+
+.codeFormatStyle{
+    background-color: #858585;
+    padding: 5px;
+    margin: 0.5em 0 0.5em 0;
+    border-radius: 5px;
+    color: white;
+    width: fit-content;
+}
+
+#tableBox{
+    grid-row: 3;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+#food-table{
+    width: 100%;
+}
+
+#table-body{
+    display: block;
+}
+
+thead, #table-body tr{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+#food-table, th, td {
+    /*border: 1px solid black;*/
+    border-collapse: separate;
+    border-spacing: 0 5px;
+    text-align: center;
+    padding: 10px;
+}
+
+#food-table tr :not(th,button,img){
+    background-color: #c7c7c7;
+}
+
+#food-table tr:hover :not(th,button,img){
+    background-color: #bebebe;
+    cursor: pointer;
+}
+
+tr td:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+tr td:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.mealCheckBox {
+    margin-right: 1cm;
+    float: right;
+}
+/*Searchfield*/
+#foodSearch{
+    width: 60%;
+    max-width: 8cm;
+    height: 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    padding: 5px 10px;
+    background-color: #c7c7c7;
+}
