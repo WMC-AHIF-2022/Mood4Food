@@ -14,10 +14,15 @@ btnLogout.addEventListener("click", () => {
     window.location.href="/";
 })
 
-
+const addODBtn: HTMLButtonElement = document.getElementById("buttonPlacement") as HTMLButtonElement;
 
 window.onload = async() =>{
+    const isTeacher: boolean = sessionStorage.getItem("web-isTeacher") === "1";
     await getOrderdays();
+
+    if(!isTeacher){
+        addODBtn.remove();
+    }
     
     
     document.addEventListener('click', (event: MouseEvent) => {

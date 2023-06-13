@@ -15,9 +15,9 @@ entryRouter.get("/simple", async(request,response) => {
 //return all orderEntries
 entryRouter.get("/", async(request,response) => {
     const db = await DB.createDBConnection();
-    const orders: OrderEntry = await db.all<OrderEntry>("select c.lastname || ' ' || c.firstname as name, f.name as food, od.orderDate as date " +
+    const orders: OrderEntry = await db.all<OrderEntry>("select c.username as name, f.name as food, od.orderDate as date " +
         "FROM orderEntry oe " +
-        "INNER JOIN customer c ON (oe.customerID = c.id)" +
+        "INNER JOIN users c ON (oe.customerID = c.id)" +
         "INNER JOIN food f ON (oe.mealID = f.id)" +
         "INNER JOIN orderDay od ON (oe.orderDayID = od.id)");
     await db.close();
