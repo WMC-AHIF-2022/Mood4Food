@@ -23,7 +23,9 @@ async function addingMeal(){
         let userID = sessionStorage.getItem('userID');
         let orderDayID = sessionStorage.getItem('orderDayID');
         let foodID = Number.parseInt(idElement!.innerHTML);
-        let newOrderEntry:any;       
+        let newOrderEntry:any;  
+        console.log(userID);
+        console.log(orderDayID);     
         if(userID !== null && orderDayID!== null){
         newOrderEntry = 
             {
@@ -43,6 +45,7 @@ async function addingMeal(){
                 food: allOrderEntrys[i].mealID.toString(),
                 date: allOrderEntrys[i].orderDayID.toString(),
             };
+            console.log(newOrderEntry);
             if(parsedObject.name == newOrderEntry!.customerID && parsedObject.date == newOrderEntry!.odID){
                 alreadyEntry = allOrderEntrys[i].id;                
                 i = allOrderEntrys.length+1;

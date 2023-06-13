@@ -41,6 +41,8 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
   const response = await fetch(Host_URL);
   const dateElement = theHtmlElementparams?.querySelector('div.dateInformation') as HTMLDivElement;
   let dateString:string|null = dateElement.textContent;
+  let dateStringParts = dateString.split('-');
+  dateString = dateStringParts[1] +'-'+dateStringParts[0];
   if(dateString !== null){
     let orderDays:OrderDay[] = await response.json();     
     for(let i = 0; i < orderDays.length;i++){
@@ -53,7 +55,7 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
           alert('Zu spät');         
           return;
         }
-      }
+      }      
     }
   }
   const userResponse = await fetch('http://localhost:3000/users');
