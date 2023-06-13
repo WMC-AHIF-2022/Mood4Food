@@ -1,5 +1,6 @@
 import {DB} from "../database";
 import {User} from "./user";
+import bcrypt from "bcrypt";
 
 export async function addUser(user: User){
     const db = await DB.createDBConnection();
@@ -32,7 +33,10 @@ export async function isAuthorized(user: User): Promise<boolean>{
     await stmt.finalize();
     await db.close();
 
-    return typeof result !== "undefined" && result.password === user.password
+    if(result === undefined){
+        return false;
+    }
+    return await bcrypt.compare(user.password, result.password);
 }
 
 export async function isTeacher(user: User): Promise<boolean>{

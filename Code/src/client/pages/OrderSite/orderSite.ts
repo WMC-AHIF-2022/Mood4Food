@@ -67,7 +67,7 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
   console.log(sessionStorage.getItem('orderDayID'));
   console.log(sessionStorage.getItem('userID'));  
   */
-  window.location.href = '../foodlistSite/index.html';
+  window.location.href = '../foodlistSite/';
 }
 async function getOrderdays(){
 

@@ -2,7 +2,9 @@ import express from "express";
 import {StatusCodes} from "http-status-codes";
 import {addUser, getAllUsers, isAuthorized, isTeacher} from "../collective/user-repository";
 import {User} from "../collective/user";
+import bcrypt from "bcrypt";
 
+export const saltRounds: number = 8;
 export const userRouter = express.Router();
 
 userRouter.post("/signup", async function (request, response) {
@@ -21,6 +23,9 @@ userRouter.post("/signup", async function (request, response) {
         password: password,
         teacher: teacher
     }
+
+    user.password = await bcrypt.hash(password, saltRounds);
+
     try {
         await addUser(user);
         response.sendStatus(StatusCodes.OK);

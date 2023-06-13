@@ -13,8 +13,8 @@ btnLogout.addEventListener("click", () => {
 })
 const btnAddMealToOrderday = document.getElementById('addToOrderDay')as HTMLButtonElement;
 
- btnAddMealToOrderday.addEventListener("click", () => {
-     addingMeal();
+ btnAddMealToOrderday.addEventListener ("click", async() => {
+     await addingMeal();
 })
 async function addingMeal(){
     
