@@ -59,7 +59,9 @@ async function addingMeal(){
        else{        
         let theResult = await fetchRestEndpoint(`http://localhost:3000/orderentries/${alreadyEntry}`,'PUT',newOrderEntry);
         alert('Speise wurde erneuert');
-       }
+       }       
+       sessionStorage.setItem('orderDayID','-1');
+       window.location.href = '../OrderSite/index.html';
        /*
        
        
