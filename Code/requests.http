@@ -6,7 +6,7 @@ GET http://localhost:3000/pages/foodSite/4 HTTP/1.1
 
 ###################################################
 
-GET http://localhost:3000/food/45 HTTP/1.1
+GET http://localhost:3000/exporter/pdf HTTP/1.1
 
 ###################################################
 

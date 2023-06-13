@@ -11,6 +11,8 @@
   "author": "YL",
   "license": "ISC",
   "dependencies": {
+    "@pdfme/generator": "^1.2.3",
+    "@pdfme/ui": "^1.2.3",
     "@types/express": "^4.17.17",
     "@types/node": "^18.15.11",
     "cors": "^2.8.5",

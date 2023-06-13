@@ -6,9 +6,6 @@ import {OrderEntry} from "../collective/OrderEntry";
 //create router
 export const entryRouter = express.Router();
 
-
-
-
 entryRouter.get("/simple", async(request,response) => {    
     const db = await DB.createDBConnection();
     const orders: OrderEntry[] = await db.all<OrderEntry[]>("select * from orderEntry");
