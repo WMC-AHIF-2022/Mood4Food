@@ -3,6 +3,7 @@ import {Person} from "../../../server/collective/Person";
 import { OrderEntry } from "../../../server/collective/OrderEntry";
 import {OrderDay} from "../../../server/collective/Orderday";
 import {User} from "../../../server/collective/user";
+import { fetchRestEndpoint } from "../../utils/client-server.js";
 
 
 const Host_URL = "http://localhost:3000/orderdays";
@@ -18,8 +19,15 @@ const addODBtn: HTMLButtonElement = document.getElementById("buttonPlacement") a
 
 window.onload = async() =>{
     const isTeacher: boolean = sessionStorage.getItem("web-isTeacher") === "1";
+    const userResponse = await fetch('http://localhost:3000/users');
+    let users:User[] = await userResponse.json();
+    for(let i = 0;  i< users.length;i++){
+      if(users[i].username === sessionStorage.getItem('web-user')){
+        sessionStorage.setItem('userID',users[i].id.toString());
+      }
+    }
     await getOrderdays();
-
+    await fillOrderdayWithFood();
     if(!isTeacher){
         addODBtn.remove();
     }
@@ -63,13 +71,7 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
       }      
     }
   }
-  const userResponse = await fetch('http://localhost:3000/users');
-  let users:User[] = await userResponse.json();
-  for(let i = 0;  i< users.length;i++){
-    if(users[i].username === sessionStorage.getItem('web-user')){
-      sessionStorage.setItem('userID',users[i].id.toString());
-    }
-  }
+  
   /*
   console.log(sessionStorage.getItem('orderDayID'));
   console.log(sessionStorage.getItem('userID'));  
@@ -107,6 +109,52 @@ async function getOrderdays(){
 
     }
     
+}
+async function getFoodForOrderDay(date:string):Promise<string>{
+  let orderDayID:number = -1;
+  let mealID = '-1';
+  let mealString:string = 'nothing';
+  let user:string = sessionStorage.getItem('userID');  
+  let orderdays = await fetchRestEndpoint('http://localhost:3000/orderdays','GET');  
+  let oDays:OrderDay[] = await orderdays.json();
+  for(let i = 0; i < oDays.length;i++){
+    let dateString:string = oDays[i].orderDate.toString();      
+    if(dateString.includes(date) === true){      
+      orderDayID = i +1;  
+        
+      i = orderdays.length +1;
+    }
+  }
+  let orderentrys = await fetchRestEndpoint('http://localhost:3000/orderentries/simple','GET');  
+  let oEntrys:OrderEntry[] = await orderentrys.json();  
+  for(let i = 0; i< oEntrys.length;i++){ 
+    if(parseInt(oEntrys[i].orderDayID) === parseInt(orderDayID.toString()) && parseInt(oEntrys[i].customerID) === parseInt(user)){   
+        
+      mealID = oEntrys[i].mealID;
+    }
+  } 
+  if(mealID !== '-1'){ 
+    let foodResponse = await fetch(`http://localhost:3000/food/${mealID}`);
+    let food:Food = await foodResponse.json();
+    
+    mealString = food.name;
+  }
+  return mealString;
+}
+async function fillOrderdayWithFood(){
+  
+  const elements = document.querySelectorAll('.dateInformation');
+  for(let i = 0; i < elements.length;i++){
+    let parentelement = elements[i].parentElement;
+    let btnElement = parentelement.querySelector('.bestellButton');
+    let dateElement = parentelement.querySelector('.dateInformation');
+    let dateStringParts = dateElement.innerHTML.split('-');    
+    btnElement.innerHTML = await getFoodForOrderDay(dateStringParts[1]+'-'+dateStringParts[0]);
+  }
+  
+  
+  
+  
 }
 
 

@@ -211,7 +211,7 @@ async function IsDateInDatabase(date: string): Promise<boolean>{
         console.log(orderdays);
 
         for(let i = 0; i < orderdays.length; i++){
-            if(date == orderdays[i].date){
+            if(date == orderdays[i].orderDayID){
                 return true;
             }
         }

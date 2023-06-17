@@ -8,10 +8,10 @@ export interface Food {
 
 export class Food {
     private id: number;
-    private name: String;
-    private ingredients: String;
+    public name: string;
+    private ingredients: string;
 
-    constructor(id: number, name: String, ingredients: String) {
+    constructor(id: number, name: string, ingredients: string) {
         this.id = id;
         this.name = name;
         this.ingredients = ingredients;

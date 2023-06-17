@@ -40,12 +40,12 @@ async function addingMeal(){
        for(let i = 0; i < allOrderEntrys.length;i++){
         if(allOrderEntrys[i] !== undefined){            
             const parsedObject: OrderEntry = {
-                name: allOrderEntrys[i].customerID.toString(),
-                food: allOrderEntrys[i].mealID.toString(),
-                date: allOrderEntrys[i].orderDayID.toString(),
+                customerID: allOrderEntrys[i].customerID.toString(),
+                mealID: allOrderEntrys[i].mealID.toString(),
+                orderDayID: allOrderEntrys[i].orderDayID.toString(),
             };
             
-            if(parsedObject.name == newOrderEntry!.customerID && parsedObject.date == newOrderEntry!.odID){
+            if(parsedObject.customerID == newOrderEntry!.customerID && parsedObject.orderDayID == newOrderEntry!.odID){
                 alreadyEntry = allOrderEntrys[i].id;                
                 i = allOrderEntrys.length+1;
             }        

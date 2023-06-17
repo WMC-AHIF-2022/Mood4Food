@@ -9,6 +9,16 @@ const foodList: Food[] = [];
 //create router
 export const foodRouter = express.Router();
 
-foodRouter.get("/:id", (request, response)=>{
-    response.status(StatusCodes.OK).send(`Hello ${request.params.id}`);
+foodRouter.get("/:id", async(request, response)=>{
+    const id = request.params.id;
+    const db = await DB.createDBConnection();
+    const orders: Food[] = await db.all<Food[]>(`select * from food where id = ${id}`);
+    await db.close();
+    response.status(StatusCodes.OK).send(orders);
+});
+foodRouter.get("/", async(request, response)=>{
+    const db = await DB.createDBConnection();
+    const orders: Food[] = await db.all<Food[]>("select * from food");
+    await db.close();
+    response.status(StatusCodes.OK).json(orders)
 });
