@@ -73,8 +73,8 @@ async function addingMeal(){
 }
 window.onload = async() => {
     //alert(sessionStorage.getItem('selectedFoodItem'));
-    if(sessionStorage.getItem('orderDayID') !== '-1' && sessionStorage.getItem('userID') !== '-1'){        
-        btnAddMealToOrderday.disabled;
+    if(sessionStorage.getItem('orderDayID') === '-1'){               
+        btnAddMealToOrderday.parentElement.removeChild(btnAddMealToOrderday);
     }
     const header = document.getElementById('contentHeader') as HTMLDivElement;
     const numberForm = document.getElementById('numberForm') as HTMLAnchorElement;
