@@ -46,8 +46,8 @@ window.onload = async() =>{
           prepareOrderEntry(targetElement.parentElement?.parentElement)
           
         }
-        
-        
+
+
       });
 }
 async function prepareOrderEntry(theHtmlElementparams:any) {
@@ -100,9 +100,14 @@ async function getOrderdays(){
             let splittedDeadLine = orderdays[i].deadline.split(':');
             let formattedDeadLine = splittedDeadLine[0] + ":" + splittedDeadLine[1];
 
-            htmlDivString += `<div class="Tile DateInGrid"><div class="dateInformation">${formattedDate}</div><div class="Description">${dayName} <br> Deadline: ${formattedDeadLine}<button type="button" class="btn btn-success Button bestellButton" >Kebab</button></div></div> `           
+            const isTeacher: boolean = sessionStorage.getItem("web-isTeacher") === "true";
+            if(!isTeacher){
+                htmlDivString += `<div class="Tile DateInGrid"><div class="dateInformation">${formattedDate}</div><div class="Description">${dayName} <br> Deadline: ${formattedDeadLine}<button type="button" class="btn btn-success Button bestellButton" >Kebab</button></div></div> `
+            }
+            else{
+                htmlDivString += `<div class="Tile DateInGrid"><div class="dateInformation">${formattedDate}</div><div class="Description">${dayName} <br> Deadline: ${formattedDeadLine}</div></div> `
+            }
         }
-
     }
     if(gridForOrderdays != null){
         gridForOrderdays.innerHTML = htmlDivString
@@ -148,7 +153,7 @@ async function fillOrderdayWithFood(){
     let parentelement = elements[i].parentElement;
     let btnElement = parentelement.querySelector('.bestellButton');
     let dateElement = parentelement.querySelector('.dateInformation');
-    let dateStringParts = dateElement.innerHTML.split('-');    
+    let dateStringParts = dateElement.innerHTML.split('-');
     btnElement.innerHTML = await getFoodForOrderDay(dateStringParts[1]+'-'+dateStringParts[0]);
   }
   
