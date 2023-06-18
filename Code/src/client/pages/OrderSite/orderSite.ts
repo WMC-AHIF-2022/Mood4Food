@@ -18,7 +18,7 @@ btnLogout.addEventListener("click", () => {
 const addODBtn: HTMLButtonElement = document.getElementById("buttonPlacement") as HTMLButtonElement;
 
 window.onload = async() =>{
-    const isTeacher: boolean = sessionStorage.getItem("web-isTeacher") === "1";
+    const isTeacher: boolean = sessionStorage.getItem("web-isTeacher") === "true";
     const userResponse = await fetch('http://localhost:3000/users');
     let users:User[] = await userResponse.json();
     for(let i = 0;  i< users.length;i++){

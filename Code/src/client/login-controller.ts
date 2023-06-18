@@ -18,6 +18,7 @@ export async function login() {
 
     const data = JSON.parse(`{"username": "${username}", "password": "${password}"}`);
     const response = await fetchRestEndpoint("http://localhost:3000/users/login", "POST", data);
+    console.log(response);
     if(!response.ok){
         loginError.innerHTML = "Login failed";
     }
