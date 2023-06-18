@@ -30,6 +30,7 @@ export async function login() {
 }
 
 export async function signup() {
+
     loginError.innerHTML = "";
     const elementUsername = <HTMLInputElement>document.getElementById("username");
     const username = elementUsername.value;

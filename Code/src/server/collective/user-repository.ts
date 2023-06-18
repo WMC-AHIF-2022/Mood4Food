@@ -36,6 +36,8 @@ export async function isAuthorized(user: User): Promise<boolean>{
     if(result === undefined){
         return false;
     }
+
+    //verschlüsselung
     return await bcrypt.compare(user.password, result.password);
 }
 
@@ -47,5 +49,6 @@ export async function isTeacher(user: User): Promise<boolean>{
     await stmt.finalize();
     await db.close();
 
+    //return value ist ein boolean
     return typeof result !== "undefined" && result.teacher == 1;
 }
