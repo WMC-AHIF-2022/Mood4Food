@@ -10,5 +10,16 @@ export const exportRouter = express.Router();
 
 exportRouter.get("/pdf", async(req, res)=>{
     await generateFile();
-    res.sendStatus(StatusCodes.OK);
+    console.log(path.join(__dirname,"..\\collective\\files"));
+    var stream = fs.createReadStream(path.join(__dirname,"..\\collective\\files"));
+    var filename = "test.pdf";
+    // Be careful of special characters
+
+    filename = encodeURIComponent(filename);
+    // Ideally this should strip them
+
+    res.setHeader('Content-disposition', 'attachment; filename="' + filename + '"');
+    res.setHeader('Content-type', 'application/pdf');
+
+    stream.pipe(res);
 });
