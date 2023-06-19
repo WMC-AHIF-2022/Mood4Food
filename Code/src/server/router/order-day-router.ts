@@ -48,20 +48,24 @@ orderDayRouter.post("/", async(req, res) => {
         return;
     }
     const db = await DB.createDBConnection();
+    let id = 1;
     // id selection
-    const stmt1 = await db.prepare('select count(*) as "count" from OrderDay');
+    const stmt1 = await db.prepare('select count(*) as count from orderday');//select id from orderday order by 1 desc limit 1
     //console.log(await stmt1.get());
     const result1 = await stmt1.get();
-    console.log(result1);
     await stmt1.finalize();
+    if(result1.count != 0){
+        console.log("that's not the first one");
+        const stmt2 = await db.prepare('select id as count from orderday order by 1 desc limit 1');
+        const result2 = await stmt2.get();
+        await stmt2.finalize();
+        id = result2.count + 1;
+    }
     if(typeof result1 == "undefined"){
         res.status(StatusCodes.CONFLICT).send('Error during id selection');
         return;
     }
 
-    if(result1.count == 0){
-        result1.count = 1;
-    }
     /*
     else{
         const stmt2 = await db.prepare('select id from orderday order by id desc limit 1');
@@ -74,8 +78,6 @@ orderDayRouter.post("/", async(req, res) => {
         result1.count = result2.count++;
     }
     */
-    console.log(result1);
-    const id = result1.count + 1;
     console.log(id);
 
     // standard process

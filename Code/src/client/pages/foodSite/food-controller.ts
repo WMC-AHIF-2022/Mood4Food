@@ -51,10 +51,11 @@ async function addingMeal(){
             }        
         }
        }       
-       if(alreadyEntry === -1){        
-        let theResult = await fetchRestEndpoint('http://localhost:3000/orderentries','POST',newOrderEntry);
-        
-        alert('Speise wurde hinzugefügt');
+       if(alreadyEntry === -1){
+           console.log(newOrderEntry);
+           let theResult = await fetchRestEndpoint('http://localhost:3000/orderentries','POST',newOrderEntry);
+
+           alert('Speise wurde hinzugefügt');
        }
        else{        
         let theResult = await fetchRestEndpoint(`http://localhost:3000/orderentries/${alreadyEntry}`,'PUT',newOrderEntry);
