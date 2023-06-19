@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
 body{
     background-color: #EDF1D6;
 }
@@ -21,12 +22,19 @@ body{
     border-radius: 15px;
     text-align: center;
     margin-top: 30px;
-  
+
 }
 
 .buttonCss{
     background-color: #40513B;
     color: #D9D9D9;
     margin-left: 47%;
+    font-family: 'Inconsolata', monospace;
+
 }
 
+#buttonHs{
+    border-radius: 5px;
+    height: 50px;
+    width: 200px;
+}
