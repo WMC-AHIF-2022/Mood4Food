@@ -32,6 +32,16 @@ Content-Type: application/json
 
 ###################################################
 
+POST http://localhost:3000/orderdays HTTP/1.1
+Content-Type: application/json
+
+{
+  "orderdate": "2023-07-27",
+  "deadline": "18:00:00"
+}
+
+###################################################
+
 PUT http://localhost:3000/food/0 HTTP/1.1
 Content-Type: application/json
 
