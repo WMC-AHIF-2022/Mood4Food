@@ -41,7 +41,7 @@ export async function signup() {
     console.log(isTeacher);
     let teacher = 0;
     if(isTeacher){
-        teacher = 1;
+        teacher = 1;        
     }
 
     const data = JSON.parse(`{"id": "${3}", "username": "${username}", "password": "${password}", "teacher": "${teacher}"}`);

@@ -84,6 +84,8 @@ async function getOrderdays(){
     let htmlDivString: string = "";    
     if(response.ok){
         const orderdays = await response.json();
+
+        orderdays.sort((a: OrderDay,b : OrderDay ) => new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime());       
         
         for(let i = 0; i < orderdays.length; i++){
            // let formattedDate = (moment(orderdays[i].orderDate)).format('DD-MMM');
