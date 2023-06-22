@@ -153,15 +153,22 @@ async function fillOrderdayWithFood(){
   const elements = document.querySelectorAll('.dateInformation');
   for(let i = 0; i < elements.length;i++){
     let parentelement = elements[i].parentElement;
-    let btnElement = parentelement.querySelector('.bestellButton');
+    let btnElement: HTMLButtonElement = parentelement.querySelector('.bestellButton');
     let dateElement = parentelement.querySelector('.dateInformation');
     let dateStringParts = dateElement.innerHTML.split('-');
     btnElement.innerHTML = await getFoodForOrderDay(dateStringParts[1]+'-'+dateStringParts[0]);
+      btnElement.style.borderRadius = "5px";
+    if(!(btnElement.innerHTML === "nothing")){
+        btnElement.style.color = "#e0e0e0";
+        btnElement.style.borderColor = "#2f6c2f";
+        btnElement.style.backgroundColor = "#39833d";
+    }
+    else{
+        btnElement.style.color = "#e0e0e0";
+        btnElement.style.borderColor = "#5c0404";
+        btnElement.style.backgroundColor = "#c91010";
+    }
   }
-  
-  
-  
-  
 }
 
 
