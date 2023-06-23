@@ -2,11 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>exportText</title>
+    <title>Export</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <button id="startExport">export</button>
+  <button id="exportBtn">export</button>
 
-  <script src="export-controller.js" type="module"></script>
+  <script>
+      window.jsPDF = window.jspdf.jsPDF;
+
+      const exportBtn = document.getElementById('exportBtn');
+
+      exportBtn.addEventListener('click', () => {
+          //default setter for orderday-id (only-use for coding)
+          sessionStorage.setItem('orderDayID', "10");
+
+          const selID = sessionStorage.getItem('orderDayID'); //item-name can differ
+          if(!(selID == null || selID === "-1")){
+
+
+              generatePDF();
+          }
+          else{
+              alert("There's no id for an selected orderDay!");
+          }
+      });
+
+      function generatePDF(orderDayName, orders){
+          const title = `OrderDay: ${orderDayName}`;
+
+          const doc = new jsPDF();
+
+          doc.text(title, 10, 15);
+          doc.save("test.pdf");
+      }
+  </script>
 </body>
 </html>
