@@ -18,17 +18,19 @@
 
       exportBtn.addEventListener('click', async() => {
           //default setter for orderday-id (only-use for coding)
-          sessionStorage.setItem('orderDayID', "9");
+          sessionStorage.setItem('orderDayID', "2");
 
           const selID = sessionStorage.getItem('orderDayID'); //item-name can differ
           if(!(selID == null || selID === "-1")){
               const getDateResponse = await fetchRestEndpoint(`http://localhost:3000/orderdays/${selID}`, "GET");
+              if(!getDateResponse.ok){
+                  alert('the orderday does not exist');
+                  return;
+              }
               const day = await getDateResponse.json();
               const getOrdersResponse = await fetchRestEndpoint(`http://localhost:3000/orderdays/foodAndAmount/${selID}`, 'GET');
-              if(getOrdersResponse.ok){
-                  const orders = await getOrdersResponse.json();
-                  generatePDF(day.orderDate, orders);
-              }
+              const orders = await getOrdersResponse.json();
+              generatePDF(day.orderDate, orders);
           }
           else{
               alert("There's no id for an selected orderDay!");
@@ -67,9 +69,10 @@
           }
           y += 10;
 
-          const totalAmount = orders.reduce((a,b) =>{
-              return a.amount + b.amount;
-          });
+          let totalAmount = 0;
+          for(let n = 0; n < orders.length; n++){
+              totalAmount += orders[n].amount;
+          }
           //console.log(totalAmount);
 
           doc.setFont(undefined, 'bold');
