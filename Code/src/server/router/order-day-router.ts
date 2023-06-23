@@ -34,6 +34,21 @@ orderDayRouter.get("/:id", async(req, res) => {
     res.status(StatusCodes.OK).json(orderDay);
 });
 
+orderDayRouter.get("/foodAndAmount/:id", async (req, res)=>{
+    const id = req.params.id;
+    const db = await DB.createDBConnection();
+    const stmt = await db.prepare("select f.name as 'food', count(oe.mealID) as 'amount' from orderentry oe INNER JOIN food f ON (oe.mealID = f.id) where oe.orderDayID = ?1 GROUP BY f.name");
+    await stmt.bind({1:id});
+    const mealOrders: {food: String, amount: number}[] | undefined = await stmt.all();
+    await stmt.finalize();
+    await db.close();
+
+    if(mealOrders === undefined){
+        res.sendStatus(StatusCodes.NOT_FOUND);
+    }
+    res.status(StatusCodes.OK).json(mealOrders);
+});
+
 // add orderDate
 orderDayRouter.post("/", async(req, res) => {
     const orderdate: any = req.body.orderdate;

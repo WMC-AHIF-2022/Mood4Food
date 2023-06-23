@@ -8,32 +8,78 @@
 <body>
   <button id="exportBtn">export</button>
 
-  <script>
+  <script type="module">
+      import {fetchRestEndpoint} from "../../utils/client-server.js";
+
       window.jsPDF = window.jspdf.jsPDF;
 
       const exportBtn = document.getElementById('exportBtn');
+      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-      exportBtn.addEventListener('click', () => {
+      exportBtn.addEventListener('click', async() => {
           //default setter for orderday-id (only-use for coding)
-          sessionStorage.setItem('orderDayID', "10");
+          sessionStorage.setItem('orderDayID', "9");
 
           const selID = sessionStorage.getItem('orderDayID'); //item-name can differ
           if(!(selID == null || selID === "-1")){
-
-
-              generatePDF();
+              const getDateResponse = await fetchRestEndpoint(`http://localhost:3000/orderdays/${selID}`, "GET");
+              const day = await getDateResponse.json();
+              const getOrdersResponse = await fetchRestEndpoint(`http://localhost:3000/orderdays/foodAndAmount/${selID}`, 'GET');
+              if(getOrdersResponse.ok){
+                  const orders = await getOrdersResponse.json();
+                  generatePDF(day.orderDate, orders);
+              }
           }
           else{
               alert("There's no id for an selected orderDay!");
           }
       });
 
-      function generatePDF(orderDayName, orders){
-          const title = `OrderDay: ${orderDayName}`;
+      function generatePDF(orderDate, orders){ //'orders' contains the name of the meal and the amount of its orders
+          const date = new Date(orderDate);
+          const day = date.getDay();
+          const title = `OrderDay: ${days[day]}, ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
 
           const doc = new jsPDF();
 
-          doc.text(title, 10, 15);
+          doc.setFontSize(25);
+          doc.text(title, 20, 20);
+
+          let x = 20;
+          let y = 40;
+          doc.setFontSize(15);
+          doc.setFont(undefined, 'bold');
+
+          doc.text("Food", x, y);
+          doc.text("Amount", 185-x,y);
+          doc.setLineWidth(0.25);
+          doc.line(x, y+3, 210-x, y+3); // horizontal line
+          doc.setFont(undefined, 'normal');
+          for(let curOrderID = 0; curOrderID < orders.length; curOrderID++){
+              y += 10;
+              const curOrder = orders[curOrderID];
+              doc.text(`${curOrder.food}`, x, y);
+              doc.text(`${curOrder.amount}`, 195-x,y);
+              if(curOrderID === orders.length-1){
+                  doc.setLineWidth(0.75);
+              }
+              doc.line(x, y+3, 210-x, y+3);
+          }
+          y += 10;
+
+          const totalAmount = orders.reduce((a,b) =>{
+              return a.amount + b.amount;
+          });
+          //console.log(totalAmount);
+
+          doc.setFont(undefined, 'bold');
+          doc.text("Total Amount", x, y);
+          doc.text(`${totalAmount}`, 195-x,y);
+
+          doc.setFont(undefined, 'normal');
+          doc.setFontSize(10);
+          doc.text("Made with Mood4Food", 155, 287);
+
           doc.save("test.pdf");
       }
   </script>
