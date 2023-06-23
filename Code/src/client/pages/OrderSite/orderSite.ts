@@ -19,6 +19,9 @@ const addODBtn: HTMLButtonElement = document.getElementById("buttonPlacement") a
 
 window.onload = async() =>{
     const isTeacher: boolean = sessionStorage.getItem("web-isTeacher") === "true";
+    if(!isTeacher){
+        addODBtn.remove();
+    }
     const userResponse = await fetch('http://localhost:3000/users');
     let users:User[] = await userResponse.json();
     for(let i = 0;  i< users.length;i++){
@@ -28,9 +31,6 @@ window.onload = async() =>{
     }
     await getOrderdays();
     await fillOrderdayWithFood();
-    if(!isTeacher){
-        addODBtn.remove();
-    }
     
     
     document.addEventListener('click', (event: MouseEvent) => {

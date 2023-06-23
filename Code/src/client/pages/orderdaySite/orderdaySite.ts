@@ -15,6 +15,10 @@ const datePicker = document.getElementById("start") as HTMLInputElement;
 
 const inputForDeadLine = document.getElementById("deadLineInput") as HTMLInputElement;
 
+window.onload = () => {
+    datePicker.value = Date.now().toLocaleString("yyyy-mm-dd")
+};
+
 //Eventhandler for Button 
 if(buttonForCompleteOrderday != null){
 
