@@ -26,7 +26,7 @@ if(buttonForCompleteOrderday != null){
 
         if(!await createOderday()){
            
-           console.log("");
+           //console.log("");
 
         }
         else{
@@ -42,9 +42,9 @@ async function createOderday(): Promise<Boolean>{
     const datePickerValueString: string = datePicker.value;
     const datePickerInDateFormat: Date = new Date(datePickerValueString);
     let deadLine: string = inputForDeadLine.value; 
-    console.log(datePickerValueString, datePickerInDateFormat.getTime(),"TodaysDate:" ,TodaysDate,"In DateFormat", datePickerInDateFormat);
+    //console.log(datePickerValueString, datePickerInDateFormat.getTime(),"TodaysDate:" ,TodaysDate,"In DateFormat", datePickerInDateFormat);
 
-    console.log(await  IsDateInDatabase(datePickerValueString));
+    //console.log(await  IsDateInDatabase(datePickerValueString));
 
         
     if(datePickerInDateFormat.getTime() < TodaysDate || await !IsDateInDatabase(datePickerValueString)){
@@ -52,7 +52,7 @@ async function createOderday(): Promise<Boolean>{
         return false;
     }
     else{
-        console.log("Alles baba und Date passt auch");
+        //console.log("Alles baba und Date passt auch");
     }
 
     var trigger = deadLine,
@@ -68,12 +68,12 @@ async function createOderday(): Promise<Boolean>{
     let options: any = { method:'POST' };
 
     options.headers = { "Content-Type": "application/json" };
-    console.log("Input für options:", datePickerValueString, deadLine);
+    //console.log("Input für options:", datePickerValueString, deadLine);
     options.body = JSON.stringify({orderdate: datePickerValueString, deadline: deadLine});
 
-    console.log("1", options.body);
+    //console.log("1", options.body);
     const response = await fetch(Host_URL, options);
-    console.log("2");
+    //console.log("2");
 
 
     if(response.ok){
@@ -92,7 +92,7 @@ async function IsDateInDatabase(date: string): Promise<boolean>{
 
     if(response.ok){
         const orderdays: OrderEntry[] = await response.json();    
-        console.log(orderdays);
+        //console.log(orderdays);
 
         for(let i = 0; i < orderdays.length; i++){
             if(date == orderdays[i].orderDayID){
