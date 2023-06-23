@@ -43,11 +43,8 @@ window.onload = async() =>{
           // Code zum Entfernen des Buttons
           button.parentNode?.removeChild(button);*/          
           
-          prepareOrderEntry(targetElement.parentElement?.parentElement)
-          
+          prepareOrderEntry(targetElement.parentElement?.parentElement);          
         }
-
-
       });
 }
 async function prepareOrderEntry(theHtmlElementparams:any) {
@@ -181,25 +178,4 @@ var gsDayNames = [
     'Friday',
     'Saturday'
   ];
-
-
-
-/*
-
-Wenn man auf den not orderd yet knopf klickt, dann sollte man auf eine neue seite kommen. 
-Auf dieser Seite kann man dann für den jeweiligen orderday ein Essen auswählen. 
-Dann wird man automatisch wieder zu Orderday seite Zurückgeschupft.
-
-
-Wenn man schon ein Essen ausgewählt hat und die Deadline noch nicht erreicht ist, dann kann man sein Essen noch bearbeiten. 
-Dann ist es der gleiche Prozess wie oben. 
-
-
-Aus der Teacher Sicht, kann man keine Essen bestellen, sondern nur die jeweiligen Orderdays festelgen. 
-Dafür klickt man auf den [+ add Orderday] Button wo man auch auf eine Seperate Seite kommt.
-Da kann man einen Orderday erstellen und eine Deadline festelegen. 
-
-
-
-*/
 
