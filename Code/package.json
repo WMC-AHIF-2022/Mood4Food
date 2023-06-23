@@ -23,7 +23,6 @@
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
-    "@pdfme/generator": "^1.2.3",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
     "@types/jsonwebtoken": "^9.0.2",
