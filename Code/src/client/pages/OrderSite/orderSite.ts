@@ -43,11 +43,8 @@ window.onload = async() =>{
           // Code zum Entfernen des Buttons
           button.parentNode?.removeChild(button);*/          
           
-          prepareOrderEntry(targetElement.parentElement?.parentElement)
-          
+          prepareOrderEntry(targetElement.parentElement?.parentElement);          
         }
-
-
       });
 }
 async function prepareOrderEntry(theHtmlElementparams:any) {

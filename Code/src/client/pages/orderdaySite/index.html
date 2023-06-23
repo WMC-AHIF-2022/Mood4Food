@@ -6,6 +6,8 @@
 <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
     <link rel="stylesheet" href="../../navbar/navBar.css">
     <link rel="stylesheet" href="orderdaySite-stylesheet.css">
+
+   
 </head>
 <body>
     <div id="navItem" class="nav-container">
@@ -24,60 +26,40 @@
 
     <br>
     <br>
-
-  
-
+    <br>
+    <br>  
+    <div class="title">
+        <h1>Add an Orderday: </h1>
+    </div>
    
-    <h2>Orderdays</h2>
 
- 
-
-    <br>
-    <br>
     
-    <div class="containerForDatePicker" id="datePicker">        
-
-        <label for="start">Start date:</label>
-
-        <input type="date" id="start" name="trip-start"
+    <div class="containerForDatePicker" id="datePicker">
+        <div class="datePickerFormat">
+            <label for="start">Start date:</label>
+            <input type="date" id="start" name="trip-start"
             value="2023-05-14"
             min="2023-01-01" max="2023-12-31" onselect="createOderday()">
+
+        </div>
+        
 
     </div>   
 
     <div class="containerForDeadline" id="deadLineSelection">
-        <label id="fname">Deadline:</label>
-        <input type="text" id="deadLineInput" name="fname">
+        <div class="deadLineInputFormater">
+            <label id="fname" >Deadline:</label>
+            <input type="text" id="deadLineInput" name="fname">
+        </div>
+       
         
     </div> 
     <br>
     <br>
     <br>
 
-    <button id="buttonHs" type="button" class="btn  buttonCss">add Orderday</button>
-
     
-
-       
-
-        <!--
-       <br>
-       <br>
-
-       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle dpB" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" >
-          Dropdown button
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="dropdownMenuButton1">10.5</a></li>
-          <li><a class="dropdown-item" href="dropdownMenuButton1">11.5</a></li>
-          <li><a class="dropdown-item" href="dropdownMenuButton1">12.5</a></li>
-        </ul>
-      </div>
-        -->
-
-   <!-- <button id="buttonPlacement" type="button" class="btn btn-primary" onclick="">+ add Orderday (Für Teacheransicht)</button>-->
-
+    <button id="buttonHs" type="button" class="btn  buttonCss">add Orderday</button>
     <script  type="module" src="orderdaySite.js"></script>
     <script src="../../navbar/navbar.js"></script>
 </body>
