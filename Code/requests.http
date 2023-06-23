@@ -2,7 +2,7 @@ GET http://localhost:3000/food HTTP/1.1
 
 ###################################################
 
-GET http://localhost:3000/orderdays/foodAndAmount/9 HTTP/1.1
+GET http://localhost:3000/foodObject/orders/9 HTTP/1.1
 
 ###################################################
 
