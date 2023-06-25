@@ -49,7 +49,7 @@ export class DB {
                  CONSTRAINT fk_orderDate
                      FOREIGN KEY (orderDayID) 
                      REFERENCES OrderDay(id) 
-                      ON DELETE CASCADE,
+                     ON DELETE CASCADE,
                  CONSTRAINT fk_customer 
                      FOREIGN KEY (customerID) 
                      REFERENCES Users(id) 

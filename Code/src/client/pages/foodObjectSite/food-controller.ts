@@ -1,4 +1,4 @@
-import { OrderEntry } from "../../../server/collective/OrderEntry.js";
+import {OrderEntry} from "../../../server/collective/OrderEntry.js";
 import {fetchRestEndpoint} from "../../utils/client-server.js";
 
 interface Food {
@@ -16,6 +16,7 @@ const btnAddMealToOrderday = document.getElementById('addToOrderDay')as HTMLButt
  btnAddMealToOrderday.addEventListener ("click", async() => {
      await addingMeal();
 })
+
 async function addingMeal(){
     
     let idElement = document.getElementById('numberForm');     
@@ -72,22 +73,28 @@ async function addingMeal(){
        sessionStorage.setItem('orderDayID','-1');*/
     }
 }
+
+let curObjectID:string = "";
+
 window.onload = async() => {
-    //alert(sessionStorage.getItem('selectedFoodItem'));
-    if(sessionStorage.getItem('orderDayID') === '-1'){               
-        btnAddMealToOrderday.parentElement.removeChild(btnAddMealToOrderday);
+    curObjectID = sessionStorage.getItem('selectedFoodItem');
+     const orderdayid = sessionStorage.getItem("orderDayID");
+     //console.log(orderdayid);
+    if(orderdayid === null || orderdayid === '-1'){
+        btnAddMealToOrderday.remove();
     }
     const header = document.getElementById('contentHeader') as HTMLDivElement;
     const numberForm = document.getElementById('numberForm') as HTMLAnchorElement;
     const nameForm = document.getElementById('nameForm') as HTMLAnchorElement;
     const ingredientsBox = document.getElementById('ingredients') as HTMLDivElement;
     const returnBtn = document.getElementById('returnLnk') as HTMLAnchorElement;
+    const orderListBox: HTMLDivElement = document.getElementById('orderList') as HTMLDivElement;
 
     returnBtn.addEventListener('click', ()=>{
         window.location.href = "/pages/foodlistSite/";
     })
 
-    const food: Food = await getFoodById(sessionStorage.getItem('selectedFoodItem')as string)as Food;
+    const food: Food = await getFoodById(curObjectID)as Food;
     const ingredients: string[] = getAllIngredients(food.ingredients);
     let html = "";
     
@@ -100,8 +107,17 @@ window.onload = async() => {
     numberForm.innerText = `${food.id}`;
     nameForm.innerText = food.name;
     ingredientsBox.innerHTML = html;
+    html = "";
 
+    const response = await fetchRestEndpoint(`http://localhost:3000/foodObject/orders/${curObjectID}`, "GET");
+    const orderRequests: {customer: string, date:string}[] = await response.json();
+    for(let x = 0; x < orderRequests.length; x++){
+        const date = new Date(orderRequests[x].date);
+        html += `<div class="orderRequest">${orderRequests[x].customer} has ordered this meal for ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}</div>`;
+    }
+    orderListBox.innerHTML = html;
 };
+
 
 function getAllIngredients(text: string): string[]{
     let ingredients:string[] = text.split(',');

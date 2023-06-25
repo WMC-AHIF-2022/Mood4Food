@@ -22,7 +22,7 @@ app.use("/food", foodlistRouter);
 app.use("/customers", customerRouter);
 app.use("/orderdays", orderDayRouter);
 app.use("/orderentries", entryRouter);
-app.use("/pages/foodSite", foodRouter);
+app.use("/foodObject", foodRouter);
 app.use("/users", userRouter);
 
 

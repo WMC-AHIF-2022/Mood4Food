@@ -19,6 +19,9 @@ const addODBtn: HTMLButtonElement = document.getElementById("buttonPlacement") a
 
 window.onload = async() =>{
     const isTeacher: boolean = sessionStorage.getItem("web-isTeacher") === "true";
+    if(!isTeacher){
+        addODBtn.remove();
+    }
     const userResponse = await fetch('http://localhost:3000/users');
     let users:User[] = await userResponse.json();
     for(let i = 0;  i< users.length;i++){
@@ -28,9 +31,6 @@ window.onload = async() =>{
     }
     await getOrderdays();
     await fillOrderdayWithFood();
-    if(!isTeacher){
-        addODBtn.remove();
-    }
     
     
     document.addEventListener('click', (event: MouseEvent) => {
@@ -43,11 +43,8 @@ window.onload = async() =>{
           // Code zum Entfernen des Buttons
           button.parentNode?.removeChild(button);*/          
           
-          prepareOrderEntry(targetElement.parentElement?.parentElement)
-          
+          prepareOrderEntry(targetElement.parentElement?.parentElement);          
         }
-
-
       });
 }
 async function prepareOrderEntry(theHtmlElementparams:any) {
@@ -155,15 +152,22 @@ async function fillOrderdayWithFood(){
   const elements = document.querySelectorAll('.dateInformation');
   for(let i = 0; i < elements.length;i++){
     let parentelement = elements[i].parentElement;
-    let btnElement = parentelement.querySelector('.bestellButton');
+    let btnElement: HTMLButtonElement = parentelement.querySelector('.bestellButton');
     let dateElement = parentelement.querySelector('.dateInformation');
     let dateStringParts = dateElement.innerHTML.split('-');
     btnElement.innerHTML = await getFoodForOrderDay(dateStringParts[1]+'-'+dateStringParts[0]);
+      btnElement.style.borderRadius = "5px";
+    if(!(btnElement.innerHTML === "nothing")){
+        btnElement.style.color = "#e0e0e0";
+        btnElement.style.borderColor = "#2f6c2f";
+        btnElement.style.backgroundColor = "#39833d";
+    }
+    else{
+        btnElement.style.color = "#e0e0e0";
+        btnElement.style.borderColor = "#5c0404";
+        btnElement.style.backgroundColor = "#c91010";
+    }
   }
-  
-  
-  
-  
 }
 
 
@@ -176,25 +180,4 @@ var gsDayNames = [
     'Friday',
     'Saturday'
   ];
-
-
-
-/*
-
-Wenn man auf den not orderd yet knopf klickt, dann sollte man auf eine neue seite kommen. 
-Auf dieser Seite kann man dann für den jeweiligen orderday ein Essen auswählen. 
-Dann wird man automatisch wieder zu Orderday seite Zurückgeschupft.
-
-
-Wenn man schon ein Essen ausgewählt hat und die Deadline noch nicht erreicht ist, dann kann man sein Essen noch bearbeiten. 
-Dann ist es der gleiche Prozess wie oben. 
-
-
-Aus der Teacher Sicht, kann man keine Essen bestellen, sondern nur die jeweiligen Orderdays festelgen. 
-Dafür klickt man auf den [+ add Orderday] Button wo man auch auf eine Seperate Seite kommt.
-Da kann man einen Orderday erstellen und eine Deadline festelegen. 
-
-
-
-*/
 

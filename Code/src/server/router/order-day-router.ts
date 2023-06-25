@@ -34,11 +34,26 @@ orderDayRouter.get("/:id", async(req, res) => {
     res.status(StatusCodes.OK).json(orderDay);
 });
 
+orderDayRouter.get("/foodAndAmount/:id", async (req, res)=>{
+    const id = req.params.id;
+    const db = await DB.createDBConnection();
+    const stmt = await db.prepare("select f.name as 'food', count(oe.mealID) as 'amount' from orderentry oe INNER JOIN food f ON (oe.mealID = f.id) where oe.orderDayID = ?1 GROUP BY f.name");
+    await stmt.bind({1:id});
+    const mealOrders: {food: String, amount: number}[] | undefined = await stmt.all();
+    await stmt.finalize();
+    await db.close();
+
+    if(mealOrders === undefined){
+        res.sendStatus(StatusCodes.NOT_FOUND);
+    }
+    res.status(StatusCodes.OK).json(mealOrders);
+});
+
 // add orderDate
 orderDayRouter.post("/", async(req, res) => {
     const orderdate: any = req.body.orderdate;
     const deadline: any = req.body.deadline;
-    console.log(orderdate,deadline);
+    //console.log(orderdate,deadline);
     if (typeof orderdate !== "string" || orderdate.trim().length === 0) {
         res.status(StatusCodes.BAD_REQUEST).send("date missing or not ok");
         return;
@@ -55,7 +70,7 @@ orderDayRouter.post("/", async(req, res) => {
     const result1 = await stmt1.get();
     await stmt1.finalize();
     if(result1.count != 0){
-        console.log("that's not the first one");
+        //console.log("that's not the first one");
         const stmt2 = await db.prepare('select id as count from orderday order by 1 desc limit 1');
         const result2 = await stmt2.get();
         await stmt2.finalize();
@@ -78,7 +93,7 @@ orderDayRouter.post("/", async(req, res) => {
         result1.count = result2.count++;
     }
     */
-    console.log(id);
+    //console.log(id);
 
     // standard process
     const stmt = await db.prepare('insert or ignore into OrderDay values (?1, ?2, ?3)');
@@ -89,7 +104,7 @@ orderDayRouter.post("/", async(req, res) => {
     await stmt.finalize();
     await db.close();   
 
-    console.log(operationResult.changes);
+    //console.log(operationResult.changes);
     if(operationResult.changes == null || operationResult.changes !== 1){
         res.status(StatusCodes.BAD_REQUEST).send("db error occurred");
     }

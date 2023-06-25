@@ -79,7 +79,7 @@ async function refresh(input: string){
             const target = e.target as HTMLButtonElement;
             if(target.tagName != "INPUT"){
                 sessionStorage.setItem('selectedFoodItem', meals[i].id);
-                window.location.href=`http://localhost:3000/pages/foodSite`;
+                window.location.href=`http://localhost:3000/pages/foodObjectSite`;
             }
         });
     }

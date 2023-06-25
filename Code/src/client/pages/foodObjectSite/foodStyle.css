@@ -88,6 +88,16 @@ html, body{
     margin-top: 10px;
 }
 
+.orderRequest{
+    color: #32412f;
+    background-color: #EDF1D6;
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
 #orderList{
     grid-row: 1/span 3;
     grid-column: 2;
