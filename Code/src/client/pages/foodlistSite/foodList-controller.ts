@@ -23,17 +23,7 @@ for(let x = 0; x < closeBtns.length;x++){
         closeWhiteOverlay();
     });
 }
-let curEl = -1;
 let isTeacher: boolean = false;
-
-//const home_URL = "http://localhost:3000/food";
-
-/*<tr>
-
-    <th>
-
-        </th>
-        </tr>*/
 
 window.onload = async() =>{
     isTeacher = sessionStorage.getItem("web-isTeacher") === "true";
@@ -236,7 +226,7 @@ function closeWhiteOverlay(){
     addingBox.style.display = "none";
 }
 // get Search field
-const inputElement = document.getElementById("ordersSearch") as HTMLInputElement;
+const inputElement = document.getElementById("foodSearch") as HTMLInputElement;
 inputElement.addEventListener("keyup", async (event: KeyboardEvent) => { 
     const inputValue = inputElement.value;    
     const tableBodyElement = document.getElementById("table-body") as HTMLTableSectionElement;

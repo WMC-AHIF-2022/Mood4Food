@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <!--<meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
     <title>M4F</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="../../navbar/navBar.css">
     <link rel="stylesheet" href="ShowOrdersStyle.css">
+    <link rel="icon" type="image/x-icon" href="../../pics/favicon.ico">
+    <link rel="stylesheet" href="../../smallBox.css">
     <!--<link rel="stylesheet" href="../../smallBox.css">-->
 </head>
 <body>
@@ -52,31 +55,98 @@
         </div>
     </div>
     <div id="BtnBox">
-        <Button id="ExportBtn">Export by CSV</Button>
+        <Button id="ExportBtn">Export by ...</Button>
     </div>
 </div>
 
 <div id="whiteOverlay" style="display: none">
     <!--Export CSV-->
-    <div class="whiteBox" id="importBox" style="display: none">
+    <div class="whiteBox" id="exportBox" style="display: none">
         <img class="closeBtn" src="../../pics/close.png">
-        <h1>Export Orders by .csv</h1>
-
-        <p>Please, keep the content to the format: <br></p>
-        <p class='codeFormatStyle'>Number;Name;Ingredients <br></p>
-        <p>(--> Ingredients are seperated by ',')</p>
-
-        <div id="uploadBox">
-            <input id="fileInput" type="file">
-        </div>
-
-        <div class='confirmBtnBox'>
-            <button id='confirmBtn'>Confirm</button>
-        </div>
+        <h1>Choose format!</h1>
+        <button id="pdfBtn">PDF</button>
+<!--        <button>CSV</button>-->
     </div>
 </div>
 
 <script src="show-orders-controller.js" type="module"></script>
 <script src="../../navbar/navbar.js"></script>
+<script type="module">
+    import {fetchRestEndpoint} from "../../utils/client-server.js";
+
+    window.jsPDF = window.jspdf.jsPDF;
+
+    const exportBtn = document.getElementById('pdfBtn');
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+    exportBtn.addEventListener('click', async() => {
+        //default setter for orderday-id (only-use for coding)
+
+        const selID = sessionStorage.getItem('orderDayID'); //item-name can differ
+        if(!(selID == null || selID === "-1")){
+            const getDateResponse = await fetchRestEndpoint(`http://localhost:3000/orderDay/${selID}`, "GET");
+            if(!getDateResponse.ok){
+                alert('the orderday does not exist');
+                return;
+            }
+            const day = await getDateResponse.json();
+            const getOrdersResponse = await fetchRestEndpoint(`http://localhost:3000/orderDay/foodAndAmount/${selID}`, 'GET');
+            const orders = await getOrdersResponse.json();
+            generatePDF(day.orderDate, orders);
+        }
+        else{
+            alert("There's no id for an selected orderDay!");
+        }
+    });
+
+    function generatePDF(orderDate, orders){ //'orders' contains the name of the meal and the amount of its orders
+        const date = new Date(orderDate);
+        const day = date.getDay();
+        const title = `OrderDay: ${days[day]}, ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+
+        const doc = new jsPDF();
+
+        doc.setFontSize(25);
+        doc.text(title, 20, 20);
+
+        let x = 20;
+        let y = 40;
+        doc.setFontSize(15);
+        doc.setFont(undefined, 'bold');
+
+        doc.text("Food", x, y);
+        doc.text("Amount", 185-x,y);
+        doc.setLineWidth(0.25);
+        doc.line(x, y+3, 210-x, y+3); // horizontal line
+        doc.setFont(undefined, 'normal');
+        for(let curOrderID = 0; curOrderID < orders.length; curOrderID++){
+            y += 10;
+            const curOrder = orders[curOrderID];
+            doc.text(`${curOrder.food}`, x, y);
+            doc.text(`${curOrder.amount}`, 195-x,y);
+            if(curOrderID === orders.length-1){
+                doc.setLineWidth(0.75);
+            }
+            doc.line(x, y+3, 210-x, y+3);
+        }
+        y += 10;
+
+        let totalAmount = 0;
+        for(let n = 0; n < orders.length; n++){
+            totalAmount += orders[n].amount;
+        }
+        //console.log(totalAmount);
+
+        doc.setFont(undefined, 'bold');
+        doc.text("Total Amount", x, y);
+        doc.text(`${totalAmount}`, 195-x,y);
+
+        doc.setFont(undefined, 'normal');
+        doc.setFontSize(10);
+        doc.text("Made with Mood4Food", 155, 287);
+
+        doc.save("test.pdf");
+    }
+</script>
 </body>
 </html>

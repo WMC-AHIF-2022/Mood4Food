@@ -25,6 +25,12 @@ button {
     cursor: pointer;
 }
 
+#ExportBtn{
+    color: white;
+    border: 1px solid #ff6a18;
+    background-color: #ff7c33;
+}
+
 input[type="checkbox"] {
     width: 20px;
     height: 20px;

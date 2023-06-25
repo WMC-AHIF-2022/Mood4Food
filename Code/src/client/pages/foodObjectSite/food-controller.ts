@@ -79,9 +79,10 @@ let curObjectID:string = "";
 
 window.onload = async() => {
     curObjectID = sessionStorage.getItem('selectedFoodItem');
+    const isTeacher = sessionStorage.getItem("web-isTeacher") === "true";
      const orderdayid = sessionStorage.getItem("orderDayID");
      //console.log(orderdayid);
-    if(orderdayid === null || orderdayid === '-1'){
+    if(isTeacher || orderdayid === null || orderdayid === '-1'){
         btnAddMealToOrderday.remove();
     }
     const header = document.getElementById('contentHeader') as HTMLDivElement;

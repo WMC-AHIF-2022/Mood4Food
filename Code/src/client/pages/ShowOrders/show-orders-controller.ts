@@ -2,12 +2,10 @@ import {fetchRestEndpoint} from "../../utils/client-server.js";
 import {OrderDay} from "../interfaces";
 
 const tableBody: HTMLTableSectionElement = document.getElementById('table-body') as HTMLTableSectionElement;
-const deleteBtnH = document.getElementById('deleteBtnH');
 const exportBtn = document.getElementById('ExportBtn') as HTMLButtonElement;
+const exportBox = document.getElementById('exportBox') as HTMLDivElement;
 const whiteOverlay = document.getElementById('whiteOverlay') as HTMLDivElement;
-const importBox = document.getElementById('importBox') as HTMLDivElement;
 const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement;
-const confirmImportBtn = document.getElementById('confirmBtn') as HTMLButtonElement;
 const closeBtns = document.getElementsByClassName('closeBtn') as HTMLCollection;
 const btnOrderDayTitle = document.getElementById('orderDayTitle');
 
@@ -26,7 +24,12 @@ window.onload = async() =>{
     const day = date.getDay();
     const title = `OrderDay: ${days[day]}, ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
     btnOrderDayTitle.innerText = title;
-    console.log(orderDay);
+    //console.log(orderDay);
+    for(let x = 0; x < closeBtns.length; x++){
+        closeBtns[x].addEventListener('click', () => {
+            closeWhiteOverlay();
+        });
+    }
     await refresh()
 }
 
@@ -80,4 +83,15 @@ deleteBtn.addEventListener('click', async()=>{
 
 async function deleteOrderEntry(number: number) {
     await fetchRestEndpoint(`http://localhost:3000/orderEntry/${number}`,"DELETE");
+}
+
+exportBtn.addEventListener('click', ()=>{
+    whiteOverlay.style.display = "flex";
+    exportBox.style.display = "block";
+});
+
+///Sets the display of the white background and all boxes to 'none'
+function closeWhiteOverlay(){
+    whiteOverlay.style.display = "none";
+    exportBox.style.display = "none";
 }
