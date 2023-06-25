@@ -15,6 +15,8 @@ import {DB} from "../database";
 export const saltRounds: number = 8;
 export const userRouter = express.Router();
 
+export const teacherCode: string = "jd/l2n)=and;f=9";
+
 userRouter.post("/signup", async function (request, response) {
     const username: string = request.body.username;
     const password: string = request.body.password;
@@ -22,7 +24,12 @@ userRouter.post("/signup", async function (request, response) {
     const firstname: string = request.body.firstName;
     const classMember: boolean = false;
     const teacher: number = request.body.teacher;
+    const code: string = request.body.teacherCode;
 
+    if(teacher == 1 && code !== teacherCode){
+        response.status(StatusCodes.BAD_REQUEST).send('teacherPassword was wrong');
+        return;
+    }
     if (password.trim().length === 0){
         response.sendStatus(StatusCodes.BAD_REQUEST);
         return;
