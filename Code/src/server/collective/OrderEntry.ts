@@ -1,5 +1,5 @@
 export interface OrderEntry {
-    customerID: string,
+    username: string,
     mealID: string,
     orderDayID: string
 }

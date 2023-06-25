@@ -4,12 +4,12 @@ const tableBody: HTMLTableSectionElement = document.getElementById('table-body')
 const deleteBtnH = document.getElementById('deleteBtnH');
 const importBtn = document.getElementById('importBtn') as HTMLButtonElement;
 const whiteOverlay = document.getElementById('whiteOverlay') as HTMLDivElement;
-const addMealBtn = document.getElementById('addCustomerBtn') as HTMLButtonElement;
+const addCustomerBtn = document.getElementById('addCustomerBtn') as HTMLButtonElement;
 const addBtn = document.getElementById('addBtn') as HTMLButtonElement;
 const importBox = document.getElementById('importBox') as HTMLDivElement;
 const addingBox = document.getElementById('addingBox') as HTMLDivElement;
 const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement;
-const confirmImportBtn = document.getElementById('confirmBtn') as HTMLButtonElement;
+//const confirmImportBtn = document.getElementById('confirmBtn') as HTMLButtonElement;
 const closeBtns = document.getElementsByClassName('closeBtn') as HTMLCollection;
 const btnLogout = document.getElementById('logoutButton') as HTMLButtonElement;
 btnLogout.addEventListener("click", () => {
@@ -30,15 +30,15 @@ window.onload = async() =>{
     isTeacher = sessionStorage.getItem("web-isTeacher") === "true";
     if(!isTeacher){
         deleteBtnH?.remove();
-        addMealBtn.remove();
-        importBtn.remove();
+        addCustomerBtn.remove();
+        //importBtn.remove();
     }
     await refresh("");
 }
 
 ///Refreshes the meal-table by fetching the data from the server.
 async function refresh(input: string){
-    const response = await fetchRestEndpoint("http://localhost:3000/customers", "GET");
+    const response = await fetchRestEndpoint("http://localhost:3000/user/class", "GET");
     const customers = await response.json();
 
     if(!(input === "")) {
@@ -58,124 +58,52 @@ async function refresh(input: string){
         tableBody.appendChild(row);
         row.id = customers[i].id;
         //row.insertCell(0).innerHTML = `<div>${customers[i].id}</div>`;
-        row.insertCell(0).innerHTML = `${customers[i].lastname}`;
-        row.insertCell(1).innerHTML = `${customers[i].firstname}`;
-        row.insertCell(2).innerHTML = `${customers[i].className}`;
+        row.insertCell(0).innerHTML = `${customers[i].username}`;
+        row.insertCell(1).innerHTML = `${customers[i].lastname}`;
+        row.insertCell(2).innerHTML = `${customers[i].firstname}`;
         if(isTeacher)
             row.insertCell(3).innerHTML = `<input type="checkbox" class="classCheckBox">`;
     }
 }
 
 ///sends an DELETE-Request to the server for the specific index parameter.
-async function deleteCustomer(index:number){
-    await fetchRestEndpoint(`http://localhost:3000/customers/${index}`,"DELETE");
+async function removeCustomer(username: string){
+    const data = {username: username};
+    await fetchRestEndpoint(`http://localhost:3000/user/poolRemoval`,"POST", data);
 }
 ///Gathers the data from the input elements and sends an object to the server with a POST-Request.
 async function addCustomerByInputElements(){
-    const lastNameBox = document.getElementById("lastNameInput") as HTMLInputElement;
-    const firstNameBox = document.getElementById("firstNameInput") as HTMLInputElement;
-    const classBox = document.getElementById("classInput") as HTMLInputElement;
-    const lastName = lastNameBox.value;
-    const firstName = firstNameBox.value;
-    const className = classBox.value;
+    const usernameBox = document.getElementById("usernameInput") as HTMLInputElement;
+    const username = usernameBox.value;
 
-    console.log(lastName,firstName,className);
+    //console.log(username);
 
-    const data = {lastName: lastName, firstName: firstName, className: className};
+    const data = {username: username};
 
-    const response = await fetchRestEndpoint('http://localhost:3000/customers',"POST", data);
+    const response = await fetchRestEndpoint('http://localhost:3000/user/poolAddition',"POST", data);
 
     if(response.ok){
         await refresh("");
-        firstNameBox.value = "";
-        lastNameBox.value = "";
-        classBox.value = "";
+        usernameBox.innerText = "";
     }
     else{
-        alert("Error during adding process");
+        alert('could not be found');
     }
 }
 
-///
-// {@addMealByInputElements}
+// importBtn.addEventListener('click', ()=>{
+//     whiteOverlay.style.display = "flex";
 //
-//
-/**
- * Reads the lines of the given parameter and, like in the
- * {@link #addMealByInputElements() addMealByInputElements()},
- * gathers the data in an object and sends it to the server with a POST-Request.
- */
-async function insertCustomersFromString(content:string){
-    //console.log(content);
-    const lines: string[] = content.split(/\r\n|\r|\n/);
-    //console.log(lines[1]);
-    for(let x = 0; x < lines.length-1; x++){
-        const line = lines[x];
-        const data: string[] = line.split(';');
-        if(data.length != 3){
-            //console.log(data);
-            alert(`Wrong number of columns (there should be 3, but there are ${data.length})`);
-            return;
-        }
-        //console.log(data[0]);
-        if(!Number(data[0])){
-            alert(`Column 0/Row ${x} should be a number, but it is not.`);
-            return;
-        }
-        const lastName:string = data[0];
-        const firstName: string = data[1];
-        const className: string = data[2];
+//     importBox.style.display = "block";
+// });
 
-        console.log(lastName, firstName, className);
-
-
-        const content = {lastName: lastName, firstName: firstName, className: className};
-
-        const response = await fetchRestEndpoint("http://localhost:3000/customers", "POST", content);
-
-        //console.log(response);
-    }
-    await refresh("");
-}
-
-importBtn.addEventListener('click', ()=>{
+addCustomerBtn.addEventListener('click', ()=> {
     whiteOverlay.style.display = "flex";
-
-    importBox.style.display = "block";
-});
-
-addMealBtn.addEventListener('click', ()=> {
-    whiteOverlay.style.display = "flex";
-
     addingBox.style.display = "block";
 })
 
 addBtn.addEventListener('click', async ()=>{
     await addCustomerByInputElements();
-});
-
-confirmImportBtn.addEventListener('click', ()=>{
-    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-
-    if(!fileInput.files){
-        alert('no file selected');
-        return;
-    }
-
-    let content: string = "";
-    const file = fileInput!.files?.item(0);
-    if (file) {
-        const reader = new FileReader();
-        reader.addEventListener("load", async() => {
-            //console.log(reader.result);
-            if(typeof reader.result == "string"){
-                content = reader.result;
-                //console.log(content);
-                await insertCustomersFromString(content);
-            }
-        });
-        reader.readAsText(file);
-    }
 });
 
 deleteBtn.addEventListener('click', async()=>{
@@ -185,14 +113,15 @@ deleteBtn.addEventListener('click', async()=>{
     for(let x = 0;x < inputElements.length; x++){
         const curElement = inputElements.item(x) as HTMLInputElement;
         if(curElement.type == "checkbox" && curElement.checked == true){
-            console.log(curElement.parentElement!.parentElement!.id);
-            activeList.push(curElement.parentElement!.parentElement!.id);
+            //console.log(curElement.parentElement!.parentElement!.firstChild.textContent);
+            activeList.push(curElement.parentElement!.parentElement!.firstChild.textContent);
         }
     }
 
     for(let x = 0; x < activeList.length; x++){
         try{
-            await deleteCustomer(Number(activeList[x]));
+            //console.log(activeList[x]);
+            await removeCustomer(activeList[x]);
         }
         catch(e){
             alert(e);
@@ -205,7 +134,7 @@ deleteBtn.addEventListener('click', async()=>{
 ///Sets the display of the white background and all boxes to 'none'
 function closeWhiteOverlay(){
     whiteOverlay.style.display = "none";
-    importBox.style.display = "none";
+    //importBox.style.display = "none";
     addingBox.style.display = "none";
 }
 // get Search field

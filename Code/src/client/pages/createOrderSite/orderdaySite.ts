@@ -1,6 +1,6 @@
 import { OrderEntry } from "../../../server/collective/OrderEntry";
 
-const Host_URL = "http://localhost:3000/orderdays";
+const Host_URL = "http://localhost:3000/orderDay";
 const btnLogout = document.getElementById('logoutButton') as HTMLButtonElement;
 btnLogout.addEventListener("click", () => {
     sessionStorage.clear();

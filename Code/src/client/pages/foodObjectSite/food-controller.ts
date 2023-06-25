@@ -1,5 +1,6 @@
-import {OrderEntry} from "../../../server/collective/OrderEntry.js";
+
 import {fetchRestEndpoint} from "../../utils/client-server.js";
+import {OrderEntry} from "../interfaces";
 
 interface Food {
     id: number,
@@ -20,33 +21,33 @@ const btnAddMealToOrderday = document.getElementById('addToOrderDay')as HTMLButt
 async function addingMeal(){
     
     let idElement = document.getElementById('numberForm');     
-    if(sessionStorage.getItem('orderDayID') !== '-1' && sessionStorage.getItem('userID') !== '-1'){
-        let userID = sessionStorage.getItem('userID');
+    if(sessionStorage.getItem('orderDayID') !== '-1' && sessionStorage.getItem('web-user') !== '-1'){
+        let username = sessionStorage.getItem('web-user');
         let orderDayID = sessionStorage.getItem('orderDayID');
         let foodID = Number.parseInt(idElement!.innerHTML);
         let newOrderEntry:any;  
             
-        if(userID !== null && orderDayID!== null){
+        if(username !== null && orderDayID!== null){
         newOrderEntry = 
             {
             odID: `${orderDayID}`,
-            customerID: `${userID}`,
+            username: `${username}`,
             mealID: `${foodID}`
             };
         }      
        
-       let allOrderEntrysPromis = await fetch('http://localhost:3000/orderentries/simple');
+       let allOrderEntrysPromis = await fetch('http://localhost:3000/orderentry/simple');
        let allOrderEntrys:any []= await allOrderEntrysPromis.json();       
        let alreadyEntry = -1;
        for(let i = 0; i < allOrderEntrys.length;i++){
         if(allOrderEntrys[i] !== undefined){            
             const parsedObject: OrderEntry = {
-                customerID: allOrderEntrys[i].customerID.toString(),
+                username: allOrderEntrys[i].username.toString(),
                 mealID: allOrderEntrys[i].mealID.toString(),
                 orderDayID: allOrderEntrys[i].orderDayID.toString(),
             };
             
-            if(parsedObject.customerID == newOrderEntry!.customerID && parsedObject.orderDayID == newOrderEntry!.odID){
+            if(parsedObject.username == newOrderEntry!.username && parsedObject.orderDayID == newOrderEntry!.odID){
                 alreadyEntry = allOrderEntrys[i].id;                
                 i = allOrderEntrys.length+1;
             }        
@@ -54,12 +55,12 @@ async function addingMeal(){
        }       
        if(alreadyEntry === -1){
            console.log(newOrderEntry);
-           let theResult = await fetchRestEndpoint('http://localhost:3000/orderentries','POST',newOrderEntry);
+           let theResult = await fetchRestEndpoint('http://localhost:3000/orderEntry','POST',newOrderEntry);
 
            alert('Speise wurde hinzugefügt');
        }
        else{        
-        let theResult = await fetchRestEndpoint(`http://localhost:3000/orderentries/${alreadyEntry}`,'PUT',newOrderEntry);
+        let theResult = await fetchRestEndpoint(`http://localhost:3000/orderEntry/${alreadyEntry}`,'PUT',newOrderEntry);
         alert('Speise wurde erneuert');
        }       
        sessionStorage.setItem('orderDayID','-1');
