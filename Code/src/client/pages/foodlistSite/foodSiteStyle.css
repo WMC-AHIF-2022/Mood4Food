@@ -9,7 +9,7 @@ html, body{
     height: 100%;
 }
 
-#page-container{
+#food-container{
     display: grid;
     height: inherit;
     grid-template-rows: auto 1fr auto;
@@ -41,7 +41,7 @@ input[type="checkbox"] {
     width: auto;
 }
 
-#food-container{
+#show-container{
     padding: 0.75cm 0.75cm 0;
     display: grid;
     grid-gap: 10px;
@@ -52,7 +52,7 @@ input[type="checkbox"] {
     overflow: auto;
 }
 
-#food-container div {
+#show-container div {
     /*background-color: #646464;*/
 }
 

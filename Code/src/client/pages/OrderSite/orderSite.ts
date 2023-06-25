@@ -38,7 +38,7 @@ window.onload = async() =>{
         
         // Überprüfen, ob das Ziellement selbst ein Button ist
         if (targetElement.classList.contains('bestellButton') ) {
-          
+          console.log(targetElement.classList.contains('bestellButton'));
           /*const button = targetElement as HTMLButtonElement;
           // Code zum Entfernen des Buttons
           button.parentNode?.removeChild(button);*/          
@@ -57,7 +57,9 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
   let dateStringParts = dateString.split('-');
   dateString = dateStringParts[1] +'-'+dateStringParts[0];
   if(dateString !== null){
-    let orderDays:OrderDay[] = await response.json();     
+    let orderDays:OrderDay[] = await response.json();
+    console.log(orderDays);
+
     for(let i = 0; i < orderDays.length;i++){
     if(orderDays[i].orderDate.toString().includes(dateString)){
       let id = i  + 1;
@@ -76,7 +78,7 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
   console.log(sessionStorage.getItem('orderDayID'));
   console.log(sessionStorage.getItem('userID'));  
   */
-  window.location.href = '../foodlistSite/';
+  //window.location.href = '../foodlistSite/';
 }
 async function getOrderdays(){
 
@@ -107,7 +109,7 @@ async function getOrderdays(){
                 htmlDivString += `<div class="Tile DateInGrid"><div class="dateInformation">${formattedDate}</div><div class="Description">${dayName} <br> Deadline: ${formattedDeadLine}<button type="button" class="btn btn-success Button bestellButton" >Kebab</button></div></div> `
             }
             else{
-                htmlDivString += `<div class="Tile DateInGrid"><div class="dateInformation">${formattedDate}</div><div class="Description">${dayName} <br> Deadline: ${formattedDeadLine}</div></div> `
+                htmlDivString += `<div class="Tile DateInGrid" onclick="window.location.href='../ShowOrders/'"><div class="dateInformation">${formattedDate}</div><div class="Description">${dayName} <br> Deadline: ${formattedDeadLine}</div></div> `
             }
         }
     }
