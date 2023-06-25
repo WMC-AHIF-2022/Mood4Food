@@ -29,12 +29,18 @@ async function refresh(){
     const response1 = await fetchRestEndpoint("http://localhost:3000/food", "GET");
     const response2 = await fetchRestEndpoint("http://localhost:3000/users", "GET");
     const response3 = await fetchRestEndpoint("http://localhost:3000/orderentries", "GET");
+    const response4 = await fetchRestEndpoint("http://localhost:3000/food", "GET");
+    const response5 = await fetchRestEndpoint("http://localhost:3000/orderentries/simple" , "GET");
+    const response6 = await fetchRestEndpoint("http://localhost:3000/orderDays" , "GET");
     const meals = await response1.json();
     const users = await response2.json();
     const orderEntries = await response3.json();
-    console.log(meals);
-    console.log(users);
+    const food = await response4.json();
+    const orderEntriesSimple = await response5.json();
+    const orderDays = await response6.json();
+    console.log(orderEntriesSimple);
     console.log(orderEntries);
+    console.log(orderDays);
         for (let i = 0; i < meals.length; i++) {
             if (!meals[i].name.includes("")) {
                 meals.splice(i, 1);
@@ -44,15 +50,19 @@ async function refresh(){
         }
 
     tableBody.innerHTML = '';
-    for(let i = 0; i < users.length; i++){
+    for(let i = 0; i < orderDays.length; i++){
         const row = document.createElement("tr");
         tableBody.appendChild(row);
-        if(orderEntries[i].name === users[i].username) {
-            row.insertCell(0).innerHTML = `${users[i].username}`;
-            row.insertCell(1).innerHTML = `${orderEntries[i].food}`;
-            row.insertCell(2).innerHTML = await getAmountOfOrdersfor(meals[i].id);
-            row.insertCell(3).innerHTML = `<input type="checkbox" class="mealCheckBox">`;
+        for(let y = 0; y < orderEntriesSimple.length; y++){
+            if(orderEntriesSimple[y].orderDayID === orderDays[i].id) {
+                console.log(orderEntriesSimple[y].orderDayID);
+                row.insertCell(0).innerHTML = `${users[y].username}`;
+                row.insertCell(1).innerHTML = `${orderEntries[y].food}`;
+                row.insertCell(2).innerHTML = await getAmountOfOrdersfor(meals[i].id);
+                row.insertCell(3).innerHTML = `<input type="checkbox" class="mealCheckBox">`;
+            }
         }
+
         /*row.addEventListener('click',(e)=> {
             const target = e.target as HTMLButtonElement;
             if (target.tagName != "INPUT") {

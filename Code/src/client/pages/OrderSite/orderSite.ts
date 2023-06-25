@@ -32,20 +32,23 @@ window.onload = async() =>{
     await getOrderdays();
     await fillOrderdayWithFood();
     
-    
-    document.addEventListener('click', (event: MouseEvent) => {
-        const targetElement = event.target as HTMLElement;
-        
-        // Überprüfen, ob das Ziellement selbst ein Button ist
-        if (targetElement.classList.contains('bestellButton') ) {
-          console.log(targetElement.classList.contains('bestellButton'));
-          /*const button = targetElement as HTMLButtonElement;
-          // Code zum Entfernen des Buttons
-          button.parentNode?.removeChild(button);*/          
-          
-          prepareOrderEntry(targetElement.parentElement?.parentElement);          
-        }
-      });
+
+        document.addEventListener('click', (event: MouseEvent) => {
+            const targetElement = event.target as HTMLElement;
+
+            // Überprüfen, ob das Ziellement selbst ein Button ist
+            if (targetElement.classList.contains('bestellButton')) {
+                console.log(targetElement.classList.contains('bestellButton'));
+                /*const button = targetElement as HTMLButtonElement;
+                // Code zum Entfernen des Buttons
+                button.parentNode?.removeChild(button);*/
+
+                prepareOrderEntry(targetElement.parentElement?.parentElement);
+            }
+        });
+
+
+
 }
 async function prepareOrderEntry(theHtmlElementparams:any) {
   const response = await fetch(Host_URL);
@@ -62,6 +65,7 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
       let id = i  + 1;
         if(new Date < new Date(orderDays[i].orderDate)){
           sessionStorage.setItem('orderDayID',id.toString());
+          window.location.href = "../foodlistSite/";
         }
         else{
           alert('Zu spät');         
