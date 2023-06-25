@@ -41,7 +41,7 @@ input[type="checkbox"] {
     width: auto;
 }
 
-#food-container{
+#show-container{
     padding: 0.75cm 0.75cm 0;
     display: grid;
     grid-gap: 10px;
@@ -52,15 +52,15 @@ input[type="checkbox"] {
     overflow: auto;
 }
 
-#food-container div {
+#show-container div {
     /*background-color: #646464;*/
 }
 
-#foodPageTitleBox{
+#ordersTitleBox{
     grid-row: 1;
 }
 
-#foodPageTitleBox h1{
+#ordersTitleBox h1{
     font-size: 3em;
     font-weight: bold;
 }
@@ -137,7 +137,7 @@ tr td:last-child {
     float: right;
 }
 /*Searchfield*/
-#foodSearch{
+#ordersSearch{
     width: 60%;
     max-width: 8cm;
     height: 25px;
