@@ -1,4 +1,5 @@
 import {fetchRestEndpoint} from "../../utils/client-server.js";
+import {OrderDay} from "../interfaces";
 
 const tableBody: HTMLTableSectionElement = document.getElementById('table-body') as HTMLTableSectionElement;
 const deleteBtnH = document.getElementById('deleteBtnH');
@@ -8,60 +9,42 @@ const importBox = document.getElementById('importBox') as HTMLDivElement;
 const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement;
 const confirmImportBtn = document.getElementById('confirmBtn') as HTMLButtonElement;
 const closeBtns = document.getElementsByClassName('closeBtn') as HTMLCollection;
+const btnOrderDayTitle = document.getElementById('orderDayTitle');
 
 const btnLogout = document.getElementById('logoutButton') as HTMLButtonElement;
+const orderId = sessionStorage.getItem('orderDayID');
+const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 btnLogout.addEventListener("click", () => {
     sessionStorage.clear();
     window.location.href="/";
 })
 window.onload = async() =>{
-    const users = await fetchRestEndpoint(`http://localhost:3000/users`,"GET");
+    const response = await fetchRestEndpoint(`http://localhost:3000/orderDay/${orderId}`, "GET");
+
+    const orderDay:OrderDay = await response.json();
+    const date = new Date(orderDay.orderDate);
+    const day = date.getDay();
+    const title = `OrderDay: ${days[day]}, ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+    btnOrderDayTitle.innerText = title;
+    console.log(orderDay);
     await refresh()
 }
 
-async function getAmountOfOrdersfor(index: number): Promise<string>{
-    const response = await fetchRestEndpoint(`http://localhost:3000/food/${index}/amount`,"GET");
-    const amount = await response.json();
-    return `${amount.value}`;
-}
+
 
 async function refresh(){
-    const response1 = await fetchRestEndpoint("http://localhost:3000/food", "GET");
-    const response2 = await fetchRestEndpoint("http://localhost:3000/users", "GET");
-    const response3 = await fetchRestEndpoint("http://localhost:3000/orderentries", "GET");
-    const response4 = await fetchRestEndpoint("http://localhost:3000/food", "GET");
-    const response5 = await fetchRestEndpoint("http://localhost:3000/orderentries/simple" , "GET");
-    const response6 = await fetchRestEndpoint("http://localhost:3000/orderDays" , "GET");
-    const meals = await response1.json();
-    const users = await response2.json();
-    const orderEntries = await response3.json();
-    const food = await response4.json();
-    const orderEntriesSimple = await response5.json();
-    const orderDays = await response6.json();
-    console.log(orderEntriesSimple);
-    console.log(orderEntries);
-    console.log(orderDays);
-        for (let i = 0; i < meals.length; i++) {
-            if (!meals[i].name.includes("")) {
-                meals.splice(i, 1);
-                console.log(meals);
-                i = -1;
-            }
-        }
 
+    const response = await fetchRestEndpoint(`http://localhost:3000/orderEntry/allOrdersOnDay/${orderId}`, "GET");
+    const allOrders:{id:number, firstname:string, lastname:string,name:string}[] = await response.json();
     tableBody.innerHTML = '';
-    for(let i = 0; i < orderDays.length; i++){
+    for(let i = 0; i < allOrders.length; i++){
         const row = document.createElement("tr");
+        row.id = `${allOrders[i].id}`;
         tableBody.appendChild(row);
-        for(let y = 0; y < orderEntriesSimple.length; y++){
-            if(orderEntriesSimple[y].orderDayID === orderDays[i].id) {
-                console.log(orderEntriesSimple[y].orderDayID);
-                row.insertCell(0).innerHTML = `${users[y].username}`;
-                row.insertCell(1).innerHTML = `${orderEntries[y].food}`;
-                row.insertCell(2).innerHTML = await getAmountOfOrdersfor(meals[i].id);
+                row.insertCell(0).innerHTML = `${allOrders[i].firstname}`;
+                row.insertCell(1).innerHTML = `${allOrders[i].lastname}`;
+                row.insertCell(2).innerHTML = `${allOrders[i].name}`;
                 row.insertCell(3).innerHTML = `<input type="checkbox" class="mealCheckBox">`;
-            }
-        }
 
         /*row.addEventListener('click',(e)=> {
             const target = e.target as HTMLButtonElement;
@@ -71,4 +54,30 @@ async function refresh(){
             }
         });*/
     }
+}
+deleteBtn.addEventListener('click', async()=>{
+    const inputElements = document.getElementsByTagName("input");
+    let activeList = [];
+    let count = 0;
+    for(let x = 0;x < inputElements.length; x++){
+        const curElement = inputElements.item(x) as HTMLInputElement;
+        if(curElement.type == "checkbox" && curElement.checked == true){
+            activeList.push(curElement.parentElement!.parentElement!.id!);
+        }
+    }
+    console.log(activeList);
+    for(let x = 0; x < activeList.length; x++){
+        try{
+            await deleteOrderEntry(Number(activeList[x]));
+        }
+        catch(e){
+            alert(e);
+            return;
+        }
+    }
+    await refresh();
+});
+
+async function deleteOrderEntry(number: number) {
+    await fetchRestEndpoint(`http://localhost:3000/orderEntry/${number}`,"DELETE");
 }
