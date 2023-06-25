@@ -38,17 +38,15 @@
 
 #form {
     background-color: #c5c5c5;
-    padding: 0.5cm 1cm 0 1cm;
+    padding: 0.5cm 1cm;
     border-radius: 5px;
     height: fit-content;
+    display: grid;
+    grid-gap: 0.5cm;
 }
 
 #form div{
     width: 100%;
-}
-
-#form div:not(:last-child, :first-child){
-    margin: 1cm 0;
 }
 
 #textOutput{
@@ -56,10 +54,8 @@
     display: flex;
     align-items: center;
     justify-content: right;
-}
-
-#signUpText{
-    color: black;
+    grid-row: 5;
+    grid-column: 2;
 }
 
 #loginError{
@@ -78,6 +74,48 @@ button {
     border-radius: 5px;
     border: 1px solid #1a6000;
     cursor: pointer;
+}
+
+#checkBar{
+    /*text-align: center;*/
+    display: block;
+    grid-row: 1;
+    grid-column: 1 /span 2;
+}
+
+#usernameBox{
+    grid-row: 2;
+    grid-column: 1 /span 2;
+}
+
+#lastnameBox{
+    grid-row: 3;
+    grid-column: 1;
+}
+
+#firstnameBox{
+    grid-row: 3;
+    grid-column: 2;
+}
+
+#pwdBox{
+    grid-row: 4;
+    grid-column: 1 /span 2;
+}
+
+#btnBox{
+    grid-row: 5;
+    grid-column: 1;
+}
+
+#backToLogin{
+    color: black;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #32412f;
 }
 
 input[type=text],input[type=password], select {

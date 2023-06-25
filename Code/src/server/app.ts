@@ -2,7 +2,6 @@ import express from "express";
 import { join } from "path";
 import cors from "cors";
 import { foodlistRouter } from "./router/foodlist-router";
-import {customerRouter} from "./router/customer-router";
 import {orderDayRouter} from "./router/order-day-router";
 import {entryRouter} from "./router/orderentry-router";
 import {foodRouter} from "./router/food-router";
@@ -19,11 +18,10 @@ app.use(express.json())
 app.use(express.static(path, options));
 
 app.use("/food", foodlistRouter);
-app.use("/customers", customerRouter);
-app.use("/orderdays", orderDayRouter);
-app.use("/orderentries", entryRouter);
+app.use("/orderDay", orderDayRouter);
+app.use("/orderEntry", entryRouter);
 app.use("/foodObject", foodRouter);
-app.use("/users", userRouter);
+app.use("/user", userRouter);
 
 
 // start http server

@@ -17,7 +17,7 @@ entryRouter.get("/", async(request,response) => {
     const db = await DB.createDBConnection();
     const orders: OrderEntry = await db.all<OrderEntry>("select c.username as name, f.name as food, od.orderDate as date " +
         "FROM orderEntry oe " +
-        "INNER JOIN users c ON (oe.customerID = c.id)" +
+        "INNER JOIN user c ON (oe.username = c.username)" +
         "INNER JOIN food f ON (oe.mealID = f.id)" +
         "INNER JOIN orderDay od ON (oe.orderDayID = od.id)");
     await db.close();
@@ -32,7 +32,7 @@ entryRouter.get("/:id", async(req, res) => {
     const db = await DB.createDBConnection();
     const stmt = await db.prepare("select c.lastname || ' ' || c.firstname as name, f.name as food, od.orderDate as date " +
         "FROM orderEntry oe " +
-        "INNER JOIN customer c ON (oe.customerID = c.id)" +
+        "INNER JOIN user c ON (oe.username = c.username)" +
         "INNER JOIN food f ON (oe.mealID = f.id)" +
         "INNER JOIN orderDay od ON (oe.orderDayID = od.id) where oe.id = ?1");
     await stmt.bind({1: id});
@@ -50,13 +50,13 @@ entryRouter.get("/:id", async(req, res) => {
 // add orderEntry
 entryRouter.post("/", async(req, res) => {
     const odID: any = req.body.odID;
-    const customerID: any = req.body.customerID;
+    const username: any = req.body.username;
     const mealID: any = req.body.mealID;
     if (typeof odID !== "string" || odID.trim().length === 0) {
         res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
         return;
     }
-    if (typeof customerID !== "string" || customerID.trim().length === 0) {
+    if (typeof username !== "string" || username.trim().length === 0) {
         res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
         return;
     }
@@ -99,8 +99,8 @@ entryRouter.post("/", async(req, res) => {
     await temp.finalize();
 
     //customerID
-    temp = await db.prepare('select count(*) as count from users where id = ?1');   
-    await temp.bind({1:customerID});
+    temp = await db.prepare('select count(*) as count from user where username = ?1');
+    await temp.bind({1:username});
     const customerResult = await temp.get();
     await temp.finalize();
 
@@ -128,8 +128,8 @@ entryRouter.post("/", async(req, res) => {
     // standard process
     
     
-    const stmt = await db.prepare('insert  into OrderEntry (id, orderDayID, customerID, mealID) values (?1, ?2, ?3, ?4)');
-    await stmt.bind({1:id, 2: odID, 3: customerID, 4: mealID});
+    const stmt = await db.prepare('insert  into OrderEntry (id, orderDayID, username, mealID) values (?1, ?2, ?3, ?4)');
+    await stmt.bind({1:id, 2: odID, 3: username, 4: mealID});
     const operationResult = await stmt.run();
     await stmt.finalize();
     await db.close();
@@ -148,13 +148,13 @@ entryRouter.post("/", async(req, res) => {
 entryRouter.put("/:id", async(req, res) => {
     const id: number = Number(req.params.id);
     const odID: any = req.body.odID;
-    const customerID: any = req.body.customerID;
+    const username: any = req.body.username;
     const mealID: any = req.body.mealID;
     if (typeof odID !== "string" || odID.trim().length === 0) {
         res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
         return;
     }
-    if (typeof customerID !== "string" || customerID.trim().length === 0) {
+    if (typeof username !== "string" || username.trim().length === 0) {
         res.status(StatusCodes.BAD_REQUEST).send("name missing or not ok");
         return;
     }
@@ -173,8 +173,8 @@ entryRouter.put("/:id", async(req, res) => {
     await temp.finalize();
 
     //customerID
-    temp = await db.prepare('select count(*) as count from Users where id = ?1');
-    await temp.bind({1:customerID});
+    temp = await db.prepare('select count(*) as count from User where username = ?1');
+    await temp.bind({1:username});
     const customerResult = await temp.get();
     await temp.finalize();
 
@@ -192,7 +192,7 @@ entryRouter.put("/:id", async(req, res) => {
         return;
     }
     if(customerResult.count == 0){
-        res.status(StatusCodes.BAD_REQUEST).send("customer-ID is not appropriate");
+        res.status(StatusCodes.BAD_REQUEST).send("username is not appropriate");
         return;
     }
     if(mealResult.count == 0){
@@ -201,10 +201,10 @@ entryRouter.put("/:id", async(req, res) => {
         return;
     }
 
-    const stmt = await db.prepare('update or replace OrderEntry set orderDayID = ?1, customerID = ?2, mealID = ?3 where id = ?4');
+    const stmt = await db.prepare('update or replace OrderEntry set orderDayID = ?1, username = ?2, mealID = ?3 where id = ?4');
     await stmt.bind({
         1: odID,
-        2: customerID,
+        2: username,
         3: mealID,
         4: id
     });

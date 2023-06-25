@@ -1,12 +1,8 @@
-import {Food} from "../../../server/collective/Food";
-import {Person} from "../../../server/collective/Person";
-import { OrderEntry } from "../../../server/collective/OrderEntry";
-import {OrderDay} from "../../../server/collective/Orderday";
-import {User} from "../../../server/collective/user";
 import { fetchRestEndpoint } from "../../utils/client-server.js";
+import {Food, OrderDay, OrderEntry, User} from "../interfaces";
 
 
-const Host_URL = "http://localhost:3000/orderdays";
+const Host_URL = "http://localhost:3000/orderDay";
 
 let gridForOrderdays = document.getElementById("FoodOrders");
 const btnLogout = document.getElementById('logoutButton') as HTMLButtonElement;
@@ -18,19 +14,29 @@ btnLogout.addEventListener("click", () => {
 const addODBtn: HTMLButtonElement = document.getElementById("buttonPlacement") as HTMLButtonElement;
 
 window.onload = async() =>{
+    const username = sessionStorage.getItem('web-user');
+    console.log(username);
     const isTeacher: boolean = sessionStorage.getItem("web-isTeacher") === "true";
     if(!isTeacher){
         addODBtn.remove();
     }
-    const userResponse = await fetch('http://localhost:3000/users');
+
+    const isClassMember: number = await isPoolMember(username);
+    console.log(isClassMember);
+
+    const userResponse = await fetch('http://localhost:3000/user');
     let users:User[] = await userResponse.json();
     for(let i = 0;  i< users.length;i++){
       if(users[i].username === sessionStorage.getItem('web-user')){
-        sessionStorage.setItem('userID',users[i].id.toString());
+        sessionStorage.setItem('username',users[i].username);
       }
     }
-    await getOrderdays();
-    await fillOrderdayWithFood();
+    if(isTeacher || isClassMember == 1){
+        await getOrderdays();
+    }
+    if(!isTeacher){
+        await fillOrderdayWithFood();
+    }
     
     
     document.addEventListener('click', (event: MouseEvent) => {
@@ -47,6 +53,13 @@ window.onload = async() =>{
         }
       });
 }
+
+async function isPoolMember(username: string) {
+    const response = await fetchRestEndpoint(`http://localhost:3000/user/isClassMember/${username}`, "GET");
+    const result: {classMember: number} = await response.json();
+    return result.classMember;
+}
+
 async function prepareOrderEntry(theHtmlElementparams:any) {
   const response = await fetch(Host_URL);
   const dateElement = theHtmlElementparams?.querySelector('div.dateInformation') as HTMLDivElement;
@@ -118,8 +131,8 @@ async function getFoodForOrderDay(date:string):Promise<string>{
   let orderDayID:number = -1;
   let mealID = '-1';
   let mealString:string = 'nothing';
-  let user:string = sessionStorage.getItem('userID');  
-  let orderdays = await fetchRestEndpoint('http://localhost:3000/orderdays','GET');  
+  let user:string = sessionStorage.getItem('username');
+  let orderdays = await fetchRestEndpoint('http://localhost:3000/orderDay','GET');
   let oDays:OrderDay[] = await orderdays.json();
   for(let i = 0; i < oDays.length;i++){
     let dateString:string = oDays[i].orderDate.toString();      
@@ -129,10 +142,10 @@ async function getFoodForOrderDay(date:string):Promise<string>{
       i = orderdays.length +1;
     }
   }
-  let orderentrys = await fetchRestEndpoint('http://localhost:3000/orderentries/simple','GET');  
+  let orderentrys = await fetchRestEndpoint('http://localhost:3000/orderentry/simple','GET');
   let oEntrys:OrderEntry[] = await orderentrys.json();  
   for(let i = 0; i< oEntrys.length;i++){ 
-    if(parseInt(oEntrys[i].orderDayID) === parseInt(orderDayID.toString()) && parseInt(oEntrys[i].customerID) === parseInt(user)){   
+    if(parseInt(oEntrys[i].orderDayID) === parseInt(orderDayID.toString()) && oEntrys[i].username === user){
         
       mealID = oEntrys[i].mealID;
     }

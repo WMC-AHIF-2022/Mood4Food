@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>M4F</title>
-    <link rel="icon" type="image/x-icon" href="./pics/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../../pics/favicon.ico">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,17 +15,31 @@
         </div>
 
         <form id="form">
-            <div>
+            <div id="checkBar">
+                <label>Teacher: </label>
+                <input type="checkbox" id="checkBoxTeacher">
+            </div>
+            <div id="usernameBox">
                 <label for="username" class="form-label">Username:</label>
                 <input type="text" class="form-control" id="username">
             </div>
-            <div>
+            <div id="lastnameBox">
+                <label class="form-label">Lastname:</label>
+                <input type="text" class="form-control" id="lastname">
+            </div>
+            <div id="firstnameBox">
+                <label class="form-label">Firstname:</label>
+                <input type="text" class="form-control" id="firstname">
+            </div>
+            <div id="pwdBox">
                 <label for="password" class="form-label">Password: </label>
                 <input type="password" class="form-control" id="password">
             </div>
 
-            <button id="btnLogin" type="button" class="btn btn-primary btnSMB">Login</button>
-            <a id="signUpText" href="http://localhost:3000/pages/signUp/">Need to register? Sign up here!</a>
+            <div id="btnBox">
+                <button id="btnSignup" type="button" class="btn btn-primary">Signup</button>
+                <a id="backToLogin" href="http://localhost:3000">Already have an account?</a>
+            </div>
 
             <div id="textOutput">
                 <label id="loginStatus" class="text-success"></label>
@@ -35,7 +49,7 @@
     </div>
 </div>
 
-<script src="login-controller.js" type="module"></script>
+<script src="signUp-Controller.js" type="module"></script>
 
 </body>
 </html>

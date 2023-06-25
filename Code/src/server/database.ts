@@ -24,15 +24,6 @@ export class DB {
         );
 
         await connection.run(
-            `create table if not exists Customer(
-                id INTEGER NOT NULL PRIMARY KEY,
-                lastname TEXT NOT NULL,
-                firstname TEXT NOT NULL,
-                className TEXT
-            ) strict`
-        );
-
-        await connection.run(
             `create table if not exists OrderDay(
                 id INTEGER NOT NULL PRIMARY KEY,
                 orderDate TEXT DEFAULT (DATE('now')) NOT NULL,
@@ -40,19 +31,30 @@ export class DB {
             ) strict`
         );
 
+        await connection.run(`
+            CREATE TABLE IF NOT EXISTS User (
+                username TEXT NOT NULL PRIMARY KEY,
+                password TEXT NOT NULL,
+                lastname TEXT NOT NULL,
+                firstname TEXT NOT NULL,
+                classMember BOOLEAN,
+                teacher INTEGER
+            )
+        `);
+
          await connection.run(
              `create table if not exists OrderEntry(
                  id INTEGER NOT NULL PRIMARY KEY,
                  orderDayID INTEGER NOT NULL,
-                 customerID INTEGER NOT NULL,
+                 username TEXT NOT NULL,
                  mealID INTEGER NOT NULL,
                  CONSTRAINT fk_orderDate
                      FOREIGN KEY (orderDayID) 
                      REFERENCES OrderDay(id) 
                      ON DELETE CASCADE,
-                 CONSTRAINT fk_customer 
-                     FOREIGN KEY (customerID) 
-                     REFERENCES Users(id) 
+                 CONSTRAINT fk_user
+                     FOREIGN KEY (username) 
+                     REFERENCES User(username) 
                      ON DELETE CASCADE,
                  CONSTRAINT fk_food 
                      FOREIGN KEY (mealID) 
@@ -60,13 +62,5 @@ export class DB {
                      ON DELETE CASCADE
             ) strict`
         );
-        await connection.run(`
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY,
-                username UNIQUE NOT NULL,
-                password NOT NULL,
-                teacher INTEGER
-            )
-        `);
     }
 }

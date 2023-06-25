@@ -36,9 +36,9 @@
                     <table id="class-table">
                         <thead>
                         <tr>
+                            <th>Username</th>
                             <th>Lastname</th>
                             <th>Firstname</th>
-                            <th>Class</th>
                             <th id="deleteBtnH">
                                 <button id="deleteBtn">
                                     <img id="deleteImg" src="../../pics/delete.png">
@@ -52,28 +52,28 @@
                 </div>
             </div>
             <div id="BtnBox">
-                <Button id="importBtn">Import by CSV</Button>
+<!--                <Button id="importBtn">Import by CSV</Button>-->
                 <button id="addCustomerBtn">Add Customer</button>
             </div>
         </div>
 
         <div id="whiteOverlay" style="display: none">
             <!--Import CSV-->
-            <div class="whiteBox" id="importBox" style="display: none">
-                <img class="closeBtn" src="../../pics/close.png">
-                <h1>Import Class list by .csv</h1>
+<!--            <div class="whiteBox" id="importBox" style="display: none">-->
+<!--                <img class="closeBtn" src="../../pics/close.png">-->
+<!--                <h1>Import Class list by .csv</h1>-->
 
-                <p>Please, keep the content to the format: <br></p>
-                <p class='codeFormatStyle'>Lastname;Firstname;Class <br></p>
+<!--                <p>Please, keep the content to the format: <br></p>-->
+<!--                <p class='codeFormatStyle'>Lastname;Firstname;Class <br></p>-->
 
-                <div id="uploadBox">
-                    <input id="fileInput" type="file">
-                </div>
+<!--                <div id="uploadBox">-->
+<!--                    <input id="fileInput" type="file">-->
+<!--                </div>-->
 
-                <div class='confirmBtnBox'>
-                    <button id='confirmBtn'>Confirm</button>
-                </div>
-            </div>
+<!--                <div class='confirmBtnBox'>-->
+<!--                    <button id='confirmBtn'>Confirm</button>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <!--add meal-->
             <div class="whiteBox" id="addingBox" style="display: none">
@@ -81,12 +81,8 @@
                 <h1>Add a customer</h1>
 
                 <div id="input-Container">
-                    <div class="inputPreText">Lastname:</div>
-                    <div class="inputBox"><input type="text" id="lastNameInput" name="fnumber"></div>
-                    <div class="inputPreText">Firstname:</div>
-                    <div class="inputBox"><input type="text" id="firstNameInput" name="fname"></div>
-                    <div class="inputPreText">Class: </div>
-                    <div class="inputBox"><input type="text" id="classInput" name="fingredients"></div>
+                    <div class="inputPreText">Username:</div>
+                    <div class="inputBox"><input type="text" id="usernameInput" name="fnumber"></div>
                 </div>
                 <div class='confirmBtnBox'><button id="addBtn">Add</button></div>
             </div>

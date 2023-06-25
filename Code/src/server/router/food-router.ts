@@ -28,7 +28,7 @@ foodRouter.get("/orders/:id", async(req, res)=>{
     const id = req.params.id;
 
     const db = await DB.createDBConnection();
-    const stmt = await db.prepare("select u.username as 'customer',od.orderdate as 'date' from orderentry oe INNER JOIN users u ON (oe.customerID = u.id) INNER JOIN orderday od ON (oe.orderDayID = od.id) where mealID = ?1;");
+    const stmt = await db.prepare("select oe.username as 'customer',od.orderdate as 'date' from orderentry oe INNER JOIN orderday od ON (oe.orderDayID = od.id) where mealID = ?1;");
     await stmt.bind({1: id});
     const result: {customer: string, date: string}[] = await stmt.all<{customer: string, date:string}[]>();
     await stmt.finalize();
