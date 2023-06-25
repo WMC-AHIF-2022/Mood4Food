@@ -78,11 +78,7 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
       let id = i  + 1;
         if(new Date < new Date(orderDays[i].orderDate)){
           sessionStorage.setItem('orderDayID',id.toString());
-<<<<<<< HEAD
-          window.location.href = "../foodlistSite/";
-=======
           window.location.href = "../foodlistSite";
->>>>>>> 27f00e3e96bad085341b5345937ac97a0315e5d3
         }
         else{
           alert('Zu spät');         
