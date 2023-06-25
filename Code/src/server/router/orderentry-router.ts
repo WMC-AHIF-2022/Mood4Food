@@ -12,6 +12,18 @@ entryRouter.get("/simple", async(request,response) => {
     await db.close();
     response.status(StatusCodes.OK).json(orders);
 });
+
+entryRouter.get("/allOrdersOnDay/:id", async(request, response) =>{
+    const id = request.params.id;
+    const db = await DB.createDBConnection();
+    const statement = await db.prepare('select oe.id, u.firstname,u.lastname,f.name from orderentry oe INNER JOIN food f ON (f.id = oe.mealID) INNER JOIN user u ON (u.username = oe.username) where oe.orderDayID = ?1;');
+    await statement.bind({1: id});
+
+    const allOrders:{id: number,firstname:string, lastname:string,food:string}[] = await statement.all<{id:number, firstname:string, lastname:string,food:string}[]>();
+    await statement.finalize();
+    await db.close();
+    response.status(StatusCodes.OK).json(allOrders);
+})
 //return all orderEntries
 entryRouter.get("/", async(request,response) => {
     const db = await DB.createDBConnection();

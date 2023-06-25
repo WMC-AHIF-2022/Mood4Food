@@ -12,11 +12,12 @@ btnLogout.addEventListener("click", () => {
 })
 
 const addODBtn: HTMLButtonElement = document.getElementById("buttonPlacement") as HTMLButtonElement;
+let isTeacher = false
 
 window.onload = async() =>{
     const username = sessionStorage.getItem('web-user');
     //console.log(username);
-    const isTeacher: boolean = sessionStorage.getItem("web-isTeacher") === "true";
+    isTeacher = sessionStorage.getItem("web-isTeacher") === "true";
     if(!isTeacher){
         addODBtn.remove();
     }
@@ -37,24 +38,32 @@ window.onload = async() =>{
     if(!isTeacher){
         await fillOrderdayWithFood();
     }
-    
 
         document.addEventListener('click', (event: MouseEvent) => {
             const targetElement = event.target as HTMLElement;
 
             // Überprüfen, ob das Ziellement selbst ein Button ist
-            if (targetElement.classList.contains('bestellButton')) {
-                console.log(targetElement.classList.contains('bestellButton'));
-                /*const button = targetElement as HTMLButtonElement;
-                // Code zum Entfernen des Buttons
-                button.parentNode?.removeChild(button);*/
+            if(!isTeacher) {
+                if (targetElement.classList.contains('bestellButton')) {
+                    console.log(targetElement.classList.contains('bestellButton'));
+                    /*const button = targetElement as HTMLButtonElement;
+                    // Code zum Entfernen des Buttons
+                    button.parentNode?.removeChild(button);*/
 
-                prepareOrderEntry(targetElement.parentElement?.parentElement);
+                    prepareOrderEntry(targetElement.parentElement?.parentElement);
+                }
+            }
+            else{
+                if (targetElement.classList.contains('showOrders')) {
+                    console.log(targetElement.classList.contains('showOrders'));
+                    /*const button = targetElement as HTMLButtonElement;
+                    // Code zum Entfernen des Buttons
+                    button.parentNode?.removeChild(button);*/
+
+                    prepareOrderEntry(targetElement.parentElement?.parentElement);
+                }
             }
         });
-
-
-
 }
 
 async function isPoolMember(username: string) {
@@ -78,11 +87,13 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
       let id = i  + 1;
         if(new Date < new Date(orderDays[i].orderDate)){
           sessionStorage.setItem('orderDayID',id.toString());
-<<<<<<< HEAD
-          window.location.href = "../foodlistSite/";
-=======
-          window.location.href = "../foodlistSite";
->>>>>>> 27f00e3e96bad085341b5345937ac97a0315e5d3
+            if(!isTeacher){
+                window.location.href = "../foodlistSite/";
+            }
+            else{
+                window.location.href = "../ShowOrders/";
+            }
+
         }
         else{
           alert('Zu spät');         
@@ -127,7 +138,7 @@ async function getOrderDays(){
                 htmlDivString += `<div class="Tile DateInGrid"><div class="dateInformation">${formattedDate}</div><div class="Description">${dayName} <br> Deadline: ${formattedDeadLine}<button type="button" class="btn btn-success Button bestellButton" >Kebab</button></div></div> `
             }
             else{
-                htmlDivString += `<div class="Tile DateInGrid" onclick="window.location.href='../ShowOrders/'"><div class="dateInformation">${formattedDate}</div><div class="Description">${dayName} <br> Deadline: ${formattedDeadLine}</div></div> `
+                htmlDivString += `<div class="Tile DateInGrid" ><div class="dateInformation">${formattedDate}</div><div class="Description">${dayName} <br> Deadline: ${formattedDeadLine}<button type="button" class="Button showOrders" >Show Orders</button></div></div> `
             }
         }
     }
