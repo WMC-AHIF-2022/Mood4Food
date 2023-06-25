@@ -15,14 +15,14 @@ const addODBtn: HTMLButtonElement = document.getElementById("buttonPlacement") a
 
 window.onload = async() =>{
     const username = sessionStorage.getItem('web-user');
-    console.log(username);
+    //console.log(username);
     const isTeacher: boolean = sessionStorage.getItem("web-isTeacher") === "true";
     if(!isTeacher){
         addODBtn.remove();
     }
 
     const isClassMember: number = await isPoolMember(username);
-    console.log(isClassMember);
+    //console.log(isClassMember);
 
     const userResponse = await fetch('http://localhost:3000/user');
     let users:User[] = await userResponse.json();
@@ -32,7 +32,7 @@ window.onload = async() =>{
       }
     }
     if(isTeacher || isClassMember == 1){
-        await getOrderdays();
+        await getOrderDays();
     }
     if(!isTeacher){
         await fillOrderdayWithFood();
@@ -75,6 +75,7 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
       let id = i  + 1;
         if(new Date < new Date(orderDays[i].orderDate)){
           sessionStorage.setItem('orderDayID',id.toString());
+          window.location.href = "../foodlistSite";
         }
         else{
           alert('Zu spät');         
@@ -90,7 +91,7 @@ async function prepareOrderEntry(theHtmlElementparams:any) {
   */
   //window.location.href = '../foodlistSite/';
 }
-async function getOrderdays(){
+async function getOrderDays(){
 
     const response = await fetch(Host_URL);
     let htmlDivString: string = "";    

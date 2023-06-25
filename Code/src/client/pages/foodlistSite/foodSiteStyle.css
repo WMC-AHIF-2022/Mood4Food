@@ -9,7 +9,7 @@ html, body{
     height: 100%;
 }
 
-#food-container{
+#page-container{
     display: grid;
     height: inherit;
     grid-template-rows: auto 1fr auto;
@@ -41,7 +41,7 @@ input[type="checkbox"] {
     width: auto;
 }
 
-#show-container{
+#food-container{
     padding: 0.75cm 0.75cm 0;
     display: grid;
     grid-gap: 10px;
@@ -52,11 +52,11 @@ input[type="checkbox"] {
     overflow: auto;
 }
 
-#show-container div {
+#food-container div {
     /*background-color: #646464;*/
 }
 
-#foodPageTitleBox{
+#ordersTitleBox{
     grid-row: 1;
 }
 
@@ -132,7 +132,7 @@ tr td:last-child {
     border-bottom-right-radius: 5px;
 }
 
-.mealCheckBox {
+.classCheckBox {
     margin-right: 1cm;
     float: right;
 }
