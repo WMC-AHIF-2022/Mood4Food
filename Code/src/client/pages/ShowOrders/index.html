@@ -145,7 +145,8 @@
         doc.setFontSize(10);
         doc.text("Made with Mood4Food", 155, 287);
 
-        doc.save("test.pdf");
+        const filename = `orders_${date.getDate()}.${date.getMonth()}.${date.getFullYear()}.pdf`;
+        doc.save(filename);
     }
 </script>
 </body>
